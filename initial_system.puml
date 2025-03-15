@@ -1,0 +1,276 @@
+@startuml
+class AmmoCrate [[java:main.AmmoCrate]] {
+	#x: int
+	#y: int
+	-size: int
+	+AmmoCrate(x: int, y: int)
+	+drawOn(g: Graphics2D): void
+	+getDimensions(): Rectangle2D.Double
+	+pickedUpAmmo(player: Player): void
+}
+class Platform [[java:main.Platform]] {
+	#x: int
+	#y: int
+	#height: int
+	#width: int
+	+Platform(x: int, y: int, width: int, height: int)
+	+drawOn(g: Graphics2D): void
+	+getDimensions(): Rectangle2D.Double
+}
+class TitleScreen [[java:main.TitleScreen]] {
+	#g: Graphics2D
+	#title: String
+	#{static} onTitle: boolean
+	#button: Button
+	#lastScore: int
+	+TitleScreen(score: int)
+	+paintComponent(g: Graphics): void
+}
+class JComponent {
+}
+JComponent <|-- TitleScreen
+class GameAdvanceListener [[java:main.GameAdvanceListener]] {
+	+GameAdvanceListener(component: MyComponent)
+	+actionPerformed(arg0: ActionEvent): void
+	+advanceOneTick(): void
+}
+class MyComponent {
+}
+GameAdvanceListener --> "1" MyComponent : component
+interface ActionListener {
+}
+ActionListener <|.. GameAdvanceListener
+class MyComponent [[java:main.MyComponent]] {
+	#num: int
+	#direction: String[]
+	#g: Graphics2D
+	-{static} faceLeft: boolean
+	-{static} faceRight: boolean
+	-lives: int
+	#points: int
+	#{static} dropItem: boolean
+	#buildRocketNum: int
+	#PieceCount: int
+	#fuelCount: int
+	-hasTakenOff: boolean
+	-endGame: boolean
+	-levelChange: boolean
+	+MyComponent()
+	+paintComponent(g: Graphics): void
+	+gameOver(): void
+	+playerPickUp(): void
+	+playerHit(): void
+	+updateFuelCount(): void
+	+onRocketHolder(): void
+	+takeOff(): void
+	+updateBullets(): void
+	+drawScreen(): void
+	+updateleftsideBullets(): void
+	+updateAllAlienBullets(): void
+	+updateGrav(): void
+	+updateAlienReload(): void
+	+updateAliens(): void
+	+updatePickUpTimer(): void
+	+Run(): void
+	+updateState(): void
+}
+class Player {
+}
+MyComponent --> "1" Player : player
+class LevelReader {
+}
+MyComponent --> "1" LevelReader : levels
+class Platform {
+}
+MyComponent --> "*" Platform : platforms
+class Alien {
+}
+MyComponent --> "*" Alien : aliensType1
+class Alien {
+}
+MyComponent --> "*" Alien : aliensType2
+class BuildingPiece {
+}
+MyComponent --> "1" BuildingPiece : rocketHolder
+class Rocket {
+}
+MyComponent --> "1" Rocket : buildingRocket
+class AmmoCrate {
+}
+MyComponent --> "1" AmmoCrate : ammo
+class JComponent {
+}
+JComponent <|-- MyComponent
+class LevelReader [[java:main.LevelReader]] {
+	-g: Graphics2D
+	-ch: char[][]
+	-levelNum: int
+	#f: FileReader
+	#rocketPiece: int
+	#on: int
+	+LevelReader(num: int)
+	+drawFile(g: Graphics2D): void
+}
+class Player {
+}
+LevelReader --> "1" Player : player
+class Platform {
+}
+LevelReader --> "*" Platform : platforms
+class Fuel {
+}
+LevelReader --> "*" Fuel : fuels
+class Rocket {
+}
+LevelReader --> "*" Rocket : rocketPieces
+class Fuel [[java:main.Fuel]] {
+	#x: int
+	#y: int
+	-size: int
+	-{static} GRAVITY: int
+	-haveGrav: boolean
+	+Fuel(x: int, y: int)
+	+drawOn(g: Graphics2D): void
+	+getDimensions(): Rectangle2D.Double
+	+pickedUp(player: Player): void
+	+gravity(plats: ArrayList<Platform>): void
+}
+class Main [[java:main.Main]] {
+	+{static} frameWidth: int
+	+{static} frameHeight: int
+	+{static} main(args: String[]): void
+	+{static} playMusic(musicLocation: String): void
+}
+class Rocket [[java:main.Rocket]] {
+	-height: int
+	-width: int
+	-fuelCount: int
+	#x: int
+	-{static} GRAVITY: int
+	#y: int
+	-partHeight: int
+	-g: Graphics2D
+	#type: int
+	#isRocketPickedUp: boolean
+	#notStacked: boolean
+	-rocketOffScreen: boolean
+	+Rocket(x: int, y: int, type: int)
+	+Rocket(x: int, y: int)
+	+build(num: int, g: Graphics2D): void
+	+draw(g: Graphics2D): void
+	+takeOff(g: Graphics2D): void
+	+getDimensions(): Rectangle2D.Double
+	+pickedUp(player: Player): void
+	+gravity(plats: ArrayList<Platform>): void
+}
+class Bullets [[java:main.Bullets]] {
+	-x: double
+	-y: double
+	-xVelocity: double
+	-size: double
+	-bulletcolor: Color
+	+Bullets(startx: int, starty: int, bulletcolor: Color, size: int)
+	+move(boundary: int): boolean
+	+moveleft(boundary: int): boolean
+	+drawOn(g: Graphics2D): void
+	+setSpeedX(speedX: int): void
+	+getDimensions(): Rectangle2D.Double
+}
+class Alien [[java:main.Alien]] {
+	#x: int
+	#y: int
+	-type: int
+	-alienreload: int
+	-width: int
+	-height: int
+	#direction: String
+	-num: int
+	#directNum: int
+	#Alien1: Image
+	#Alien2: Image
+	+Alien(x: int, y: int, type: int, direction: String)
+	+drawOn(g: Graphics2D): void
+	+contactWith(plats: ArrayList<Platform>): void
+	+shootright(): void
+	+shotTimer(): void
+	+bulletHit(bullets: ArrayList<Bullets>): boolean
+	+getDimensions(): Rectangle2D.Double
+	+move(plats: ArrayList<Platform>): void
+}
+class Platform {
+}
+Alien --> "*" Platform : platforms
+class Bullets {
+}
+Alien --> "*" Bullets : rightbulletlist
+class Bullets {
+}
+Alien --> "*" Bullets : getListOfRightBullets()
+class GameOverScreen [[java:main.GameOverScreen]] {
+	#paintComponent(g: Graphics): void
+}
+class JComponent {
+}
+JComponent <|-- GameOverScreen
+class Player [[java:main.Player]] {
+	-height: int
+	-width: int
+	-{static} GRAVITY: int
+	#lives: int
+	#x: int
+	#y: int
+	#speed: int
+	#spacePressed: boolean
+	#hasItem: boolean
+	-count: double
+	#bulletCount: int
+	#reserveAmmo: int
+	#image: Image
+	#wait: int
+	#{static} right: boolean
+	#{static} left: boolean
+	#{static} up: boolean
+	#{static} down: boolean
+	#pickup: boolean
+	-pickUpCooldown: int
+	+Player(x: int, y: int, speed: int)
+	+drawOn(g2d: Graphics2D): void
+	+isHit(): void
+	+getPickUpCooldown(): int
+	+setPickUpCooldown(i: int): void
+	+startCountDown(): void
+	+getDimensions(): Rectangle2D.Double
+	+move(): void
+	+gravity(plats: ArrayList<Platform>): void
+	+shoot(): void
+	+shootleft(): void
+	+reload(): void
+	+setPickUp(b: boolean): void
+	+getx(): int
+	+gety(): int
+}
+class Fuel {
+}
+Player --> "1" Fuel : heldFuel
+class Bullets {
+}
+Player --> "*" Bullets : bulletlist
+class Bullets {
+}
+Player --> "*" Bullets : bulletlistleft
+class Bullets {
+}
+Player --> "*" Bullets : getListOfBullets()
+class Bullets {
+}
+Player --> "*" Bullets : getListOfLeftBullets()
+class BuildingPiece [[java:main.BuildingPiece]] {
+	#x: int
+	#y: int
+	#height: int
+	#width: int
+	+BuildingPiece(x: int, y: int)
+	+draw(g: Graphics2D): void
+	+getDimensions(): Rectangle2D.Double
+}
+@enduml
