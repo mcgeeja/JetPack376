@@ -358,7 +358,6 @@ public class MyComponent extends JComponent {
 
 			}
 		}
-
 	}
 
 	public void updatePickUpTimer() {
@@ -367,178 +366,146 @@ public class MyComponent extends JComponent {
 
 	public void Run() {
 
-		KeyListener keylisten = new KeyListener() {
-
-			@Override
-			public void keyPressed(KeyEvent e) {
-				if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
-					faceRight = true;
-					faceLeft = false;
-					player.right = true;
-
-					repaint();
-				}
-				if (e.getKeyCode() == KeyEvent.VK_LEFT) {
-					faceRight = false;
-					faceLeft = true;
-					player.left = true;
-
-					repaint();
-				}
-				if(e.getKeyCode() == KeyEvent.VK_SPACE) {
-	            	if(faceRight==true) {
-	            	player.shoot();
-	            		}
-	    
-	            	if(faceLeft==true) {
-	                	player.shootleft();
-	                		}
-	            	}
-				
-				
-				if(e.getKeyCode() == KeyEvent.VK_R) {
-					player.reload();
-            
-            	}
-				if(e.getKeyCode() == KeyEvent.VK_X) {
-	            	dropItem = true;
-	            }
-				if (e.getKeyCode() == KeyEvent.VK_UP) {
-
-					player.spacePressed = true;
-					player.up = true;
-					repaint();
-				} else {
-					player.spacePressed = false;
-
-					repaint();
-				}
-				if (e.getKeyCode() == KeyEvent.VK_DOWN) {
-
-					player.spacePressed = false;
-					player.down = true;
-					repaint();
-				}
-				if (e.getKeyCode() == KeyEvent.VK_U ) {
-					if (levels.on == 1) {
-						levels = new LevelReader(2);
-						points = 0;
-						player.lives = 3;
-						player.reserveAmmo = 75;
-						player.bulletCount = 25;
-						levels.on = 2;
-						buildRocketNum = 0;
-						PieceCount = 3;
-						Random rand = new Random();
-						num = rand.nextInt(20);
-						ammo = new AmmoCrate(levels.platforms.get(num).x,levels.platforms.get(num).y -30);
-						buildingRocket.y = levels.platforms.get(levels.platforms.size()-1).y -120;
-					}
-					
-
-					repaint();
-				}
-				if (e.getKeyCode() == KeyEvent.VK_2) {
-					if(endGame == true) {
-						levels = new LevelReader(2);
-						points = 0;
-						player.lives = 3;
-						player.reserveAmmo = 75;
-						player.bulletCount = 25;
-						levels.on = 2;
-						endGame = false;
-						buildRocketNum = 0;
-						PieceCount = 3;
-						Random rand = new Random();
-						num = rand.nextInt(20);
-						ammo = new AmmoCrate(levels.platforms.get(num).x,levels.platforms.get(num).y -30);
-						buildingRocket.y = levels.platforms.get(levels.platforms.size()-1).y -120;
-					}
-
-					repaint();
-				}
-				if (e.getKeyCode() == KeyEvent.VK_1) {
-					if(endGame == true) {
-						levels = new LevelReader(1);
-						points = 0;
-						player.lives = 3;
-						player.reserveAmmo = 75;
-						player.bulletCount = 25;
-						levels.on = 1;
-						endGame = false;
-						buildRocketNum = 0;
-						PieceCount = 3;
-						Random rand = new Random();
-						num = rand.nextInt(20);
-						ammo = new AmmoCrate(levels.platforms.get(num).x,levels.platforms.get(num).y -30);
-						buildingRocket.y = levels.platforms.get(levels.platforms.size()-1).y -120;
-					}
-
-					repaint();
-				}
-				if (e.getKeyCode() == KeyEvent.VK_D ) {
-					if (levels.on == 2) {
-						
-						levels = new LevelReader(1);
-						points = 0;
-						player.lives = 3;
-						player.reserveAmmo = 75;
-						player.bulletCount = 25;
-						levels.on = 1;
-						buildRocketNum = 0;
-						PieceCount = 3;
-						Random rand = new Random();
-						num = rand.nextInt(20);
-						ammo = new AmmoCrate(levels.platforms.get(num).x,levels.platforms.get(num).y -30);
-						buildingRocket.y = levels.platforms.get(levels.platforms.size()-1).y -120;
-						repaint();
-					}
-				}
-				
-			}
-			@Override
-			public void keyReleased(KeyEvent e) {
-				// TODO Auto-generated method stub
-				if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
-            		player.right = false;
-            	}
-			if (e.getKeyCode() == KeyEvent.VK_LEFT) {
-            	player.left = false;
-            }
-            if(e.getKeyCode() == KeyEvent.VK_UP) {
-            	player.up = false;
-            }
-            if(e.getKeyCode() == KeyEvent.VK_DOWN) {
-            	player.down = false;
-            }
-            if(e.getKeyCode() == KeyEvent.VK_X) {
-            	dropItem = false;
-            } 
-				player.left = false;
-			
-			if (e.getKeyCode() == KeyEvent.VK_UP) {
-				player.up = false;
-			}
-			
-			if (e.getKeyCode() == KeyEvent.VK_DOWN) {
-				player.down = false;
-			}
-			}
-			@Override
-			public void keyTyped(KeyEvent e) {
-				
-			}
-		};
-		
-			
-	
+		KeyListener keylisten = new GameRunningKeyListener(this);
        
         this.addKeyListener(keylisten);
         this.setFocusable(true);
 		}
 	
-    
+	public void moveRightKeyPressResponse() {
+		faceRight = true;
+		faceLeft = false;
+		player.right = true;
 
+		repaint();
+	}
+	public void moveLeftKeyPressResponse() {
+		faceRight = false;
+		faceLeft = true;
+		player.left = true;
+		repaint();
+	}
+    public void moveUpKeyPressResponse() {
+    	player.spacePressed = true;
+		player.up = true;
+		repaint();
+    }
+	public void moveDownKeyPressResponse() {
+		player.spacePressed = false;
+		player.down = true;
+		repaint();
+	}
+    
+    public void shootKeyPressResponse() {
+    	if(faceRight) {
+    		player.shoot();
+		}
+
+    	if(faceLeft) {
+        	player.shootleft();
+		}
+    }
+    public void reloadKeyPressResponse() {
+    	player.reload();
+    }
+    public void pickupKeyPressResponse() {
+    	dropItem = true;
+    }
+    
+    public void changeToNextLevelKeyPressResponse() {
+    	if (levels.on == 1) {
+			levels = new LevelReader(2);
+			points = 0;
+			player.lives = 3;
+			player.reserveAmmo = 75;
+			player.bulletCount = 25;
+			levels.on = 2;
+			buildRocketNum = 0;
+			PieceCount = 3;
+			Random rand = new Random();
+			num = rand.nextInt(20);
+			ammo = new AmmoCrate(levels.platforms.get(num).x,levels.platforms.get(num).y -30);
+			buildingRocket.y = levels.platforms.get(levels.platforms.size()-1).y -120;
+		}
+		repaint();
+    }
+    public void changeToPreviousLevelKeyPressResponse() {
+    	if (levels.on == 2) {
+			
+			levels = new LevelReader(1);
+			points = 0;
+			player.lives = 3;
+			player.reserveAmmo = 75;
+			player.bulletCount = 25;
+			levels.on = 1;
+			buildRocketNum = 0;
+			PieceCount = 3;
+			Random rand = new Random();
+			num = rand.nextInt(20);
+			ammo = new AmmoCrate(levels.platforms.get(num).x,levels.platforms.get(num).y -30);
+			buildingRocket.y = levels.platforms.get(levels.platforms.size()-1).y -120;
+			repaint();
+		}
+    }
+    
+    public void selectLevelOneKeyPressResponse() {
+		if(endGame == true) {
+			levels = new LevelReader(1);
+			points = 0;
+			player.lives = 3;
+			player.reserveAmmo = 75;
+			player.bulletCount = 25;
+			levels.on = 1;
+			endGame = false;
+			buildRocketNum = 0;
+			PieceCount = 3;
+			Random rand = new Random();
+			num = rand.nextInt(20);
+			ammo = new AmmoCrate(levels.platforms.get(num).x,levels.platforms.get(num).y -30);
+			buildingRocket.y = levels.platforms.get(levels.platforms.size()-1).y -120;
+		}
+
+		repaint();
+    }
+    public void selectLevelTwoKeyPressResponse() {
+    	if(endGame == true) {
+			levels = new LevelReader(2);
+			points = 0;
+			player.lives = 3;
+			player.reserveAmmo = 75;
+			player.bulletCount = 25;
+			levels.on = 2;
+			endGame = false;
+			buildRocketNum = 0;
+			PieceCount = 3;
+			Random rand = new Random();
+			num = rand.nextInt(20);
+			ammo = new AmmoCrate(levels.platforms.get(num).x,levels.platforms.get(num).y -30);
+			buildingRocket.y = levels.platforms.get(levels.platforms.size()-1).y -120;
+		}
+		repaint();
+    }
+    
+    
+    public void moveRightKeyReleaseResponse() {
+    	player.right = false;
+    }
+    public void moveLeftKeyReleaseResponse() {
+    	player.left = false;
+    }
+    public void moveUpKeyReleaseResponse() {
+    	player.up = false;
+		player.spacePressed = false;
+		repaint();
+    }
+    public void moveDownKeyReleaseResponse() {
+    	player.down = false;
+    }
+    
+    public void pickupKeyReleaseResponse() {
+    	dropItem = false;
+    }
+    
 	public void updateState() throws FileNotFoundException {
 		updateAlienReload();
 		updateleftsideBullets();
