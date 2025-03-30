@@ -12,14 +12,12 @@ import java.util.Random;
 
 import javax.imageio.ImageIO;
 
-public class Alien {
+public class Alien extends GameObject{
 
-	protected int x;
-	protected int y;
 	private int type;
 	private int alienreload;
-	private int width = 25;
-	private int height = 25;
+	private static int width = 25;
+	private static int height = 25;
 	protected String direction;
 	private int num;
 	protected int directNum;
@@ -29,6 +27,7 @@ public class Alien {
 	protected Image Alien2;
 
 	public Alien(int x, int y, int type, String direction) {
+		super(x, y, width, height);
 		this.x = x;
 		this.y = y;
 		this.type = type;
@@ -60,6 +59,14 @@ public class Alien {
 			}
 			g.drawImage(Alien2, x, y, width, height, null);
 		}
+	}
+	public boolean shotPlayer(Player player) {
+		for(Bullets b : this.rightbulletlist) {
+			if(player.intersects(b)) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	public void contactWith(ArrayList<Platform> plats) {
@@ -114,9 +121,9 @@ public class Alien {
 		return false;
 	}
 
-	public Rectangle2D.Double getDimensions() {
-		return new Rectangle2D.Double(this.x, this.y, this.width, this.height);
-	}
+//	public Rectangle2D.Double getDimensions() {
+//		return new Rectangle2D.Double(this.x, this.y, this.width, this.height);
+//	}
 
 	public void move(ArrayList<Platform> plats) {
 		this.platforms = plats;

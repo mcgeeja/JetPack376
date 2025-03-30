@@ -40,8 +40,10 @@ public class MyComponent extends JComponent {
 	protected int fuelCount = 0;
 	protected AmmoCrate ammo;
 	private boolean hasTakenOff=false;
-	private boolean endGame = false;
+	protected boolean endGame = false;
 	private boolean levelChange = false;
+	
+//	protected boolean gameOver = false;
 //	protected int xR;
 
 	public MyComponent() {
@@ -85,7 +87,7 @@ public class MyComponent extends JComponent {
 		
 		this.g.setColor(Color.BLACK);
     	this.g.fillRect(0, 0, 1920, 1080);
-		this.rocketHolder.draw(g2d);
+		this.rocketHolder.drawOn(g2d);
 		this.ammo.drawOn(g2d);
     	this.buildingRocket.build(buildRocketNum, g2d);
         levels.drawFile(this.g);
@@ -183,61 +185,100 @@ public class MyComponent extends JComponent {
 			levels.rocketPieces.get(i).pickedUp(this.player);
 		}
 		}
-		if(this.ammo.getDimensions().intersects(this.player.getDimensions())) {
+//		if(this.ammo.getDimensions().intersects(this.player.getDimensions())) {
+//			ammo.pickedUpAmmo(player);
+//		}
+		if(this.ammo.intersects(this.player)) {
 			ammo.pickedUpAmmo(player);
 		}
 	}
 
+//	public void playerHit() {
+//		for(int i = 0; i < aliensType2.size(); i++) {
+//			if (this.player.getDimensions().intersects(aliensType2.get(i).getDimensions())) {
+//				player.isHit();
+//
+//			}
+//		}
+//		for (int i = 0; i < aliensType1.size(); i++) {
+//			if (this.player.getDimensions().intersects(aliensType1.get(i).getDimensions())) {
+//				player.isHit();
+//
+//			}
+//			
+//			for (int j = 0; j < aliensType1.get(i).rightbulletlist.size(); j++) {
+//				if (aliensType1.get(i).rightbulletlist.get(j).getDimensions().intersects(this.player.getDimensions())) {
+//					player.isHit();
+//				}
+//			}
+//			
+//			
+//		}
+//		
+//	}
 	public void playerHit() {
-		for(int i = 0; i < aliensType2.size(); i++) {
-			if (this.player.getDimensions().intersects(aliensType2.get(i).getDimensions())) {
-				player.isHit();
-
+		for(Alien a : this.aliensType1) {
+			if(this.player.intersects(a) || a.shotPlayer(this.player)) {
+				this.player.isHit();
 			}
 		}
-		for (int i = 0; i < aliensType1.size(); i++) {
-			if (this.player.getDimensions().intersects(aliensType1.get(i).getDimensions())) {
-				player.isHit();
-
+		for(Alien a : this.aliensType2) {
+			if(this.player.intersects(a)) {
+				this.player.isHit();
 			}
-			
-			for (int j = 0; j < aliensType1.get(i).rightbulletlist.size(); j++) {
-				if (aliensType1.get(i).rightbulletlist.get(j).getDimensions().intersects(this.player.getDimensions())) {
-					player.isHit();
-				}
-			}
-			
-			
 		}
 		
 	}
 
+//    public void updateFuelCount() {
+//    	if(PieceCount == 0) {
+//    		for(int i = 0 ; i < levels.fuels.size(); i++) {
+//    			if(this.levels.fuels.get(i).getDimensions().intersects(rocketHolder.getDimensions())){
+//    				this.levels.fuels.remove(i);
+//    				this.fuelCount += 40;
+//    				this.points += 300;
+//    			}
+//    		}	
+//    	}
+//    }
     public void updateFuelCount() {
     	if(PieceCount == 0) {
     		for(int i = 0 ; i < levels.fuels.size(); i++) {
-    			if(this.levels.fuels.get(i).getDimensions().intersects(rocketHolder.getDimensions())){
+    			if(this.levels.fuels.get(i).intersects(rocketHolder)){
     				this.levels.fuels.remove(i);
     				this.fuelCount += 40;
     				this.points += 300;
-    				
     			}
     		}	
     	}
     }
     
+//    public void onRocketHolder() {
+//    	for(int i = 0 ; i < this.levels.rocketPieces.size(); i++) {
+//    		if(this.rocketHolder.getDimensions().intersects(levels.rocketPieces.get(i).getDimensions())){
+//    		levels.rocketPieces.get(i).x = this.rocketHolder.x-10;	
+//    		if(levels.rocketPieces.get(i).type == PieceCount) {
+//    			this.levels.rocketPieces.remove(i);
+//    			this.buildRocketNum += 1;
+//    			this.PieceCount -= 1;
+//    			this.points += 300;
+//    		}
+//    		}
+//
+//    		}
+//    }
     public void onRocketHolder() {
     	for(int i = 0 ; i < this.levels.rocketPieces.size(); i++) {
-    		if(this.rocketHolder.getDimensions().intersects(levels.rocketPieces.get(i).getDimensions())){
+    		if(this.rocketHolder.intersects(levels.rocketPieces.get(i))){
     		levels.rocketPieces.get(i).x = this.rocketHolder.x-10;	
-    		if(levels.rocketPieces.get(i).type == PieceCount) {
-    			this.levels.rocketPieces.remove(i);
-    			this.buildRocketNum += 1;
-    			this.PieceCount -= 1;
-    			this.points += 300;
+    			if(levels.rocketPieces.get(i).type == PieceCount) {
+    				this.levels.rocketPieces.remove(i);
+    				this.buildRocketNum += 1;
+    				this.PieceCount -= 1;
+    				this.points += 300;
+    			}
     		}
-    		}
-
-    		}
+    	}
     }
     public void takeOff(){
     	if(this.PieceCount == 0 && this.fuelCount == 120) {

@@ -7,13 +7,13 @@ import java.awt.color.*;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 
-public class Rocket {
-	private int height = 120;
-	private int width = 60;
-	private int fuelCount = 0;
-	protected int x;
+public class Rocket extends GameObject{
+	private static int height = 120;
+	private static int width = 60;
+//	private int fuelCount = 0;
+//	protected int x;
 	private static final int GRAVITY = 5;
-	protected int y;
+//	protected int y;
 	private int partHeight = 40;
 	private Graphics2D g;
 	protected int type;
@@ -22,20 +22,22 @@ public class Rocket {
 	private boolean rocketOffScreen=false;
 
 	public Rocket(int x, int y, int type) {
-		this.fuelCount = 0;
-		this.x = x;
-		this.y = y;
-		this.g = g;
+		super(x, y, width, height);
+//		this.fuelCount = 0;
+//		this.x = x;
+//		this.y = y;
+//		this.g = g;
 		this.type = type;
 		this.isRocketPickedUp = false;
 
 	}
 	public Rocket(int x, int y) {
-		this.fuelCount = 0;
-		this.x = x;
-		this.y = y;
-		this.g = g;
-		this.type = type;
+		super(x, y, width, height);
+//		this.fuelCount = 0;
+//		this.x = x;
+//		this.y = y;
+//		this.g = g;
+//		this.type = type;
 		this.isRocketPickedUp = false;
 
 	}
@@ -85,7 +87,7 @@ public class Rocket {
 	
 	}
 
-	public void draw(Graphics2D g) {
+	public void drawOn(Graphics2D g) {
 		if (this.type == 1) {
 			g.setColor(Color.WHITE);
 			g.fillRect(x, y, width, height / 3);
@@ -122,6 +124,7 @@ public class Rocket {
 		System.out.println("Y = " + this.y);
 	}
 
+	@Override
 	public Rectangle2D.Double getDimensions() {
 		if (this.type == 1) {
 			return new Rectangle2D.Double(x, y, width, height / 3);
@@ -141,8 +144,14 @@ public class Rocket {
 			this.y = player.y;
 			this.isRocketPickedUp = true;
 		}
-
 	}
+//	public void pickedUp(Player player) {
+//		if (this.intersects(player) && player.getPickUpCooldown() == 0) {
+//			this.x = player.x;
+//			this.y = player.y;
+//			this.isRocketPickedUp = true;
+//		}
+//	}
 
 
 	public void gravity(ArrayList<Platform> plats) {

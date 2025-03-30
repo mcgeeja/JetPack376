@@ -14,13 +14,13 @@ import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
 
-public class Player {
-	private int height = 60;
-	private int width = 30;
+public class Player extends GameObject{
+	private static int HeroHeight = 60;
+	private static int HeroWidth = 30;
 	private static final int GRAVITY = 5;
 	protected int lives;
-	protected int x;
-	protected int y;
+//	protected int x;
+//	protected int y;
 	protected int speed;
 	protected boolean spacePressed;
 	protected boolean hasItem;
@@ -40,9 +40,10 @@ public class Player {
 	private int pickUpCooldown;
 
 	public Player(int x, int y, int speed) {
+		super(x, y, HeroWidth, HeroHeight);
 		this.lives = 3;
-		this.x = x;
-		this.y = y;
+//		this.x = x;
+//		this.y = y;
 		this.speed = speed;
 		this.spacePressed = false;
 		this.hasItem = false;
@@ -90,9 +91,9 @@ public class Player {
 		}
 	}
 
-	public Rectangle2D.Double getDimensions() {
-		return new Rectangle2D.Double(this.x, this.y, this.width, this.height);
-	}
+//	public Rectangle2D.Double getDimensions() {
+//		return new Rectangle2D.Double(this.x, this.y, this.width, this.height);
+//	}
 
 	public void move() {
 		if (this.right == true) {

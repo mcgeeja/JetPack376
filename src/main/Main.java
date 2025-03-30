@@ -69,7 +69,7 @@ public class Main {
 
 				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
 					frame.setVisible(false);
-
+					System.out.println("Starting game");
 					component.Run();
 					GameAdvanceListener advancelistener = new GameAdvanceListener(component);
 					Timer timer = new Timer(60, advancelistener);
@@ -77,10 +77,12 @@ public class Main {
 					frame2.setVisible(true);
 					frame2.setSize(frameWidth, frameHeight);
 					frame2.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+					System.out.println("checking for game over");
 					if (e.getKeyCode() == KeyEvent.VK_BACK_SPACE) {
 						frame.setVisible(true);
 						frame2.setVisible(false);
 					}
+					
 				}
 
 			}
