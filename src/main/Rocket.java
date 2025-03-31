@@ -124,18 +124,18 @@ public class Rocket extends GameObject{
 		System.out.println("Y = " + this.y);
 	}
 
-	private Rectangle2D.Double getDimensions() {
-		if (this.type == 1) {
-			return new Rectangle2D.Double(x, y, width, height / 3);
-		}
-		if (this.type == 2) {
-			return new Rectangle2D.Double(x, y, width, height / 3);
-		}
-		if (this.type == 3) {
-			return new Rectangle2D.Double(x, y, width, height / 3);
-		}
-		return null;
-	}
+//	private Rectangle2D.Double getDimensions() {
+//		if (this.type == 1) {
+//			return new Rectangle2D.Double(x, y, width, height / 3);
+//		}
+//		if (this.type == 2) {
+//			return new Rectangle2D.Double(x, y, width, height / 3);
+//		}
+//		if (this.type == 3) {
+//			return new Rectangle2D.Double(x, y, width, height / 3);
+//		}
+//		return null;
+//	}
 
 //	public void pickedUp(Player player) {
 //		if (this.getDimensions().intersects(player.getDimensions()) && player.getPickUpCooldown() == 0) {
