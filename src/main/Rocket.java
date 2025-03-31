@@ -124,8 +124,7 @@ public class Rocket extends GameObject{
 		System.out.println("Y = " + this.y);
 	}
 
-	@Override
-	public Rectangle2D.Double getDimensions() {
+	private Rectangle2D.Double getDimensions() {
 		if (this.type == 1) {
 			return new Rectangle2D.Double(x, y, width, height / 3);
 		}
@@ -138,34 +137,42 @@ public class Rocket extends GameObject{
 		return null;
 	}
 
-	public void pickedUp(Player player) {
-		if (this.getDimensions().intersects(player.getDimensions()) && player.getPickUpCooldown() == 0) {
-			this.x = player.x;
-			this.y = player.y;
-			this.isRocketPickedUp = true;
-		}
-	}
 //	public void pickedUp(Player player) {
-//		if (this.intersects(player) && player.getPickUpCooldown() == 0) {
+//		if (this.getDimensions().intersects(player.getDimensions()) && player.getPickUpCooldown() == 0) {
 //			this.x = player.x;
 //			this.y = player.y;
 //			this.isRocketPickedUp = true;
 //		}
 //	}
-
-
-	public void gravity(ArrayList<Platform> plats) {
-		if(notStacked = true) {
-		this.y = this.y + GRAVITY;
-		for (int i = 0; i < plats.size(); i++) {
-			if (this.getDimensions().intersects(plats.get(i).getDimensions())) {
-				this.y = plats.get(i).y - this.height / 3;
-			}
-
-		}
+	public void pickedUp(Player player) {
+		if (this.intersects(player) && player.getPickUpCooldown() == 0) {
+			this.x = player.x;
+			this.y = player.y;
+			this.isRocketPickedUp = true;
 		}
 	}
 
+
+//	public void gravity(ArrayList<Platform> plats) {
+//		if(notStacked = true) {
+//			this.y = this.y + GRAVITY;
+//			for (int i = 0; i < plats.size(); i++) {
+//				if (this.getDimensions().intersects(plats.get(i).getDimensions())) {
+//					this.y = plats.get(i).y - this.height / 3;
+//				}
+//			}
+//		}
+//	}
+	public void gravity(ArrayList<Platform> plats) {
+		if(notStacked = true) {
+			this.y = this.y + GRAVITY;
+			for (int i = 0; i < plats.size(); i++) {
+				if (this.intersects(plats.get(i))) {
+					this.y = plats.get(i).y - this.height / 3;
+				}
+			}
+		}
+	}
 //	public int getRocketType() {
 //		return this.type;
 //	}

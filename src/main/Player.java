@@ -124,7 +124,7 @@ public class Player extends GameObject{
 		this.y = this.y + GRAVITY;
 
 		for (int i = 0; i < plats.size(); i++) {
-			if (this.getDimensions().intersects(plats.get(i).getDimensions())) {
+			if (this.intersects(plats.get(i))) {
 				this.y = plats.get(i).y - this.height;
 			}
 		}

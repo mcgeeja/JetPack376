@@ -26,7 +26,7 @@ public class Platform extends GameObject{
 
 	public void drawOn(Graphics2D g) {
 		g.setColor(Color.GREEN);
-		g.fill(getDimensions());
+		g.fill(new Rectangle2D.Double(x, y, width, height));
 
 	}
 

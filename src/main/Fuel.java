@@ -47,7 +47,7 @@ public class Fuel extends GameObject{
 	public void gravity(ArrayList<Platform> plats) {
 		this.y = this.y + GRAVITY;
 		for (int i = 0; i < plats.size(); i++) {
-			if (this.getDimensions().intersects(plats.get(i).getDimensions())) {
+			if (this.intersects(plats.get(i))) {
 				this.y = plats.get(i).y - this.size;
 			}
 		}

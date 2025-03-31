@@ -14,7 +14,7 @@ public abstract class GameObject {
 	public boolean intersects(GameObject ob) {
 		return ob.getDimensions().intersects(this.getDimensions());
 	}
-	public Rectangle2D.Double getDimensions() {
+	private Rectangle2D.Double getDimensions() {
 		return new Rectangle2D.Double(x, y, width, height);
 	}
 	public abstract void drawOn(Graphics2D g);

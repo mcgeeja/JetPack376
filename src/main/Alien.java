@@ -71,7 +71,7 @@ public class Alien extends GameObject{
 
 	public void contactWith(ArrayList<Platform> plats) {
 		for (int i = 0; i < plats.size(); i++) {
-			if (this.getDimensions().intersects(plats.get(i).getDimensions())) {
+			if (this.intersects(plats.get(i))) {
 
 				if (this.directNum == 1) {
 					directNum = 2;
@@ -100,10 +100,30 @@ public class Alien extends GameObject{
 		}
 	}
 
+//	public boolean bulletHit(ArrayList<Bullets> bullets) {
+//		Random rand = new Random();
+//		for (int i = 0; i < bullets.size(); i++) {
+//			if (this.getDimensions().intersects(bullets.get(i).getDimensions())) {
+//				if (direction == "+") {
+//					this.x = 0;
+//					this.y = rand.nextInt(600);
+//					this.direction = "-";
+//					return true;
+//				} else {
+//					this.x = 1920;
+//					this.y = rand.nextInt(600);
+//					this.direction = "+";
+//					return true;
+//				}
+//
+//			}
+//		}
+//		return false;
+//	}
 	public boolean bulletHit(ArrayList<Bullets> bullets) {
 		Random rand = new Random();
 		for (int i = 0; i < bullets.size(); i++) {
-			if (this.getDimensions().intersects(bullets.get(i).getDimensions())) {
+			if (this.intersects(bullets.get(i))) {
 				if (direction == "+") {
 					this.x = 0;
 					this.y = rand.nextInt(600);
