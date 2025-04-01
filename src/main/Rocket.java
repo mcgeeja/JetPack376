@@ -86,6 +86,7 @@ public class Rocket {
 	}
 
 	public void draw(Graphics2D g) {
+		//TODO what if level file has more than 3 rockets
 		if (this.type == 1) {
 			g.setColor(Color.WHITE);
 			g.fillRect(x, y, width, height / 3);
