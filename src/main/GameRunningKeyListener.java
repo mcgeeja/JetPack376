@@ -5,21 +5,17 @@ import java.awt.event.KeyListener;
 import java.util.Random;
 
 public class GameRunningKeyListener implements KeyListener {
-		private int moveRightKey =  KeyEvent.VK_RIGHT;
-		private int moveLeftKey =  KeyEvent.VK_LEFT;
-		private int downKey = KeyEvent.VK_DOWN;//I don't know if this is a duck or a move downwards key so we'll see and rename later
-		private int moveUpKey = KeyEvent.VK_UP;
+		private static int moveRightKey =  KeyEvent.VK_RIGHT;
+		private static int moveLeftKey =  KeyEvent.VK_LEFT;
+		private static int downKey = KeyEvent.VK_DOWN;//I don't know if this is a duck or a move downwards key so we'll see and rename later
+		private static int moveUpKey = KeyEvent.VK_UP;
 		
-		private int shootKey = KeyEvent.VK_SPACE;
-		private int reloadKey = KeyEvent.VK_R;
-		private int pickupKey = KeyEvent.VK_X;
+		private static int shootKey = KeyEvent.VK_SPACE;
+		private static int reloadKey = KeyEvent.VK_R;
+		private static int pickupKey = KeyEvent.VK_X;
 		
-		private int changeToNextLevelKey = KeyEvent.VK_U;
-		private int changeToPreviousLevelKey = KeyEvent.VK_D;
-		
-		private int selectLevelOneKey = KeyEvent.VK_1;
-		private int selectLevelTwoKey = KeyEvent.VK_2;
-		
+		private static int changeToNextLevelKey = KeyEvent.VK_U;
+		private static int changeToPreviousLevelKey = KeyEvent.VK_D;
 		
 		private MyComponent component;
 	
@@ -61,14 +57,6 @@ public class GameRunningKeyListener implements KeyListener {
 				component.changeToNextLevelKeyPressResponse();
 			}
 			
-			if (e.getKeyCode() == selectLevelTwoKey) {
-				component.selectLevelTwoKeyPressResponse();
-			}
-			
-			if (e.getKeyCode() == selectLevelOneKey) {
-				component.selectLevelOneKeyPressResponse();
-			}
-			
 			if (e.getKeyCode() == changeToPreviousLevelKey ) {
 				component.changeToPreviousLevelKeyPressResponse();
 			}
@@ -95,7 +83,6 @@ public class GameRunningKeyListener implements KeyListener {
 	        if(e.getKeyCode() == pickupKey) {
 	        	component.pickupKeyReleaseResponse();
 	        }
-	        
 		}
 		
 		public void keyTyped(KeyEvent e) {

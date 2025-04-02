@@ -30,7 +30,6 @@ public class MyComponent extends JComponent {
 
 	private static boolean faceLeft;
 	private static boolean faceRight;
-	private int lives;
 	protected int points;
 	protected BuildingPiece rocketHolder;
 	protected static boolean dropItem = false;
@@ -39,10 +38,7 @@ public class MyComponent extends JComponent {
 	protected int PieceCount = 3;
 	protected int fuelCount = 0;
 	protected AmmoCrate ammo;
-	private boolean hasTakenOff=false;
 	private boolean endGame = false;
-	private boolean levelChange = false;
-//	protected int xR;
 
 	public MyComponent() {
 		this.direction[0] = "-";
@@ -70,8 +66,6 @@ public class MyComponent extends JComponent {
 		Random rand = new Random();
 		num = rand.nextInt(20);
 		this.ammo = new AmmoCrate(levels.platforms.get(num).x,levels.platforms.get(num).y -30);
-
-
 
 	}
 
@@ -151,6 +145,9 @@ public class MyComponent extends JComponent {
 			this.g.setFont(font);
 			this.g.drawString("Press '1' for level 1 or '2' for level 2 " , (1920 / 2) - 420, (1080 / 2) + 300);
 			endGame = true;
+			
+			KeyListener gameOverScreenListener = new GameOverKeyListener(this);
+			this.addKeyListener(gameOverScreenListener);
 		}
 		if(buildingRocket.y <= 0) {
 			Time time = new Time(10);
@@ -170,7 +167,8 @@ public class MyComponent extends JComponent {
 			this.g.drawString("Press the X to exit" , (1920 / 2) - 230, (1080 / 2) + 300);
 			endGame = true;
 			
-
+			KeyListener gameOverScreenListener = new GameOverKeyListener(this);
+			this.addKeyListener(gameOverScreenListener);
     	}
 	}
 
@@ -485,7 +483,7 @@ public class MyComponent extends JComponent {
 		}
 		repaint();
     }
-    
+
     
     public void moveRightKeyReleaseResponse() {
     	player.right = false;
