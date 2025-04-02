@@ -7,25 +7,14 @@ import java.util.Map;
 import java.util.Random;
 
 public class GameRunningKeyListener implements KeyListener {
-//		private static int moveUpKey = KeyEvent.VK_UP;
-//		private static int moveLeftKey =  KeyEvent.VK_LEFT;
-//		private static int downKey = KeyEvent.VK_DOWN;//I don't know if this is a duck or a move downwards key so we'll see and rename later
-//		private static int moveRightKey =  KeyEvent.VK_RIGHT;
-		
-		
-//		private static int shootKey = KeyEvent.VK_SPACE;
-//		private static int reloadKey = KeyEvent.VK_R;
-//		private static int pickupKey = KeyEvent.VK_X;
-		
-//		private static int changeToNextLevelKey = KeyEvent.VK_U;
-//		private static int changeToPreviousLevelKey = KeyEvent.VK_D;
-		
 		
 		static Map<String, Integer> controlsMap = new HashMap<>();
 		
 		
 		private MyComponent component;
 	
+		//this is called in the main method I think there is probably a better way to set this up
+		//also possible future feature is making this generate based on a controls config file
 		public static void initializeDefaultControlsMap() {
 			controlsMap.put("Move Up", KeyEvent.VK_UP);
 			controlsMap.put("Move Left", KeyEvent.VK_LEFT);
@@ -39,6 +28,7 @@ public class GameRunningKeyListener implements KeyListener {
 			controlsMap.put("Next Level", KeyEvent.VK_U);
 			controlsMap.put("Previous Level", KeyEvent.VK_D);
 		}
+		
 	
 		public GameRunningKeyListener(MyComponent myComponent) {
 			this.component = myComponent;
