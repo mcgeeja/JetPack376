@@ -4,32 +4,24 @@ import java.awt.Button;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.io.FileNotFoundException;
-import java.util.ArrayList;
-import java.util.Random;
 
 import javax.swing.JComponent;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import java.awt.Graphics2D;
-import java.awt.event.KeyListener;
 
 public class TitleScreen extends JComponent {
 	protected Graphics2D g;
 	protected String title = "JETPACK";
-//	protected static boolean onTitle;
+	protected static boolean onTitle;
 	protected Button button;
 	protected int lastScore;
 
 	public TitleScreen(int score) {
-//		this.onTitle = true;
+		this.onTitle = true;
 		this.lastScore = score;
 	}
 
 	@Override
 	public void paintComponent(Graphics g) {
+		Graphics2D g2d = (Graphics2D) g;
 		this.g = (Graphics2D) g;
 		Font font = new Font("arial", Font.BOLD, 100);
 		this.g.setFont(font);

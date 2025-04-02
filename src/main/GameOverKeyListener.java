@@ -32,7 +32,7 @@ public class GameOverKeyListener implements KeyListener {
 		}
 		
 		if (e.getKeyCode() == exitKey) {
-//			component;
+//			component
 		}
 	}
 

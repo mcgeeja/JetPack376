@@ -28,17 +28,18 @@ public class MyComponent extends JComponent {
 	protected ArrayList<Alien> aliensType2 = new ArrayList<Alien>();
 	protected Graphics2D g;
 
-	private static boolean faceLeft;
-	private static boolean faceRight;
+	private int lives;
 	protected int points;
 	protected BuildingPiece rocketHolder;
-	protected static boolean dropItem = false;
 	protected Rocket buildingRocket;
 	protected int buildRocketNum = 0;
 	protected int PieceCount = 3;
 	protected int fuelCount = 0;
 	protected AmmoCrate ammo;
+	private boolean hasTakenOff=false;
 	private boolean endGame = false;
+	private boolean levelChange = false;
+//	protected int xR;
 
 	public MyComponent() {
 		this.direction[0] = "-";
@@ -66,6 +67,7 @@ public class MyComponent extends JComponent {
 		Random rand = new Random();
 		num = rand.nextInt(20);
 		this.ammo = new AmmoCrate(levels.platforms.get(num).x,levels.platforms.get(num).y -30);
+
 
 	}
 
@@ -128,58 +130,25 @@ public class MyComponent extends JComponent {
 
 	public void gameOver() {
 		if (this.player.lives <= 0) {
-			Time time = new Time(10);
-
-			this.g.setColor(Color.BLACK);
-			this.g.fillRect(0, 0, 1920, 1080);
-
-			Font font = new Font("arial", Font.BOLD, 100);
-			this.g.setFont(font);
-			this.g.setColor(Color.RED);
-			this.g.drawString("GAME OVER", 1920 / 2 - 300, 1080 / 2);
-
-			this.g.setColor(Color.WHITE);
-			this.g.drawString("Last score was: " + Integer.toString(this.points), (1920 / 2) - 475, (1080 / 2) + 200);
-			
-			font = new Font("arial", Font.BOLD, 50);
-			this.g.setFont(font);
-			this.g.drawString("Press '1' for level 1 or '2' for level 2 " , (1920 / 2) - 420, (1080 / 2) + 300);
+			GameOverScreen gameOverScreen = new GameOverScreen(this);
+			gameOverScreen.paintLoseGame();
 			endGame = true;
-			
-			KeyListener gameOverScreenListener = new GameOverKeyListener(this);
-			this.addKeyListener(gameOverScreenListener);
 		}
 		if(buildingRocket.y <= 0) {
-			Time time = new Time(10);
-
-			this.g.setColor(Color.BLACK);
-			this.g.fillRect(0, 0, 1920, 1080);
-
-			Font font = new Font("arial", Font.BOLD, 100);
-			this.g.setFont(font);
-			this.g.setColor(Color.GREEN);
-			this.g.drawString("SUCCESS", 1920 / 2 - 250, 1080 / 2);
-
-			this.g.setColor(Color.WHITE);
-			this.g.drawString("Last score was: " + Integer.toString(this.points), (1920 / 2) - 475, (1080 / 2) + 200);
-			font = new Font("arial", Font.BOLD, 50);
-			this.g.setFont(font);
-			this.g.drawString("Press the X to exit" , (1920 / 2) - 230, (1080 / 2) + 300);
+			GameOverScreen gameOverScreen = new GameOverScreen(this);
+			gameOverScreen.paintWinGame();
 			endGame = true;
-			
-			KeyListener gameOverScreenListener = new GameOverKeyListener(this);
-			this.addKeyListener(gameOverScreenListener);
-    	}
+		}
 	}
 
 	public void playerPickUp() {
-		if(dropItem != false) {
-		for (int i = 0; i < levels.fuels.size(); i++) {
-			levels.fuels.get(i).pickedUp(this.player);
-		}
-		for (int i = 0; i < levels.rocketPieces.size(); i++) {
-			levels.rocketPieces.get(i).pickedUp(this.player);
-		}
+		if(player.dropItem != false) {
+			for (int i = 0; i < levels.fuels.size(); i++) {
+				levels.fuels.get(i).pickedUp(this.player);
+			}
+			for (int i = 0; i < levels.rocketPieces.size(); i++) {
+				levels.rocketPieces.get(i).pickedUp(this.player);
+			}
 		}
 		if(this.ammo.getDimensions().intersects(this.player.getDimensions())) {
 			ammo.pickedUpAmmo(player);
@@ -368,49 +337,9 @@ public class MyComponent extends JComponent {
        
         this.addKeyListener(keylisten);
         this.setFocusable(true);
-		}
+	}
 	
-	public void moveRightKeyPressResponse() {
-		faceRight = true;
-		faceLeft = false;
-		player.right = true;
-
-		repaint();
-	}
-	public void moveLeftKeyPressResponse() {
-		faceRight = false;
-		faceLeft = true;
-		player.left = true;
-		repaint();
-	}
-    public void moveUpKeyPressResponse() {
-    	player.spacePressed = true;
-		player.up = true;
-		repaint();
-    }
-	public void moveDownKeyPressResponse() {
-		player.spacePressed = false;
-		player.down = true;
-		repaint();
-	}
-    
-    public void shootKeyPressResponse() {
-    	if(faceRight) {
-    		player.shoot();
-		}
-
-    	if(faceLeft) {
-        	player.shootleft();
-		}
-    }
-    public void reloadKeyPressResponse() {
-    	player.reload();
-    }
-    public void pickupKeyPressResponse() {
-    	dropItem = true;
-    }
-    
-    public void changeToNextLevelKeyPressResponse() {
+	public void changeToNextLevelKeyPressResponse() {
     	if (levels.on == 1) {
 			levels = new LevelReader(2);
 			points = 0;
@@ -462,8 +391,6 @@ public class MyComponent extends JComponent {
 			ammo = new AmmoCrate(levels.platforms.get(num).x,levels.platforms.get(num).y -30);
 			buildingRocket.y = levels.platforms.get(levels.platforms.size()-1).y -120;
 		}
-
-		repaint();
     }
     public void selectLevelTwoKeyPressResponse() {
     	if(endGame == true) {
@@ -481,30 +408,10 @@ public class MyComponent extends JComponent {
 			ammo = new AmmoCrate(levels.platforms.get(num).x,levels.platforms.get(num).y -30);
 			buildingRocket.y = levels.platforms.get(levels.platforms.size()-1).y -120;
 		}
-		repaint();
     }
 
     
-    public void moveRightKeyReleaseResponse() {
-    	player.right = false;
-    }
-    public void moveLeftKeyReleaseResponse() {
-    	player.left = false;
-    }
-    public void moveUpKeyReleaseResponse() {
-    	player.up = false;
-		player.spacePressed = false;
-		repaint();
-    }
-    public void moveDownKeyReleaseResponse() {
-    	player.down = false;
-    }
-    
-    public void pickupKeyReleaseResponse() {
-    	dropItem = false;
-    }
-    
-	public void updateState() throws FileNotFoundException {
+    public void updateState() throws FileNotFoundException {
 		updateAlienReload();
 		updateleftsideBullets();
 		updateBullets();
