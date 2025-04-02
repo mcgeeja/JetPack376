@@ -4,8 +4,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.FileNotFoundException;
 
-import javax.swing.JComponent;
-
 public class GameAdvanceListener implements ActionListener {
 
 	private MyComponent component;

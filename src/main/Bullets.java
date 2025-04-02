@@ -4,18 +4,19 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
 
-public class Bullets {
-	private double x;
-	private double y;
-	private double xVelocity;
+public class Bullets extends GameObject{
+//	private double x;
+//	private double y;
+	private int xVelocity;
 	private double size;
 	private Color bulletcolor;
 
 	//
 
 	public Bullets(int startx, int starty, Color bulletcolor, int size) {
-		this.x = startx;
-		this.y = starty;
+		super(startx, starty, size, size);
+//		this.x = startx;
+//		this.y = starty;
 		this.xVelocity = 25;
 		this.bulletcolor = bulletcolor;
 		this.size = size;
@@ -44,7 +45,7 @@ public class Bullets {
 		this.xVelocity = speedX;
 	}
 
-	public Rectangle2D.Double getDimensions() {
-		return new Rectangle2D.Double(this.x, this.y, this.size, this.size);
-	}
+//	public Rectangle2D.Double getDimensions() {
+//		return new Rectangle2D.Double(this.x, this.y, this.size, this.size);
+//	}
 }

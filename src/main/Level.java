@@ -100,7 +100,7 @@ public class Level {
             f.drawOn(g);
         }
         for (Rocket r : rocketPieces) {
-            r.draw(g);
+            r.drawOn(g);
         }
 
 

@@ -24,20 +24,19 @@ public class MyComponent extends JComponent {
 	protected ArrayList<Alien> aliensType2 = new ArrayList<Alien>();
 	protected Graphics2D g;
 
-	private static boolean faceLeft;
-	private static boolean faceRight;
 	private int lives;
 	protected int points;
 	protected BuildingPiece rocketHolder;
-	protected static boolean dropItem = false;
 	protected Rocket buildingRocket;
 	protected int buildRocketNum = 0;
 	protected int PieceCount = 3;
 	protected int fuelCount = 0;
 	protected AmmoCrate ammo;
 	private boolean hasTakenOff=false;
-	private boolean endGame = false;
+	protected boolean endGame = false;
 	private boolean levelChange = false;
+	
+//	protected boolean gameOver = false;
 //	protected int xR;
 
 	public MyComponent() {
@@ -68,7 +67,6 @@ public class MyComponent extends JComponent {
 		this.ammo = new AmmoCrate(levels.platforms.get(num).x,levels.platforms.get(num).y -30);
 
 
-
 	}
 
 	@Override
@@ -81,7 +79,7 @@ public class MyComponent extends JComponent {
 		
 		this.g.setColor(Color.BLACK);
     	this.g.fillRect(0, 0, 1920, 1080);
-		this.rocketHolder.draw(g2d);
+		this.rocketHolder.drawOn(g2d);
 		this.ammo.drawOn(g2d);
     	this.buildingRocket.build(buildRocketNum, g2d);
         levels.drawLevel(this.g);
@@ -130,110 +128,120 @@ public class MyComponent extends JComponent {
 
 	public void gameOver() {
 		if (this.player.lives <= 0) {
-			Time time = new Time(10);
-
-			this.g.setColor(Color.BLACK);
-			this.g.fillRect(0, 0, 1920, 1080);
-
-			Font font = new Font("arial", Font.BOLD, 100);
-			this.g.setFont(font);
-			this.g.setColor(Color.RED);
-			this.g.drawString("GAME OVER", 1920 / 2 - 300, 1080 / 2);
-
-			this.g.setColor(Color.WHITE);
-			this.g.drawString("Last score was: " + Integer.toString(this.points), (1920 / 2) - 475, (1080 / 2) + 200);
-			
-			font = new Font("arial", Font.BOLD, 50);
-			this.g.setFont(font);
-			this.g.drawString("Press '1' for level 1 or '2' for level 2 " , (1920 / 2) - 420, (1080 / 2) + 300);
+			GameOverScreen gameOverScreen = new GameOverScreen(this);
+			gameOverScreen.paintLoseGame();
 			endGame = true;
 		}
 		if(buildingRocket.y <= 0) {
-			Time time = new Time(10);
-
-			this.g.setColor(Color.BLACK);
-			this.g.fillRect(0, 0, 1920, 1080);
-
-			Font font = new Font("arial", Font.BOLD, 100);
-			this.g.setFont(font);
-			this.g.setColor(Color.GREEN);
-			this.g.drawString("SUCCESS", 1920 / 2 - 250, 1080 / 2);
-
-			this.g.setColor(Color.WHITE);
-			this.g.drawString("Last score was: " + Integer.toString(this.points), (1920 / 2) - 475, (1080 / 2) + 200);
-			font = new Font("arial", Font.BOLD, 50);
-			this.g.setFont(font);
-			this.g.drawString("Press the X to exit" , (1920 / 2) - 230, (1080 / 2) + 300);
+			GameOverScreen gameOverScreen = new GameOverScreen(this);
+			gameOverScreen.paintWinGame();
 			endGame = true;
-			
-
-    	}
+		}
 	}
 
 	public void playerPickUp() {
-		if(dropItem != false) {
-		for (int i = 0; i < levels.fuels.size(); i++) {
-			levels.fuels.get(i).pickedUp(this.player);
+		if(player.dropItem != false) {
+			for (int i = 0; i < levels.fuels.size(); i++) {
+				levels.fuels.get(i).pickedUp(this.player);
+			}
+			for (int i = 0; i < levels.rocketPieces.size(); i++) {
+				levels.rocketPieces.get(i).pickedUp(this.player);
+			}
 		}
-		for (int i = 0; i < levels.rocketPieces.size(); i++) {
-			levels.rocketPieces.get(i).pickedUp(this.player);
-		}
-		}
-		if(this.ammo.getDimensions().intersects(this.player.getDimensions())) {
+//		if(this.ammo.getDimensions().intersects(this.player.getDimensions())) {
+//			ammo.pickedUpAmmo(player);
+//		}
+		if(this.ammo.intersects(this.player)) {
 			ammo.pickedUpAmmo(player);
 		}
 	}
 
+//	public void playerHit() {
+//		for(int i = 0; i < aliensType2.size(); i++) {
+//			if (this.player.getDimensions().intersects(aliensType2.get(i).getDimensions())) {
+//				player.isHit();
+//
+//			}
+//		}
+//		for (int i = 0; i < aliensType1.size(); i++) {
+//			if (this.player.getDimensions().intersects(aliensType1.get(i).getDimensions())) {
+//				player.isHit();
+//
+//			}
+//			
+//			for (int j = 0; j < aliensType1.get(i).rightbulletlist.size(); j++) {
+//				if (aliensType1.get(i).rightbulletlist.get(j).getDimensions().intersects(this.player.getDimensions())) {
+//					player.isHit();
+//				}
+//			}
+//			
+//			
+//		}
+//		
+//	}
 	public void playerHit() {
-		for(int i = 0; i < aliensType2.size(); i++) {
-			if (this.player.getDimensions().intersects(aliensType2.get(i).getDimensions())) {
-				player.isHit();
-
+		for(Alien a : this.aliensType1) {
+			if(this.player.intersects(a) || a.shotPlayer(this.player)) {
+				this.player.isHit();
 			}
 		}
-		for (int i = 0; i < aliensType1.size(); i++) {
-			if (this.player.getDimensions().intersects(aliensType1.get(i).getDimensions())) {
-				player.isHit();
-
+		for(Alien a : this.aliensType2) {
+			if(this.player.intersects(a)) {
+				this.player.isHit();
 			}
-			
-			for (int j = 0; j < aliensType1.get(i).rightbulletlist.size(); j++) {
-				if (aliensType1.get(i).rightbulletlist.get(j).getDimensions().intersects(this.player.getDimensions())) {
-					player.isHit();
-				}
-			}
-			
-			
 		}
 		
 	}
 
+//    public void updateFuelCount() {
+//    	if(PieceCount == 0) {
+//    		for(int i = 0 ; i < levels.fuels.size(); i++) {
+//    			if(this.levels.fuels.get(i).getDimensions().intersects(rocketHolder.getDimensions())){
+//    				this.levels.fuels.remove(i);
+//    				this.fuelCount += 40;
+//    				this.points += 300;
+//    			}
+//    		}	
+//    	}
+//    }
     public void updateFuelCount() {
     	if(PieceCount == 0) {
     		for(int i = 0 ; i < levels.fuels.size(); i++) {
-    			if(this.levels.fuels.get(i).getDimensions().intersects(rocketHolder.getDimensions())){
+    			if(this.levels.fuels.get(i).intersects(rocketHolder)){
     				this.levels.fuels.remove(i);
     				this.fuelCount += 40;
     				this.points += 300;
-    				
     			}
     		}	
     	}
     }
     
+//    public void onRocketHolder() {
+//    	for(int i = 0 ; i < this.levels.rocketPieces.size(); i++) {
+//    		if(this.rocketHolder.getDimensions().intersects(levels.rocketPieces.get(i).getDimensions())){
+//    		levels.rocketPieces.get(i).x = this.rocketHolder.x-10;	
+//    		if(levels.rocketPieces.get(i).type == PieceCount) {
+//    			this.levels.rocketPieces.remove(i);
+//    			this.buildRocketNum += 1;
+//    			this.PieceCount -= 1;
+//    			this.points += 300;
+//    		}
+//    		}
+//
+//    		}
+//    }
     public void onRocketHolder() {
     	for(int i = 0 ; i < this.levels.rocketPieces.size(); i++) {
-    		if(this.rocketHolder.getDimensions().intersects(levels.rocketPieces.get(i).getDimensions())){
+    		if(this.rocketHolder.intersects(levels.rocketPieces.get(i))){
     		levels.rocketPieces.get(i).x = this.rocketHolder.x-10;	
-    		if(levels.rocketPieces.get(i).type == PieceCount) {
-    			this.levels.rocketPieces.remove(i);
-    			this.buildRocketNum += 1;
-    			this.PieceCount -= 1;
-    			this.points += 300;
+    			if(levels.rocketPieces.get(i).type == PieceCount) {
+    				this.levels.rocketPieces.remove(i);
+    				this.buildRocketNum += 1;
+    				this.PieceCount -= 1;
+    				this.points += 300;
+    			}
     		}
-    		}
-
-    		}
+    	}
     }
     public void takeOff(){
     	if(this.PieceCount == 0 && this.fuelCount == 120) {
@@ -263,8 +271,6 @@ public class MyComponent extends JComponent {
 	public void drawScreen() {
 		this.repaint();
 	}
-
-	
 
 	public void updateleftsideBullets() {
 		ArrayList<Bullets> bulletsToRemoveS = new ArrayList<>();
@@ -354,7 +360,6 @@ public class MyComponent extends JComponent {
 
 			}
 		}
-
 	}
 
 	public void updatePickUpTimer() {
@@ -363,179 +368,87 @@ public class MyComponent extends JComponent {
 
 	public void Run() {
 
-		KeyListener keylisten = new KeyListener() {
-
-			@Override
-			public void keyPressed(KeyEvent e) {
-				if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
-					faceRight = true;
-					faceLeft = false;
-					player.right = true;
-
-					repaint();
-				}
-				if (e.getKeyCode() == KeyEvent.VK_LEFT) {
-					faceRight = false;
-					faceLeft = true;
-					player.left = true;
-
-					repaint();
-				}
-				if(e.getKeyCode() == KeyEvent.VK_SPACE) {
-	            	if(faceRight==true) {
-	            	player.shoot();
-	            		}
-	    
-	            	if(faceLeft==true) {
-	                	player.shootleft();
-	                		}
-	            	}
-				
-				
-				if(e.getKeyCode() == KeyEvent.VK_R) {
-					player.reload();
-            
-            	}
-				if(e.getKeyCode() == KeyEvent.VK_X) {
-	            	dropItem = true;
-	            }
-				if (e.getKeyCode() == KeyEvent.VK_UP) {
-
-					player.spacePressed = true;
-					player.up = true;
-					repaint();
-				} else {
-					player.spacePressed = false;
-
-					repaint();
-				}
-				if (e.getKeyCode() == KeyEvent.VK_DOWN) {
-
-					player.spacePressed = false;
-					player.down = true;
-					repaint();
-				}
-				if (e.getKeyCode() == KeyEvent.VK_U ) {
-					if (levels.curLevel == 1) {
-						levels = new Level(2);
-						points = 0;
-						player.lives = 3;
-						player.reserveAmmo = 75;
-						player.bulletCount = 25;
-						levels.curLevel = 2;
-						buildRocketNum = 0;
-						PieceCount = 3;
-						Random rand = new Random();
-						num = rand.nextInt(20);
-						ammo = new AmmoCrate(levels.platforms.get(num).x,levels.platforms.get(num).y -30);
-						buildingRocket.y = levels.platforms.get(levels.platforms.size()-1).y -120;
-					}
-					
-
-					repaint();
-				}
-				if (e.getKeyCode() == KeyEvent.VK_2) {
-					if(endGame == true) {
-						levels = new Level(2);
-						points = 0;
-						player.lives = 3;
-						player.reserveAmmo = 75;
-						player.bulletCount = 25;
-						levels.curLevel = 2;
-						endGame = false;
-						buildRocketNum = 0;
-						PieceCount = 3;
-						Random rand = new Random();
-						num = rand.nextInt(20);
-						ammo = new AmmoCrate(levels.platforms.get(num).x,levels.platforms.get(num).y -30);
-						buildingRocket.y = levels.platforms.get(levels.platforms.size()-1).y -120;
-					}
-
-					repaint();
-				}
-				if (e.getKeyCode() == KeyEvent.VK_1) {
-					if(endGame == true) {
-						levels = new Level(1);
-						points = 0;
-						player.lives = 3;
-						player.reserveAmmo = 75;
-						player.bulletCount = 25;
-						levels.curLevel = 1;
-						endGame = false;
-						buildRocketNum = 0;
-						PieceCount = 3;
-						Random rand = new Random();
-						num = rand.nextInt(20);
-						ammo = new AmmoCrate(levels.platforms.get(num).x,levels.platforms.get(num).y -30);
-						buildingRocket.y = levels.platforms.get(levels.platforms.size()-1).y -120;
-					}
-
-					repaint();
-				}
-				if (e.getKeyCode() == KeyEvent.VK_D ) {
-					if (levels.curLevel == 2) {
-						
-						levels = new Level(1);
-						points = 0;
-						player.lives = 3;
-						player.reserveAmmo = 75;
-						player.bulletCount = 25;
-						levels.curLevel = 1;
-						buildRocketNum = 0;
-						PieceCount = 3;
-						Random rand = new Random();
-						num = rand.nextInt(20);
-						ammo = new AmmoCrate(levels.platforms.get(num).x,levels.platforms.get(num).y -30);
-						buildingRocket.y = levels.platforms.get(levels.platforms.size()-1).y -120;
-						repaint();
-					}
-				}
-				
-			}
-			@Override
-			public void keyReleased(KeyEvent e) {
-				// TODO Auto-generated method stub
-				if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
-            		player.right = false;
-            	}
-			if (e.getKeyCode() == KeyEvent.VK_LEFT) {
-            	player.left = false;
-            }
-            if(e.getKeyCode() == KeyEvent.VK_UP) {
-            	player.up = false;
-            }
-            if(e.getKeyCode() == KeyEvent.VK_DOWN) {
-            	player.down = false;
-            }
-            if(e.getKeyCode() == KeyEvent.VK_X) {
-            	dropItem = false;
-            } 
-				player.left = false;
-			
-			if (e.getKeyCode() == KeyEvent.VK_UP) {
-				player.up = false;
-			}
-			
-			if (e.getKeyCode() == KeyEvent.VK_DOWN) {
-				player.down = false;
-			}
-			}
-			@Override
-			public void keyTyped(KeyEvent e) {
-				
-			}
-		};
-		
-			
-	
+		KeyListener keylisten = new GameRunningKeyListener(this);
        
         this.addKeyListener(keylisten);
         this.setFocusable(true);
-		}
+	}
 	
-    
+	public void changeToNextLevelKeyPressResponse() {
+    	if (levels.on == 1) {
+			levels = new Level(2);
+			points = 0;
+			player.lives = 3;
+			player.reserveAmmo = 75;
+			player.bulletCount = 25;
+			levels.on = 2;
+			buildRocketNum = 0;
+			PieceCount = 3;
+			Random rand = new Random();
+			num = rand.nextInt(20);
+			ammo = new AmmoCrate(levels.platforms.get(num).x,levels.platforms.get(num).y -30);
+			buildingRocket.y = levels.platforms.get(levels.platforms.size()-1).y -120;
+		}
+		repaint();
+    }
 
-	public void updateState() throws FileNotFoundException {
+	public void changeToPreviousLevelKeyPressResponse() {
+    	if (levels.on == 2) {
+			
+			levels = new Level(1);
+			points = 0;
+			player.lives = 3;
+			player.reserveAmmo = 75;
+			player.bulletCount = 25;
+			levels.on = 1;
+			buildRocketNum = 0;
+			PieceCount = 3;
+			Random rand = new Random();
+			num = rand.nextInt(20);
+			ammo = new AmmoCrate(levels.platforms.get(num).x,levels.platforms.get(num).y -30);
+			buildingRocket.y = levels.platforms.get(levels.platforms.size()-1).y -120;
+			repaint();
+		}
+    }
+    
+    public void selectLevelOneKeyPressResponse() {
+		if(endGame == true) {
+			levels = new Level(1);
+			points = 0;
+			player.lives = 3;
+			player.reserveAmmo = 75;
+			player.bulletCount = 25;
+			levels.on = 1;
+			endGame = false;
+			buildRocketNum = 0;
+			PieceCount = 3;
+			Random rand = new Random();
+			num = rand.nextInt(20);
+			ammo = new AmmoCrate(levels.platforms.get(num).x,levels.platforms.get(num).y -30);
+			buildingRocket.y = levels.platforms.get(levels.platforms.size()-1).y -120;
+		}
+    }
+    
+    public void selectLevelTwoKeyPressResponse() {
+    	if(endGame == true) {
+			levels = new Level(2);
+			points = 0;
+			player.lives = 3;
+			player.reserveAmmo = 75;
+			player.bulletCount = 25;
+			levels.on = 2;
+			endGame = false;
+			buildRocketNum = 0;
+			PieceCount = 3;
+			Random rand = new Random();
+			num = rand.nextInt(20);
+			ammo = new AmmoCrate(levels.platforms.get(num).x,levels.platforms.get(num).y -30);
+			buildingRocket.y = levels.platforms.get(levels.platforms.size()-1).y -120;
+		}
+    }
+
+    
+    public void updateState() throws FileNotFoundException {
 		updateAlienReload();
 		updateleftsideBullets();
 		updateBullets();

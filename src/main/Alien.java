@@ -12,13 +12,12 @@ import java.util.Random;
 
 import javax.imageio.ImageIO;
 
-public abstract class Alien {
+public abstract class Alien extends GameObject{
 
-	protected int x;
-	protected int y;
+	private int type;
 	private int alienreload;
-	int width = 25;
-	int height = 25;
+	private static int width = 25;
+	private static int height = 25;
 	protected String direction;
 	private int num;
 	protected int directNum;
@@ -28,6 +27,7 @@ public abstract class Alien {
 	protected Image Alien2;
 
 	public Alien(int x, int y, String direction) {
+		super(x, y, width, height);
 		this.x = x;
 		this.y = y;
 		this.direction = direction;
@@ -37,10 +37,18 @@ public abstract class Alien {
 	}
 
 	public abstract void drawOn(Graphics2D g);
+	public boolean shotPlayer(Player player) {
+		for(Bullets b : this.rightbulletlist) {
+			if(player.intersects(b)) {
+				return true;
+			}
+		}
+		return false;
+	}
 
 	public void contactWith(ArrayList<Platform> plats) {
 		for (int i = 0; i < plats.size(); i++) {
-			if (this.getDimensions().intersects(plats.get(i).getDimensions())) {
+			if (this.intersects(plats.get(i))) {
 
 				if (this.directNum == 1) {
 					directNum = 2;
@@ -69,10 +77,30 @@ public abstract class Alien {
 		}
 	}
 
+//	public boolean bulletHit(ArrayList<Bullets> bullets) {
+//		Random rand = new Random();
+//		for (int i = 0; i < bullets.size(); i++) {
+//			if (this.getDimensions().intersects(bullets.get(i).getDimensions())) {
+//				if (direction == "+") {
+//					this.x = 0;
+//					this.y = rand.nextInt(600);
+//					this.direction = "-";
+//					return true;
+//				} else {
+//					this.x = 1920;
+//					this.y = rand.nextInt(600);
+//					this.direction = "+";
+//					return true;
+//				}
+//
+//			}
+//		}
+//		return false;
+//	}
 	public boolean bulletHit(ArrayList<Bullets> bullets) {
 		Random rand = new Random();
 		for (int i = 0; i < bullets.size(); i++) {
-			if (this.getDimensions().intersects(bullets.get(i).getDimensions())) {
+			if (this.intersects(bullets.get(i))) {
 				if (direction == "+") {
 					this.x = 0;
 					this.y = rand.nextInt(600);
@@ -90,9 +118,9 @@ public abstract class Alien {
 		return false;
 	}
 
-	public Rectangle2D.Double getDimensions() {
-		return new Rectangle2D.Double(this.x, this.y, this.width, this.height);
-	}
+//	public Rectangle2D.Double getDimensions() {
+//		return new Rectangle2D.Double(this.x, this.y, this.width, this.height);
+//	}
 
 	public abstract  void move(ArrayList<Platform> plats) ;
 
