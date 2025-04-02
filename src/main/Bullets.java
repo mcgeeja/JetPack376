@@ -45,7 +45,7 @@ public class Bullets extends GameObject{
 		this.xVelocity = speedX;
 	}
 
-	public Rectangle2D.Double getDimensions() {
-		return new Rectangle2D.Double(this.x, this.y, this.size, this.size);
-	}
+//	public Rectangle2D.Double getDimensions() {
+//		return new Rectangle2D.Double(this.x, this.y, this.size, this.size);
+//	}
 }
