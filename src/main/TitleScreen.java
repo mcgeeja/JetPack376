@@ -4,17 +4,8 @@ import java.awt.Button;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.io.FileNotFoundException;
-import java.util.ArrayList;
-import java.util.Random;
 
 import javax.swing.JComponent;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import java.awt.Graphics2D;
-import java.awt.event.KeyListener;
 
 public class TitleScreen extends JComponent {
 	protected Graphics2D g;

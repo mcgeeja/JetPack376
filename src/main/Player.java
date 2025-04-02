@@ -1,13 +1,10 @@
 package main;
 
 import java.awt.Color;
-import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Toolkit;
-import java.awt.color.*;
 import java.awt.geom.Rectangle2D;
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -22,29 +19,29 @@ public class Player {
 	protected int x;
 	protected int y;
 	protected int speed;
-	protected boolean spacePressed;
 	protected boolean hasItem;
 	protected Fuel heldFuel;
 	protected ArrayList<Bullets> bulletlist = new ArrayList<>();
 	protected ArrayList<Bullets> bulletlistleft = new ArrayList<>();
-	private double count = 1;
 	protected int bulletCount;
 	protected int reserveAmmo;
 	protected Image image;
 	protected int wait = 0;
-	protected static boolean right = false;
-	protected static boolean left = false;
-	protected static boolean up = false;
-	protected static boolean down = false;
+	protected boolean right = false;
+	protected boolean left = false;
+	protected boolean up = false;
+	protected boolean down = false;
 	protected boolean pickup;
 	private int pickUpCooldown;
+	private boolean faceLeft;
+	private boolean faceRight;
+	protected boolean dropItem = false;
 
 	public Player(int x, int y, int speed) {
 		this.lives = 3;
 		this.x = x;
 		this.y = y;
 		this.speed = speed;
-		this.spacePressed = false;
 		this.hasItem = false;
 		this.bulletCount = 25;
 		this.reserveAmmo = 75;
@@ -172,19 +169,71 @@ public class Player {
 		return bulletlistleft;
 	}
 
-
-
-	public void setPickUp(boolean b) {
-		this.pickup = b;
-
-	}
-
 	public int getx() {
 		return this.x;
 	}
 
 	public int gety() {
 		return this.y;
+	}
+
+	public void moveRightKeyReleaseResponse() {
+		right = false;
+	}
+
+	public void moveLeftKeyReleaseResponse() {
+		left = false;
+	}
+
+	public void moveUpKeyReleaseResponse() {
+		up = false;
+	}
+
+	public void moveDownKeyReleaseResponse() {
+		down = false;
+	}
+
+	public void reloadKeyPressResponse() {
+		reload();
+	}
+
+	public void shootKeyPressResponse() {
+		if(faceRight) {
+			shoot();
+		}
+	
+		if(faceLeft) {
+	    	shootleft();
+		}
+	}
+
+	public void pickupKeyPressResponse() {
+		dropItem = true;
+	}
+
+	public void moveRightKeyPressResponse() {
+		faceRight = true;
+		faceLeft = false;
+		right = true;
+	
+	}
+
+	public void moveLeftKeyPressResponse() {
+		faceRight = false;
+		faceLeft = true;
+		left = true;
+	}
+
+	public void moveUpKeyPressResponse() {
+		up = true;
+	}
+
+	public void moveDownKeyPressResponse() {
+		down = true;
+	}
+
+	public void pickupKeyReleaseResponse() {
+		dropItem = false;
 	}
 
 }
