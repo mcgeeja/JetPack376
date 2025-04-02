@@ -375,13 +375,13 @@ public class MyComponent extends JComponent {
 	}
 	
 	public void changeToNextLevelKeyPressResponse() {
-    	if (levels.on == 1) {
+    	if (levels.curLevel == 1) {
 			levels = new Level(2);
 			points = 0;
 			player.lives = 3;
 			player.reserveAmmo = 75;
 			player.bulletCount = 25;
-			levels.on = 2;
+			levels.curLevel = 2;
 			buildRocketNum = 0;
 			PieceCount = 3;
 			Random rand = new Random();
@@ -393,14 +393,14 @@ public class MyComponent extends JComponent {
     }
 
 	public void changeToPreviousLevelKeyPressResponse() {
-    	if (levels.on == 2) {
+    	if (levels.curLevel == 2) {
 			
 			levels = new Level(1);
 			points = 0;
 			player.lives = 3;
 			player.reserveAmmo = 75;
 			player.bulletCount = 25;
-			levels.on = 1;
+			levels.curLevel = 1;
 			buildRocketNum = 0;
 			PieceCount = 3;
 			Random rand = new Random();
@@ -418,7 +418,7 @@ public class MyComponent extends JComponent {
 			player.lives = 3;
 			player.reserveAmmo = 75;
 			player.bulletCount = 25;
-			levels.on = 1;
+			levels.curLevel = 1;
 			endGame = false;
 			buildRocketNum = 0;
 			PieceCount = 3;
@@ -436,7 +436,7 @@ public class MyComponent extends JComponent {
 			player.lives = 3;
 			player.reserveAmmo = 75;
 			player.bulletCount = 25;
-			levels.on = 2;
+			levels.curLevel = 2;
 			endGame = false;
 			buildRocketNum = 0;
 			PieceCount = 3;

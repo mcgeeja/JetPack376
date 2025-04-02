@@ -16,8 +16,6 @@ public abstract class Alien extends GameObject{
 
 	private int type;
 	private int alienreload;
-	private static int width = 25;
-	private static int height = 25;
 	protected String direction;
 	private int num;
 	protected int directNum;
@@ -27,7 +25,7 @@ public abstract class Alien extends GameObject{
 	protected Image Alien2;
 
 	public Alien(int x, int y, String direction) {
-		super(x, y, width, height);
+		super(x, y, 25, 25);
 		this.x = x;
 		this.y = y;
 		this.direction = direction;
