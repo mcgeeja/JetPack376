@@ -2,6 +2,7 @@ package main;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -52,6 +53,7 @@ public class Main {
 	public static final int frameHeight = 1080;
 
 	public static void main(String[] args) {
+		GameRunningKeyListener.initializeDefaultControlsMap();
 
 		JFrame frame = new JFrame();
 
@@ -59,6 +61,9 @@ public class Main {
 		frame.add(title);
 
 		JFrame frame2 = new JFrame();
+		frame2.setSize(frameWidth, frameHeight);
+		frame2.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
 		MyComponent component = new MyComponent();
 		frame2.add(component);
 
@@ -75,14 +80,17 @@ public class Main {
 					Timer timer = new Timer(60, advancelistener);
 					timer.start();
 					frame2.setVisible(true);
-					frame2.setSize(frameWidth, frameHeight);
-					frame2.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-					System.out.println("checking for game over");
-					if (e.getKeyCode() == KeyEvent.VK_BACK_SPACE) {
-						frame.setVisible(true);
-						frame2.setVisible(false);
-					}
+				}
+				
+				if (e.getKeyCode() == KeyEvent.VK_BACK_SPACE) {
 					
+					JFrame controlRemappingFrame = new JFrame("Control Settings");
+			        controlRemappingFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+			        controlRemappingFrame.setSize(400, 1000);
+			        ControlRemappingComponent controlMappingComponent = new ControlRemappingComponent();
+			        
+			        controlRemappingFrame.add(controlMappingComponent.panel);
+			        controlRemappingFrame.setVisible(true);					
 				}
 
 			}
