@@ -7,6 +7,7 @@ import java.awt.Graphics2D;
 import java.sql.Time;
 
 
+
 public class GameOverScreen {
 	MyComponent component;
 	
@@ -54,4 +55,5 @@ public class GameOverScreen {
 		g.drawString("Press '1' for level 1 or '2' for level 2 " , (1920 / 2) - 420, (1080 / 2) + 300);
 		
 	}
+
 }

@@ -74,7 +74,7 @@ public class Main {
 
 				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
 					frame.setVisible(false);
-
+					System.out.println("Starting game");
 					component.Run();
 					GameAdvanceListener advancelistener = new GameAdvanceListener(component);
 					Timer timer = new Timer(60, advancelistener);
@@ -90,8 +90,7 @@ public class Main {
 			        ControlRemappingComponent controlMappingComponent = new ControlRemappingComponent();
 			        
 			        controlRemappingFrame.add(controlMappingComponent.panel);
-			        controlRemappingFrame.setVisible(true);
-					
+			        controlRemappingFrame.setVisible(true);					
 				}
 
 			}

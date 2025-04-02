@@ -114,7 +114,7 @@ public class LevelReader {
             this.fuels.get(i).drawOn(g);
         }
         for (int i = 0; i < this.rocketPieces.size(); i++) {
-            this.rocketPieces.get(i).draw(g);
+            this.rocketPieces.get(i).drawOn(g);
         }
 
 
