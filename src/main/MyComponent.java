@@ -10,17 +10,13 @@ import java.io.FileNotFoundException;
 import java.sql.Time;
 import java.util.ArrayList;
 import java.util.Random;
-import java.util.logging.Level;
 
 import javax.swing.JComponent;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.Timer;
 
 
 public class MyComponent extends JComponent {
 	protected Player player = new Player(1920 / 2, 800, 15);
-	private LevelReader levels;
+	private Level levels;
 	protected int num;
 	protected String[] direction = new String[2];
 	protected ArrayList<Platform> platforms;
@@ -49,11 +45,11 @@ public class MyComponent extends JComponent {
 		this.direction[0] = "+";
 		Random random = new Random();
 		for (int i = 0; i < 1; i++) {
-			Alien alienType1 = new Alien(0, random.nextInt(900), 1, this.direction[random.nextInt(2)]);
-			Alien alienType1_2 = new Alien(0, random.nextInt(900), 1, this.direction[random.nextInt(2)]);
-			Alien alienType2 = new Alien(1920, random.nextInt(900), 2, this.direction[random.nextInt(2)]);
-			Alien alien1 = new Alien(0, 150, 1, this.direction[random.nextInt(2)]);
-			Alien alien2 = new Alien(1920, 500, 2, this.direction[random.nextInt(2)]);
+			Alien alienType1 = new BlueAlien(0, random.nextInt(900),  this.direction[random.nextInt(2)]);
+			Alien alienType1_2 = new BlueAlien(0, random.nextInt(900),  this.direction[random.nextInt(2)]);
+			Alien alienType2 = new GreenAlien(1920, random.nextInt(900),  this.direction[random.nextInt(2)]);
+			Alien alien1 = new BlueAlien(0, 150,  this.direction[random.nextInt(2)]);
+			Alien alien2 = new GreenAlien(1920, 500,  this.direction[random.nextInt(2)]);
 			aliensType1.add(alienType1);
 			aliensType1.add(alienType1_2);
 			aliensType1.add(alien1);
@@ -61,7 +57,7 @@ public class MyComponent extends JComponent {
 			aliensType2.add(alienType2);
 			aliensType2.add(alien2);
 		}
-		this.levels = new LevelReader(1);
+		this.levels = new Level(1);
 		int xR = levels.rocketPieces.get(2).x;
 		
 		this.rocketHolder = new BuildingPiece( xR, 930);
@@ -86,7 +82,7 @@ public class MyComponent extends JComponent {
 		this.rocketHolder.drawOn(g2d);
 		this.ammo.drawOn(g2d);
     	this.buildingRocket.build(buildRocketNum, g2d);
-        levels.drawFile(this.g);
+        levels.drawLevel(this.g);
         
      	for(int i = 0; i < aliensType1.size(); i++) {
        	aliensType1.get(i).drawOn(g2d);
@@ -379,13 +375,13 @@ public class MyComponent extends JComponent {
 	}
 	
 	public void changeToNextLevelKeyPressResponse() {
-    	if (levels.on == 1) {
-			levels = new LevelReader(2);
+    	if (levels.curLevel == 1) {
+			levels = new Level(2);
 			points = 0;
 			player.lives = 3;
 			player.reserveAmmo = 75;
 			player.bulletCount = 25;
-			levels.on = 2;
+			levels.curLevel = 2;
 			buildRocketNum = 0;
 			PieceCount = 3;
 			Random rand = new Random();
@@ -397,14 +393,14 @@ public class MyComponent extends JComponent {
     }
 
 	public void changeToPreviousLevelKeyPressResponse() {
-    	if (levels.on == 2) {
+    	if (levels.curLevel == 2) {
 			
-			levels = new LevelReader(1);
+			levels = new Level(1);
 			points = 0;
 			player.lives = 3;
 			player.reserveAmmo = 75;
 			player.bulletCount = 25;
-			levels.on = 1;
+			levels.curLevel = 1;
 			buildRocketNum = 0;
 			PieceCount = 3;
 			Random rand = new Random();
@@ -417,12 +413,12 @@ public class MyComponent extends JComponent {
     
     public void selectLevelOneKeyPressResponse() {
 		if(endGame == true) {
-			levels = new LevelReader(1);
+			levels = new Level(1);
 			points = 0;
 			player.lives = 3;
 			player.reserveAmmo = 75;
 			player.bulletCount = 25;
-			levels.on = 1;
+			levels.curLevel = 1;
 			endGame = false;
 			buildRocketNum = 0;
 			PieceCount = 3;
@@ -435,12 +431,12 @@ public class MyComponent extends JComponent {
     
     public void selectLevelTwoKeyPressResponse() {
     	if(endGame == true) {
-			levels = new LevelReader(2);
+			levels = new Level(2);
 			points = 0;
 			player.lives = 3;
 			player.reserveAmmo = 75;
 			player.bulletCount = 25;
-			levels.on = 2;
+			levels.curLevel = 2;
 			endGame = false;
 			buildRocketNum = 0;
 			PieceCount = 3;

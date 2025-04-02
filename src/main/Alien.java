@@ -12,12 +12,10 @@ import java.util.Random;
 
 import javax.imageio.ImageIO;
 
-public class Alien extends GameObject{
+public abstract class Alien extends GameObject{
 
 	private int type;
 	private int alienreload;
-	private static int width = 25;
-	private static int height = 25;
 	protected String direction;
 	private int num;
 	protected int directNum;
@@ -26,40 +24,17 @@ public class Alien extends GameObject{
 	protected Image Alien1;
 	protected Image Alien2;
 
-	public Alien(int x, int y, int type, String direction) {
-		super(x, y, width, height);
+	public Alien(int x, int y, String direction) {
+		super(x, y, 25, 25);
 		this.x = x;
 		this.y = y;
-		this.type = type;
 		this.direction = direction;
 		this.alienreload = 1;
 		this.Alien1 = null;
 		this.Alien2 = null;
 	}
 
-	public void drawOn(Graphics2D g) {
-		if (this.type == 1) {
-
-			this.Alien1 = Toolkit.getDefaultToolkit().getImage("alien_type_1_2.0.png");
-			try {
-				this.Alien1 = ImageIO.read(new File("alien_type_1_2.0.png"));
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-
-			g.drawImage(Alien1, x, y, width, height, null);
-		}
-		if (this.type == 2) {
-
-			this.Alien2 = Toolkit.getDefaultToolkit().getImage("Alien_type_2_2.0.png");
-			try {
-				this.Alien2 = ImageIO.read(new File("Alien_type_2_2.0.png"));
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-			g.drawImage(Alien2, x, y, width, height, null);
-		}
-	}
+	public abstract void drawOn(Graphics2D g);
 	public boolean shotPlayer(Player player) {
 		for(Bullets b : this.rightbulletlist) {
 			if(player.intersects(b)) {
@@ -145,44 +120,6 @@ public class Alien extends GameObject{
 //		return new Rectangle2D.Double(this.x, this.y, this.width, this.height);
 //	}
 
-	public void move(ArrayList<Platform> plats) {
-		this.platforms = plats;
-		if (this.type == 1) {
-			if (direction == "+") {
-				if (this.x <= 1920) {
-					this.x += 10;
-				} else {
-					this.x = 0;
-				}
-			} else {
-				if (this.x > 0) {
-					this.x -= 15;
-				} else {
-					this.x = 1920;
-				}
-			}
-		} else {
-			this.contactWith(plats);
-			if (direction == "-") {
-				if (directNum == 1) {
-					this.y += 10;
-				} else {
-					this.y -= 10;
-				}
-				this.x -= 15;
-			} else {
-
-				if (directNum == 2) {
-					this.y -= 10;
-				} else {
-					this.y += 10;
-				}
-
-				this.x += 15;
-
-			}
-		}
-
-	}
+	public abstract  void move(ArrayList<Platform> plats) ;
 
 }
