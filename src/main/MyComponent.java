@@ -235,8 +235,6 @@ public class MyComponent extends JComponent {
 		this.repaint();
 	}
 
-	
-
 	public void updateleftsideBullets() {
 		ArrayList<Bullets> bulletsToRemoveS = new ArrayList<>();
 		for (Bullets b : player.getListOfLeftBullets()) {
@@ -356,7 +354,8 @@ public class MyComponent extends JComponent {
 		}
 		repaint();
     }
-    public void changeToPreviousLevelKeyPressResponse() {
+
+	public void changeToPreviousLevelKeyPressResponse() {
     	if (levels.on == 2) {
 			
 			levels = new LevelReader(1);
@@ -392,6 +391,7 @@ public class MyComponent extends JComponent {
 			buildingRocket.y = levels.platforms.get(levels.platforms.size()-1).y -120;
 		}
     }
+    
     public void selectLevelTwoKeyPressResponse() {
     	if(endGame == true) {
 			levels = new LevelReader(2);
