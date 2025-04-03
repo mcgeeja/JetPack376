@@ -42,6 +42,7 @@ public class MyComponent extends JComponent {
 		Random random = new Random();
 		for (int i = 0; i < 1; i++) {
 			Alien alienType1 = new BlueAlien(0, random.nextInt(900),  this.direction[random.nextInt(2)]);
+			Alien redAlien = new RedAlien(500,500,"+");
 			Alien alienType1_2 = new BlueAlien(0, random.nextInt(900),  this.direction[random.nextInt(2)]);
 			Alien alienType2 = new GreenAlien(1920, random.nextInt(900),  this.direction[random.nextInt(2)]);
 			Alien alien1 = new BlueAlien(0, 150,  this.direction[random.nextInt(2)]);
@@ -49,6 +50,7 @@ public class MyComponent extends JComponent {
 			aliensType1.add(alienType1);
 			aliensType1.add(alienType1_2);
 			aliensType1.add(alien1);
+			aliensType1.add(redAlien);
 			
 			aliensType2.add(alienType2);
 			aliensType2.add(alien2);
