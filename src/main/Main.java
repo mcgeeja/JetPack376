@@ -1,32 +1,15 @@
 package main;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.GridLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.Set;
-import java.util.TreeSet;
 import java.io.File;
 
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
-import javax.sound.sampled.LineUnavailableException;
-import javax.sound.sampled.UnsupportedAudioFileException;
-import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 import javax.swing.Timer;
 
-//import javax.scene.input.KeyCode;
 
 /**
  * The main class for your arcade game.
@@ -75,7 +58,7 @@ public class Main {
 				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
 					frame.setVisible(false);
 					System.out.println("Starting game");
-					component.Run();
+					component.run();
 					GameAdvanceListener advancelistener = new GameAdvanceListener(component);
 					Timer timer = new Timer(60, advancelistener);
 					timer.start();
