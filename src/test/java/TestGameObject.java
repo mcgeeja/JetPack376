@@ -1,12 +1,9 @@
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.awt.Graphics2D;
 
-import org.junit.Test;
-
-import junit.framework.Assert;
-
+import org.junit.jupiter.api.Test;
 
 public class TestGameObject {
 	public boolean ranDrawOn = false;
@@ -21,6 +18,7 @@ public class TestGameObject {
 		public void drawOn(Graphics2D g) {
 			ranDrawOn = true;
 		}
+
 		
 	}
 	@Test
