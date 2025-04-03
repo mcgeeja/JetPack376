@@ -18,7 +18,7 @@ public class GameOverScreen {
 	
 	public void paintWinGame(){
 		Graphics2D g = component.g;
-		Time time = new Time(10);
+//		Time time = new Time(10);
 
 		g.setColor(Color.BLACK);
 		g.fillRect(0, 0, 1920, 1080);
@@ -29,7 +29,7 @@ public class GameOverScreen {
 		g.drawString("SUCCESS", 1920 / 2 - 250, 1080 / 2);
 
 		g.setColor(Color.WHITE);
-		g.drawString("Last score was: " + Integer.toString(component.points), (1920 / 2) - 475, (1080 / 2) + 200);
+		g.drawString("Last score was: " + component.points, (1920 / 2) - 475, (1080 / 2) + 200);
 		font = new Font("arial", Font.BOLD, 50);
 		g.setFont(font);
 		g.drawString("Press the X to exit" , (1920 / 2) - 230, (1080 / 2) + 300);
@@ -37,7 +37,7 @@ public class GameOverScreen {
 	
 	public void paintLoseGame(){
 		Graphics2D g = component.g;
-		Time time = new Time(10);
+//		Time time = new Time(10);
 
 		g.setColor(Color.BLACK);
 		g.fillRect(0, 0, 1920, 1080);
@@ -48,7 +48,7 @@ public class GameOverScreen {
 		g.drawString("GAME OVER", 1920 / 2 - 300, 1080 / 2);
 
 		g.setColor(Color.WHITE);
-		g.drawString("Last score was: " + Integer.toString(component.points), (1920 / 2) - 475, (1080 / 2) + 200);
+		g.drawString("Last score was: " + component.points, (1920 / 2) - 475, (1080 / 2) + 200);
 		
 		font = new Font("arial", Font.BOLD, 50);
 		g.setFont(font);

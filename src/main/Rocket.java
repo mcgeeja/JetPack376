@@ -1,45 +1,22 @@
 package main;
 
 import java.awt.Color;
-import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.color.*;
-import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 
 public class Rocket extends GameObject{
 	private static int height = 120;
 	private static int width = 60;
-//	private int fuelCount = 0;
-//	protected int x;
 	private static final int GRAVITY = 5;
-//	protected int y;
 	private int partHeight = 40;
-	private Graphics2D g;
 	protected int type;
-	protected boolean isRocketPickedUp;
-	protected boolean notStacked = false;
-	private boolean rocketOffScreen=false;
 
 	public Rocket(int x, int y, int type) {
 		super(x, y, width, height);
-//		this.fuelCount = 0;
-//		this.x = x;
-//		this.y = y;
-//		this.g = g;
 		this.type = type;
-		this.isRocketPickedUp = false;
-
 	}
 	public Rocket(int x, int y) {
 		super(x, y, width, height);
-//		this.fuelCount = 0;
-//		this.x = x;
-//		this.y = y;
-//		this.g = g;
-//		this.type = type;
-		this.isRocketPickedUp = false;
-
 	}
 	public void build(int num, Graphics2D g) {
 		if(num > 0) {
@@ -124,57 +101,20 @@ public class Rocket extends GameObject{
 		System.out.println("Y = " + this.y);
 	}
 
-//	private Rectangle2D.Double getDimensions() {
-//		if (this.type == 1) {
-//			return new Rectangle2D.Double(x, y, width, height / 3);
-//		}
-//		if (this.type == 2) {
-//			return new Rectangle2D.Double(x, y, width, height / 3);
-//		}
-//		if (this.type == 3) {
-//			return new Rectangle2D.Double(x, y, width, height / 3);
-//		}
-//		return null;
-//	}
-
-//	public void pickedUp(Player player) {
-//		if (this.getDimensions().intersects(player.getDimensions()) && player.getPickUpCooldown() == 0) {
-//			this.x = player.x;
-//			this.y = player.y;
-//			this.isRocketPickedUp = true;
-//		}
-//	}
 	public void pickedUp(Player player) {
 		if (this.intersects(player) && player.getPickUpCooldown() == 0) {
 			this.x = player.x;
 			this.y = player.y;
-			this.isRocketPickedUp = true;
 		}
 	}
 
-
-//	public void gravity(ArrayList<Platform> plats) {
-//		if(notStacked = true) {
-//			this.y = this.y + GRAVITY;
-//			for (int i = 0; i < plats.size(); i++) {
-//				if (this.getDimensions().intersects(plats.get(i).getDimensions())) {
-//					this.y = plats.get(i).y - this.height / 3;
-//				}
-//			}
-//		}
-//	}
 	public void gravity(ArrayList<Platform> plats) {
-		if(notStacked = true) {
 			this.y = this.y + GRAVITY;
 			for (int i = 0; i < plats.size(); i++) {
 				if (this.intersects(plats.get(i))) {
 					this.y = plats.get(i).y - this.height / 3;
 				}
 			}
-		}
 	}
-//	public int getRocketType() {
-//		return this.type;
-//	}
 
 }

@@ -9,19 +9,9 @@ import java.awt.geom.Rectangle2D;
 import javax.swing.JFrame;
 
 public class Platform extends GameObject{
-//
-//	protected int x;
-//	protected int y;
-//	protected int height;
-//	protected int width;
 
 	public Platform(int x, int y, int width, int height) {
 		super(x, y, width, height);
-//		this.x = x;
-//		this.y = y;
-//		this.width = width;
-//		this.height = height;
-
 	}
 
 	public void drawOn(Graphics2D g) {
@@ -29,9 +19,5 @@ public class Platform extends GameObject{
 		g.fill(new Rectangle2D.Double(x, y, width, height));
 
 	}
-
-//	public Rectangle2D.Double getDimensions() {
-//		return new Rectangle2D.Double(x, y, width, height);
-//	}
 
 }

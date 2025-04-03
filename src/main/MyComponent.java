@@ -4,10 +4,8 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.io.FileNotFoundException;
-import java.sql.Time;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -29,7 +27,7 @@ public class MyComponent extends JComponent {
 	protected BuildingPiece rocketHolder;
 	protected Rocket buildingRocket;
 	protected int buildRocketNum = 0;
-	protected int PieceCount = 3;
+	protected int pieceCount = 3;
 	protected int fuelCount = 0;
 	protected AmmoCrate ammo;
 	private boolean hasTakenOff=false;
@@ -71,52 +69,48 @@ public class MyComponent extends JComponent {
 
 	@Override
 	public void paintComponent(Graphics g) {
-		super.paintComponent(g);
-		
-	
-		Graphics2D g2d = (Graphics2D) g;
 		this.g = (Graphics2D) g;
 		
 		this.g.setColor(Color.BLACK);
     	this.g.fillRect(0, 0, 1920, 1080);
-		this.rocketHolder.drawOn(g2d);
-		this.ammo.drawOn(g2d);
-    	this.buildingRocket.build(buildRocketNum, g2d);
+		this.rocketHolder.drawOn(this.g);
+		this.ammo.drawOn(this.g);
+    	this.buildingRocket.build(buildRocketNum, this.g);
         levels.drawLevel(this.g);
         
      	for(int i = 0; i < aliensType1.size(); i++) {
-       	aliensType1.get(i).drawOn(g2d);
+       	aliensType1.get(i).drawOn(this.g);
       	
         }
      	for(int i = 0; i < aliensType2.size(); i++) {
-     	aliensType2.get(i).drawOn(g2d);
+     	aliensType2.get(i).drawOn(this.g);
      	}
         playerPickUp();
         onRocketHolder();
         updateFuelCount();
         if(fuelCount != 120) {
-        player.drawOn(g2d);
+        player.drawOn(this.g);
         }
         for(Bullets bullet:player.getListOfBullets()) {
-        	bullet.drawOn(g2d);
+        	bullet.drawOn(this.g);
         }
 	
 		playerHit();
 		Font font = new Font("arial", Font.BOLD, 50);
 		this.g.setFont(font);
 		this.g.setColor(Color.WHITE);
-		this.g.drawString("Lives: " + Integer.toString(this.player.lives), 100, 1030);
-		this.g.drawString("Points:" + Integer.toString(this.points), 400, 1030);
-		this.g.drawString("Bullets:" + Integer.toString(this.player.bulletCount) + "/"
-				+ Integer.toString(this.player.reserveAmmo), 700, 1030);
+		this.g.drawString("Lives: " + this.player.lives, 100, 1030);
+		this.g.drawString("Points:" + this.points, 400, 1030);
+		this.g.drawString("Bullets:" + this.player.bulletCount + "/"
+				+ this.player.reserveAmmo, 700, 1030);
 
 		for (Bullets bullet : player.getListOfLeftBullets()) {
-			bullet.drawOn(g2d);
+			bullet.drawOn(this.g);
 		}
 
 		for (Alien a : aliensType1) {
 			for (Bullets bullet : a.getListOfRightBullets()) {
-				bullet.drawOn(g2d);
+				bullet.drawOn(this.g);
 			}
 		}
 
@@ -148,37 +142,11 @@ public class MyComponent extends JComponent {
 				levels.rocketPieces.get(i).pickedUp(this.player);
 			}
 		}
-//		if(this.ammo.getDimensions().intersects(this.player.getDimensions())) {
-//			ammo.pickedUpAmmo(player);
-//		}
 		if(this.ammo.intersects(this.player)) {
 			ammo.pickedUpAmmo(player);
 		}
 	}
 
-//	public void playerHit() {
-//		for(int i = 0; i < aliensType2.size(); i++) {
-//			if (this.player.getDimensions().intersects(aliensType2.get(i).getDimensions())) {
-//				player.isHit();
-//
-//			}
-//		}
-//		for (int i = 0; i < aliensType1.size(); i++) {
-//			if (this.player.getDimensions().intersects(aliensType1.get(i).getDimensions())) {
-//				player.isHit();
-//
-//			}
-//			
-//			for (int j = 0; j < aliensType1.get(i).rightbulletlist.size(); j++) {
-//				if (aliensType1.get(i).rightbulletlist.get(j).getDimensions().intersects(this.player.getDimensions())) {
-//					player.isHit();
-//				}
-//			}
-//			
-//			
-//		}
-//		
-//	}
 	public void playerHit() {
 		for(Alien a : this.aliensType1) {
 			if(this.player.intersects(a) || a.shotPlayer(this.player)) {
@@ -193,19 +161,8 @@ public class MyComponent extends JComponent {
 		
 	}
 
-//    public void updateFuelCount() {
-//    	if(PieceCount == 0) {
-//    		for(int i = 0 ; i < levels.fuels.size(); i++) {
-//    			if(this.levels.fuels.get(i).getDimensions().intersects(rocketHolder.getDimensions())){
-//    				this.levels.fuels.remove(i);
-//    				this.fuelCount += 40;
-//    				this.points += 300;
-//    			}
-//    		}	
-//    	}
-//    }
     public void updateFuelCount() {
-    	if(PieceCount == 0) {
+    	if(pieceCount == 0) {
     		for(int i = 0 ; i < levels.fuels.size(); i++) {
     			if(this.levels.fuels.get(i).intersects(rocketHolder)){
     				this.levels.fuels.remove(i);
@@ -215,36 +172,22 @@ public class MyComponent extends JComponent {
     		}	
     	}
     }
-    
-//    public void onRocketHolder() {
-//    	for(int i = 0 ; i < this.levels.rocketPieces.size(); i++) {
-//    		if(this.rocketHolder.getDimensions().intersects(levels.rocketPieces.get(i).getDimensions())){
-//    		levels.rocketPieces.get(i).x = this.rocketHolder.x-10;	
-//    		if(levels.rocketPieces.get(i).type == PieceCount) {
-//    			this.levels.rocketPieces.remove(i);
-//    			this.buildRocketNum += 1;
-//    			this.PieceCount -= 1;
-//    			this.points += 300;
-//    		}
-//    		}
-//
-//    		}
-//    }
+
     public void onRocketHolder() {
     	for(int i = 0 ; i < this.levels.rocketPieces.size(); i++) {
     		if(this.rocketHolder.intersects(levels.rocketPieces.get(i))){
     		levels.rocketPieces.get(i).x = this.rocketHolder.x-10;	
-    			if(levels.rocketPieces.get(i).type == PieceCount) {
+    			if(levels.rocketPieces.get(i).type == pieceCount) {
     				this.levels.rocketPieces.remove(i);
     				this.buildRocketNum += 1;
-    				this.PieceCount -= 1;
+    				this.pieceCount -= 1;
     				this.points += 300;
     			}
     		}
     	}
     }
     public void takeOff(){
-    	if(this.PieceCount == 0 && this.fuelCount == 120) {
+    	if(this.pieceCount == 0 && this.fuelCount == 120) {
     	this.buildingRocket.takeOff(this.g);
     	
     	
@@ -268,14 +211,10 @@ public class MyComponent extends JComponent {
     
     }
 
-	public void drawScreen() {
-		this.repaint();
-	}
-
 	public void updateleftsideBullets() {
 		ArrayList<Bullets> bulletsToRemoveS = new ArrayList<>();
 		for (Bullets b : player.getListOfLeftBullets()) {
-			boolean shouldRemove = b.moveleft(0);
+			boolean shouldRemove = b.moveLeft(0);
 
 			if (shouldRemove) {
 				bulletsToRemoveS.add(b);
@@ -366,7 +305,7 @@ public class MyComponent extends JComponent {
 		player.startCountDown();
 	}
 
-	public void Run() {
+	public void run() {
 
 		KeyListener keylisten = new GameRunningKeyListener(this);
        
@@ -383,7 +322,7 @@ public class MyComponent extends JComponent {
 			player.bulletCount = 25;
 			levels.curLevel = 2;
 			buildRocketNum = 0;
-			PieceCount = 3;
+			pieceCount = 3;
 			Random rand = new Random();
 			num = rand.nextInt(20);
 			ammo = new AmmoCrate(levels.platforms.get(num).x,levels.platforms.get(num).y -30);
@@ -402,7 +341,7 @@ public class MyComponent extends JComponent {
 			player.bulletCount = 25;
 			levels.curLevel = 1;
 			buildRocketNum = 0;
-			PieceCount = 3;
+			pieceCount = 3;
 			Random rand = new Random();
 			num = rand.nextInt(20);
 			ammo = new AmmoCrate(levels.platforms.get(num).x,levels.platforms.get(num).y -30);
@@ -421,7 +360,7 @@ public class MyComponent extends JComponent {
 			levels.curLevel = 1;
 			endGame = false;
 			buildRocketNum = 0;
-			PieceCount = 3;
+			pieceCount = 3;
 			Random rand = new Random();
 			num = rand.nextInt(20);
 			ammo = new AmmoCrate(levels.platforms.get(num).x,levels.platforms.get(num).y -30);
@@ -439,7 +378,7 @@ public class MyComponent extends JComponent {
 			levels.curLevel = 2;
 			endGame = false;
 			buildRocketNum = 0;
-			PieceCount = 3;
+			pieceCount = 3;
 			Random rand = new Random();
 			num = rand.nextInt(20);
 			ammo = new AmmoCrate(levels.platforms.get(num).x,levels.platforms.get(num).y -30);

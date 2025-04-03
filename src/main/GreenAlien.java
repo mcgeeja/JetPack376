@@ -13,13 +13,13 @@ public class GreenAlien extends  Alien{
 
     @Override
     public void drawOn(Graphics2D g) {
-        this.Alien2 = Toolkit.getDefaultToolkit().getImage("Alien_type_2_2.0.png");
+        this.image = Toolkit.getDefaultToolkit().getImage("Alien_type_2_2.0.png");
         try {
-            this.Alien2 = ImageIO.read(new File("Alien_type_2_2.0.png"));
+            this.image = ImageIO.read(new File("Alien_type_2_2.0.png"));
         } catch (IOException e) {
             e.printStackTrace();
         }
-        g.drawImage(Alien2, x, y, width, height, null);
+        g.drawImage(image, x, y, width, height, null);
     }
 
     @Override
@@ -39,9 +39,7 @@ public class GreenAlien extends  Alien{
             } else {
                 this.y += 10;
             }
-
             this.x += 15;
-
         }
     }
 }

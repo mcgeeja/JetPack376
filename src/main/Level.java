@@ -16,7 +16,7 @@ public class Level {
     protected ArrayList<Rocket> rocketPieces = new ArrayList<>();
     protected int rocketPiece = 1;
 
-    protected FileReader f;
+//    protected FileReader f;
     protected int curLevel;
     int scale_x,scale_y;
 

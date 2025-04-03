@@ -4,7 +4,6 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Toolkit;
-import java.awt.geom.Rectangle2D;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -16,22 +15,16 @@ public class Player extends GameObject{
 	private static int HeroWidth = 30;
 	private static final int GRAVITY = 5;
 	protected int lives;
-//	protected int x;
-//	protected int y;
 	protected int speed;
-	protected boolean hasItem;
-	protected Fuel heldFuel;
 	protected ArrayList<Bullets> bulletlist = new ArrayList<>();
 	protected ArrayList<Bullets> bulletlistleft = new ArrayList<>();
 	protected int bulletCount;
 	protected int reserveAmmo;
 	protected Image image;
-	protected int wait = 0;
 	protected boolean right = false;
 	protected boolean left = false;
 	protected boolean up = false;
 	protected boolean down = false;
-	protected boolean pickup;
 	private int pickUpCooldown;
 	private boolean faceLeft;
 	private boolean faceRight;
@@ -40,10 +33,7 @@ public class Player extends GameObject{
 	public Player(int x, int y, int speed) {
 		super(x, y, HeroWidth, HeroHeight);
 		this.lives = 3;
-//		this.x = x;
-//		this.y = y;
 		this.speed = speed;
-		this.hasItem = false;
 		this.bulletCount = 25;
 		this.reserveAmmo = 75;
 		this.image = null;
@@ -77,9 +67,6 @@ public class Player extends GameObject{
 		return this.pickUpCooldown;
 	}
 
-	public void setPickUpCooldown(int i) {
-		this.pickUpCooldown = i;
-	}
 
 	public void startCountDown() {
 		this.pickUpCooldown = this.pickUpCooldown - 1;
@@ -88,15 +75,12 @@ public class Player extends GameObject{
 		}
 	}
 
-//	public Rectangle2D.Double getDimensions() {
-//		return new Rectangle2D.Double(this.x, this.y, this.width, this.height);
-//	}
 
 	public void move() {
-		if (this.right == true) {
+		if (this.right) {
 			this.x += this.speed;
 		}
-		if (this.left == true) {
+		if (this.left) {
 			this.x -= this.speed;
 		}
 		if (this.x < 0) {
@@ -109,10 +93,10 @@ public class Player extends GameObject{
 			this.y = 0;
 		}
 
-		if (this.up == true) {
+		if (this.up) {
 			this.y -= this.speed;
 		}
-		if (this.down == true) {
+		if (this.down) {
 			this.y += this.speed;
 		}
 	}
@@ -120,11 +104,11 @@ public class Player extends GameObject{
 	public void gravity(ArrayList<Platform> plats) {
 		this.y = this.y + GRAVITY;
 
-		for (int i = 0; i < plats.size(); i++) {
-			if (this.intersects(plats.get(i))) {
-				this.y = plats.get(i).y - this.height;
-			}
-		}
+        for (Platform plat : plats) {
+            if (this.intersects(plat)) {
+                this.y = plat.y - this.height;
+            }
+        }
 	}
 
 	public void shoot() {
@@ -168,14 +152,6 @@ public class Player extends GameObject{
 
 	public ArrayList<Bullets> getListOfLeftBullets() {
 		return bulletlistleft;
-	}
-
-	public int getx() {
-		return this.x;
-	}
-
-	public int gety() {
-		return this.y;
 	}
 
 	public void moveRightKeyReleaseResponse() {

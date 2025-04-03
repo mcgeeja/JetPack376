@@ -14,14 +14,14 @@ public class BlueAlien extends Alien{
 
     @Override
     public void drawOn(Graphics2D g) {
-        this.Alien1 = Toolkit.getDefaultToolkit().getImage("alien_type_1_2.0.png");
+        this.image = Toolkit.getDefaultToolkit().getImage("alien_type_1_2.0.png");
         try {
-            this.Alien1 = ImageIO.read(new File("alien_type_1_2.0.png"));
+            this.image = ImageIO.read(new File("alien_type_1_2.0.png"));
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        g.drawImage(Alien1, x, y, width, height, null);
+        g.drawImage(this.image, x, y, width, height, null);
     }
 
     @Override
