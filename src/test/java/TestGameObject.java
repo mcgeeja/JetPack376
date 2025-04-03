@@ -1,0 +1,45 @@
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
+import java.awt.Graphics2D;
+
+import org.junit.Test;
+
+import junit.framework.Assert;
+
+
+public class TestGameObject {
+	public boolean ranDrawOn = false;
+	
+	public class TestObject extends GameObject{
+		
+		public TestObject(int x, int y, int width, int height) {
+			super(x, y, width, height);
+		}
+
+		@Override
+		public void drawOn(Graphics2D g) {
+			ranDrawOn = true;
+		}
+		
+	}
+	@Test
+	public void testGameObjectIntersectsTrue() {
+		TestObject t1 = new TestObject(0,0,100,100);
+		TestObject t2 = new TestObject(0,0,100,100);
+		assertTrue(t1.intersects(t2));
+	}
+	@Test
+	public void testGameObjectIntersectsFalse() {
+		TestObject t1 = new TestObject(0,0,100,100);
+		TestObject t2 = new TestObject(200,200,100,100);
+		assertFalse(t1.intersects(t2));
+	}
+	@Test
+	public void testGameObjectGameOn() {
+		TestObject t1 = new TestObject(0,0,100,100);
+		assertFalse(ranDrawOn);
+		
+	}
+	
+}
