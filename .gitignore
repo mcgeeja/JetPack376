@@ -1,2 +1,127 @@
-/bin/
-**/*.class
+# ==========================
+# General OS-specific files
+# ==========================
+.DS_Store
+Thumbs.db
+ehthumbs.db
+desktop.ini
+
+# ==================================
+# Eclipse-specific files and folders
+# ==================================
+.project
+.classpath
+.settings/
+.metadata/
+# Local history (can grow very large)
+.history/
+# Derived resources
+bin/
+target/
+
+# ================================
+# IntelliJ IDEA-specific files
+# ================================
+.idea/
+*.iml
+*.iws
+# Workspace-specific files
+*.ipr
+# Compiler output
+out/
+# Cached files
+.idea/modules.xml
+.idea/jarRepositories.xml
+.idea/workspace.xml
+.idea/tasks.xml
+.idea/sonarlint/
+.idea/httpRequests/
+# Logs
+.idea/log/
+# Generated files
+.idea/libraries/
+
+# ==============================
+# VSCode-specific files
+# ==============================
+.vscode/
+# Debugging logs
+*.launch
+*.code-workspace
+# Extensions and caches
+.vscode-test/
+
+# =================================
+# Java-specific files and folders
+# =================================
+*.class
+*.jar
+*.war
+*.ear
+*.nar
+*.zip
+*.tar.gz
+*.rar
+# Generated Javadoc
+doc/
+# Temporary files
+*.tmp
+*.bak
+*.swp
+*.swo
+# Logs and error dumps
+*.log
+
+# BlueJ files
+*.ctxt
+
+# Mobile Tools for Java (J2ME)
+.mtj.tmp/
+
+# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
+hs_err_pid*
+replay_pid*
+
+# ============================
+# Maven-specific files
+# ============================
+.mvn/
+target/
+# Build directory
+build/
+dependency-reduced-pom.xml
+
+# ============================
+# Gradle-specific files
+# ============================
+.gradle/
+build/
+# Gradle wrapper
+!gradle-wrapper.jar
+# Gradle generated files
+**/build/
+**/out/
+# Cache
+.gradle/caches/
+.gradle/daemon/
+.gradle/wrapper/
+
+# =============================
+# Code coverage and test reports
+# =============================
+/jacoco.exec
+/coverage-reports/
+/test-results/
+
+# =============================
+# Package files
+# =============================
+*.tar.gz
+*.zip
+*.7z
+*.rar
+
+# =============================
+# Git files
+# =============================
+.git/
