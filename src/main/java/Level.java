@@ -9,10 +9,9 @@ import java.awt.Graphics2D;
 public class Level {
 
 
-    protected ArrayList<Platform> platforms;
-    protected ArrayList<Fuel> fuels;
-    protected ArrayList<Rocket> rocketPieces = new ArrayList<>();
-    protected int rocketPiece = 1;
+    public ArrayList<Platform> platforms;
+    public ArrayList<Fuel> fuels;
+    public ArrayList<Rocket> rocketPieces = new ArrayList<>();
 
 //    protected FileReader f;
     protected int curLevel;
@@ -42,9 +41,8 @@ public class Level {
         platforms.add(p);
     }
     private void addRocket(int pos_x,int pos_y){
-        Rocket r = new Rocket(pos_x,pos_y, this.rocketPiece);
+        Rocket r = new Rocket(pos_x,pos_y, this.rocketPieces.size());
         rocketPieces.add(r);
-        rocketPiece += 1;
     }
     private void processLine(String line,int row){
         for (int i = 0; i < line.length(); i++) {
@@ -70,6 +68,16 @@ public class Level {
         scanner.close();
         return lines;
     }
+    public void convertLevelToText(ArrayList<String> levelLines){
+        scale_x= Main.frameWidth/levelLines.get(0).length();
+        scale_y=Main.frameHeight/levelLines.size();
+        for(int i =0; i < levelLines.size();i ++)
+            processLine(levelLines.get(i),i);
+    }
+    public Level(){
+        this.platforms = new ArrayList<Platform>();
+        this.fuels = new ArrayList<Fuel>();
+    }
     public Level(int num) {
         this.curLevel = num;
         this.platforms = new ArrayList<Platform>();
@@ -77,12 +85,7 @@ public class Level {
         try {
             File levelFile = new File(getLevelFile(num));
             ArrayList<String> lines =readFromFile(levelFile);
-
-            //calculate scale based on shape of file and screen
-            scale_x= Main.frameWidth/lines.get(0).length();
-            scale_y=Main.frameHeight/lines.size();
-            for(int i =0; i < lines.size();i ++)
-                processLine(lines.get(i),i);
+            convertLevelToText(lines);
 
         } catch (FileNotFoundException e) {
             e.printStackTrace();
