@@ -7,12 +7,11 @@ import java.awt.Graphics2D;
 
 
 public class Level {
-
-
     protected ArrayList<Platform> platforms;
     protected ArrayList<Fuel> fuels;
     protected ArrayList<Rocket> rocketPieces = new ArrayList<>();
     protected int rocketPiece = 1;
+    protected Rocket bottomRocketPiece;
 
 //    protected FileReader f;
     protected int curLevel;
@@ -41,11 +40,24 @@ public class Level {
         Platform p = new Platform(pos_x,pos_y, 100, height);
         platforms.add(p);
     }
-    private void addRocket(int pos_x,int pos_y){
-        Rocket r = new Rocket(pos_x,pos_y, this.rocketPiece);
+    private void addBottomRocketPiece(int pos_x,int pos_y){
+        Rocket r = new BottomRocketPiece(pos_x,pos_y);
         rocketPieces.add(r);
         rocketPiece += 1;
     }
+    private void addMiddleRocketPiece(int pos_x,int pos_y){
+        Rocket r = new MiddleRocketPiece(pos_x,pos_y);
+        rocketPieces.add(r);
+        rocketPiece += 1;
+    }
+    private void addTopRocketPiece(int pos_x,int pos_y){
+        Rocket r = new TopRocketPiece(pos_x,pos_y);
+        rocketPieces.add(r);
+        this.bottomRocketPiece = r;
+        rocketPiece += 1;
+    }
+
+    
     private void processLine(String line,int row){
         for (int i = 0; i < line.length(); i++) {
             char c = line.charAt(i);
@@ -56,8 +68,12 @@ public class Level {
                 addFuel(pos_x,pos_y);
             else if (c == '-')
                 addPlatform(pos_x,pos_y,70);
-            else if (c == 'R')
-                addRocket(pos_x,pos_y);
+            else if (c == 'T')
+                addTopRocketPiece(pos_x,pos_y);
+            else if (c == 'M')
+                addMiddleRocketPiece(pos_x,pos_y);
+            else if (c == 'B')
+                addBottomRocketPiece(pos_x,pos_y);
         }
     }
     ArrayList<String> readFromFile(File levelFile) throws FileNotFoundException {
@@ -102,6 +118,10 @@ public class Level {
         }
 
 
+    }
+
+    public Rocket getBottomRocketPiece(){
+        return this.bottomRocketPiece;
     }
 
 

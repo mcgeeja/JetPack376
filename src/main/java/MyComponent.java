@@ -59,7 +59,8 @@ public class MyComponent extends JComponent {
 		int xR = levels.rocketPieces.get(2).x;
 		
 		this.rocketHolder = new BuildingPiece( xR, 930);
-		this.buildingRocket = new Rocket(xR - 10,levels.platforms.get(levels.platforms.size()-1).y -120);
+		// this.buildingRocket = new Rocket(xR - 10,levels.platforms.get(levels.platforms.size()-1).y -120);
+		this.buildingRocket = levels.getBottomRocketPiece();
 		Random rand = new Random();
 		num = rand.nextInt(20);
 		this.ammo = new AmmoCrate(levels.platforms.get(num).x,levels.platforms.get(num).y -30);
@@ -75,7 +76,7 @@ public class MyComponent extends JComponent {
     	this.g.fillRect(0, 0, 1920, 1080);
 		this.rocketHolder.drawOn(this.g);
 		this.ammo.drawOn(this.g);
-    	this.buildingRocket.build(buildRocketNum, this.g);
+    	// this.buildingRocket.build(buildRocketNum, this.g);
         levels.drawLevel(this.g);
         
      	for(int i = 0; i < aliensType1.size(); i++) {
@@ -173,27 +174,33 @@ public class MyComponent extends JComponent {
     	}
     }
 
-    public void onRocketHolder() {
-    	for(int i = 0 ; i < this.levels.rocketPieces.size(); i++) {
-    		if(this.rocketHolder.intersects(levels.rocketPieces.get(i))){
-    		levels.rocketPieces.get(i).x = this.rocketHolder.x-10;	
-    			if(levels.rocketPieces.get(i).type == pieceCount) {
-    				this.levels.rocketPieces.remove(i);
-    				this.buildRocketNum += 1;
-    				this.pieceCount -= 1;
-    				this.points += 300;
-    			}
-    		}
-    	}
-    }
-    public void takeOff(){
-    	if(this.pieceCount == 0 && this.fuelCount == 120) {
-    	this.buildingRocket.takeOff(this.g);
-    	
-    	
-    	}
-    	
-    }
+	public void onRocketHolder() {
+		for (int i = 0; i < this.levels.rocketPieces.size(); i++) {
+			Rocket piece = this.levels.rocketPieces.get(i);
+			if (this.rocketHolder.intersects(piece)) {
+				piece.x = this.rocketHolder.x - 10;
+	
+				boolean correct = (pieceCount == 3 && piece instanceof BottomRocketPiece)
+							   || (pieceCount == 2 && piece instanceof MiddleRocketPiece)
+							   || (pieceCount == 1 && piece instanceof TopRocketPiece);
+	
+				if (correct) {
+					this.buildRocketNum++;
+					this.pieceCount--;
+					this.points += 300;
+					break;
+				}
+			}
+		}
+	}
+	
+	public void takeOff() {
+		if (this.pieceCount == 0 && this.fuelCount == 120) {
+			for (Rocket r : this.levels.rocketPieces) {
+				r.y -= 10;
+			}
+		}
+	}
     
     public void updateBullets() {
     ArrayList<Bullets>	bulletsToRemove= new ArrayList<>();
