@@ -307,7 +307,7 @@ public class MyComponent extends JComponent {
 
 	public void run() {
 
-		KeyListener keylisten = new GameRunningKeyListener(this);
+		KeyListener keylisten = new GameRunningKeyListener(this, this.player);
        
         this.addKeyListener(keylisten);
         this.setFocusable(true);
