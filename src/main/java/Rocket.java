@@ -7,7 +7,7 @@ public class Rocket extends GameObject{
 	private static int width = 60;
 	private static final int GRAVITY = 5;
 	private int partHeight = 40;
-	protected int type;
+	public int type;
 
 	public Rocket(int x, int y, int type) {
 		super(x, y, width, height);
