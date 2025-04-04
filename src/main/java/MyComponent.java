@@ -31,22 +31,19 @@ public class MyComponent extends JComponent {
 	private boolean hasTakenOff=false;
 	protected boolean endGame = false;
 	private boolean levelChange = false;
-	
-//	protected boolean gameOver = false;
-//	protected int xR;
+	Random rand = new Random();
 
 	public MyComponent() {
 		this.direction[0] = "-";
 		this.direction[1] = "+";
 		this.direction[0] = "+";
-		Random random = new Random();
 		for (int i = 0; i < 1; i++) {
-			Alien alienType1 = new BlueAlien(0, random.nextInt(900),  this.direction[random.nextInt(2)]);
+			Alien alienType1 = new BlueAlien(0, rand.nextInt(900),  this.direction[rand.nextInt(2)]);
 			Alien redAlien = new RedAlien(500,500,"+");
-			Alien alienType1_2 = new BlueAlien(0, random.nextInt(900),  this.direction[random.nextInt(2)]);
-			Alien alienType2 = new GreenAlien(1920, random.nextInt(900),  this.direction[random.nextInt(2)]);
-			Alien alien1 = new BlueAlien(0, 150,  this.direction[random.nextInt(2)]);
-			Alien alien2 = new GreenAlien(1920, 500,  this.direction[random.nextInt(2)]);
+			Alien alienType1_2 = new BlueAlien(0, rand.nextInt(900),  this.direction[rand.nextInt(2)]);
+			Alien alienType2 = new GreenAlien(1920, rand.nextInt(900),  this.direction[rand.nextInt(2)]);
+			Alien alien1 = new BlueAlien(0, 150,  this.direction[rand.nextInt(2)]);
+			Alien alien2 = new GreenAlien(1920, 500,  this.direction[rand.nextInt(2)]);
 			aliensType1.add(alienType1);
 			aliensType1.add(alienType1_2);
 			aliensType1.add(alien1);
@@ -60,7 +57,6 @@ public class MyComponent extends JComponent {
 		
 		this.rocketHolder = new BuildingPiece( xR, 930);
 		this.buildingRocket = new Rocket(xR - 10,levels.platforms.get(levels.platforms.size()-1).y -120);
-		Random rand = new Random();
 		num = rand.nextInt(20);
 		this.ammo = new AmmoCrate(levels.platforms.get(num).x,levels.platforms.get(num).y -30);
 
@@ -259,7 +255,6 @@ public class MyComponent extends JComponent {
 	}
 
 	public void updateAliens() throws FileNotFoundException {
-		Random rand = new Random();
 		for (int i = 0; i < this.aliensType1.size(); i++) {
 
 			aliensType1.get(i).move(levels.platforms);
@@ -307,7 +302,7 @@ public class MyComponent extends JComponent {
 
 	public void run() {
 
-		KeyListener keylisten = new GameRunningKeyListener(this);
+		KeyListener keylisten = new GameRunningKeyListener(this, this.player);
        
         this.addKeyListener(keylisten);
         this.setFocusable(true);
@@ -323,7 +318,6 @@ public class MyComponent extends JComponent {
 			levels.curLevel = 2;
 			buildRocketNum = 0;
 			pieceCount = 3;
-			Random rand = new Random();
 			num = rand.nextInt(20);
 			ammo = new AmmoCrate(levels.platforms.get(num).x,levels.platforms.get(num).y -30);
 			buildingRocket.y = levels.platforms.get(levels.platforms.size()-1).y -120;
@@ -342,7 +336,6 @@ public class MyComponent extends JComponent {
 			levels.curLevel = 1;
 			buildRocketNum = 0;
 			pieceCount = 3;
-			Random rand = new Random();
 			num = rand.nextInt(20);
 			ammo = new AmmoCrate(levels.platforms.get(num).x,levels.platforms.get(num).y -30);
 			buildingRocket.y = levels.platforms.get(levels.platforms.size()-1).y -120;
@@ -361,7 +354,6 @@ public class MyComponent extends JComponent {
 			endGame = false;
 			buildRocketNum = 0;
 			pieceCount = 3;
-			Random rand = new Random();
 			num = rand.nextInt(20);
 			ammo = new AmmoCrate(levels.platforms.get(num).x,levels.platforms.get(num).y -30);
 			buildingRocket.y = levels.platforms.get(levels.platforms.size()-1).y -120;
@@ -379,7 +371,6 @@ public class MyComponent extends JComponent {
 			endGame = false;
 			buildRocketNum = 0;
 			pieceCount = 3;
-			Random rand = new Random();
 			num = rand.nextInt(20);
 			ammo = new AmmoCrate(levels.platforms.get(num).x,levels.platforms.get(num).y -30);
 			buildingRocket.y = levels.platforms.get(levels.platforms.size()-1).y -120;
