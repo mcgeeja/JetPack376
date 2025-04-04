@@ -7,7 +7,7 @@ public class GameOverKeyListener implements KeyListener {
 	private static int selectLevelTwoKey = KeyEvent.VK_2;
 	private static int exitKey = KeyEvent.VK_X;
 	
-	MyComponent component;
+	private final MyComponent component;
 	
 	public GameOverKeyListener(MyComponent component) {
 		this.component = component;

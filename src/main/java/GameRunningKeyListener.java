@@ -8,8 +8,8 @@ public class GameRunningKeyListener implements KeyListener {
 		static Map<String, Integer> controlsMap = new HashMap<>();
 		
 		
-		private MyComponent component;
-		private Player player;
+		private final MyComponent component;
+		private final Player player;
 	
 		//this is called in the main method I think there is probably a better way to set this up
 		//also possible future feature is making this generate based on a controls config file

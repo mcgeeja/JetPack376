@@ -4,7 +4,7 @@ import java.io.FileNotFoundException;
 
 public class GameAdvanceListener implements ActionListener {
 
-	private MyComponent component;
+	private final MyComponent component;
 
 	public GameAdvanceListener(MyComponent component) {
 		this.component = component;
