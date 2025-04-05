@@ -96,7 +96,6 @@ public class Rocket extends GameObject{
 		g.setColor(Color.YELLOW);
 		g.fillOval(x + 45, y + 120, 15, 20);
 		this.y -= 10;
-		System.out.println("Y = " + this.y);
 	}
 
 	public void pickedUp(Player player) {

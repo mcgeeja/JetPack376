@@ -120,6 +120,7 @@ public class MyComponent extends JComponent {
 		if(buildingRocket.y <= 0) {
 			GameOverScreen gameOverScreen = new GameOverScreen(this);
 			gameOverScreen.paintWinGame();
+
 			endGame = true;
 		}
 	}
@@ -179,9 +180,7 @@ public class MyComponent extends JComponent {
     }
     public void takeOff(){
     	if(this.pieceCount == 0 && this.fuelCount == 120) {
-    	this.buildingRocket.takeOff(this.g);
-    	
-    	
+    		this.buildingRocket.takeOff(this.g);
     	}
     	
     }
