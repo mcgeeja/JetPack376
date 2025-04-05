@@ -15,12 +15,11 @@ public class MyComponent extends JComponent {
 	private Level levels;
 	protected int num;
 	protected String[] direction = new String[2];
-	protected ArrayList<Platform> platforms;
-	protected ArrayList<Alien> aliensType1 = new ArrayList<Alien>();
-	protected ArrayList<Alien> aliensType2 = new ArrayList<Alien>();
+	private ArrayList<Platform> platforms;
+	protected ArrayList<Alien> aliensType1 = new ArrayList<>();
+	protected ArrayList<Alien> aliensType2 = new ArrayList<>();
 	protected Graphics2D g;
 
-	private int lives;
 	protected int points;
 	protected BuildingPiece rocketHolder;
 	protected Rocket buildingRocket;
@@ -28,9 +27,7 @@ public class MyComponent extends JComponent {
 	protected int pieceCount = 3;
 	protected int fuelCount = 0;
 	protected AmmoCrate ammo;
-	private boolean hasTakenOff=false;
 	protected boolean endGame = false;
-	private boolean levelChange = false;
 	Random rand = new Random();
 
 	public MyComponent() {
@@ -130,7 +127,7 @@ public class MyComponent extends JComponent {
 	}
 
 	public void playerPickUp() {
-		if(player.dropItem != false) {
+		if(player.getPickUpItem()) {
 			for (int i = 0; i < levels.fuels.size(); i++) {
 				levels.fuels.get(i).pickedUp(this.player);
 			}
@@ -258,8 +255,8 @@ public class MyComponent extends JComponent {
 		for (int i = 0; i < this.aliensType1.size(); i++) {
 
 			aliensType1.get(i).move(levels.platforms);
-			if (aliensType1.get(i).bulletHit(player.bulletlist)
-					|| aliensType1.get(i).bulletHit(player.bulletlistleft)) {
+			if (aliensType1.get(i).bulletHit(player.bulletList)
+					|| aliensType1.get(i).bulletHit(player.bulletListLeft)) {
 				this.points += 100;
 
 			}
@@ -288,8 +285,8 @@ public class MyComponent extends JComponent {
 
 			}
 			aliensType2.get(i).move(levels.platforms);
-			if (aliensType2.get(i).bulletHit(player.bulletlist)
-					|| aliensType2.get(i).bulletHit(player.bulletlistleft)) {
+			if (aliensType2.get(i).bulletHit(player.bulletList)
+					|| aliensType2.get(i).bulletHit(player.bulletListLeft)) {
 				this.points += 100;
 
 			}

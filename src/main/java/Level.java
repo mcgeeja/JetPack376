@@ -41,7 +41,7 @@ public class Level {
         platforms.add(p);
     }
     private void addRocket(int pos_x,int pos_y){
-        Rocket r = new Rocket(pos_x,pos_y, this.rocketPieces.size());
+        Rocket r = new Rocket(pos_x,pos_y, this.rocketPieces.size()+1);
         rocketPieces.add(r);
     }
     private void processLine(String line,int row){
