@@ -27,7 +27,8 @@ public class MyComponent extends JComponent {
 	protected BuildingPiece rocketHolder;
 	protected Rocket buildingRocket;
 	protected int buildRocketNum = 0;
-	protected int pieceCount = 3;
+	protected int piecesInLevel;
+	protected int pieceCount;
 	protected int fuelCount = 0;
 	protected AmmoCrate ammo;
 	private boolean hasTakenOff=false;
@@ -55,6 +56,8 @@ public class MyComponent extends JComponent {
 			aliensType2.add(alien2);
 		}
 		this.levels = new Level(1);
+		piecesInLevel = levels.rocketPieces.size();
+		pieceCount = levels.rocketPieces.size(); ;
 		int xR = levels.getBottomRocketPiece().x;
 		
 		this.rocketHolder = new BuildingPiece( xR, 930);
@@ -185,8 +188,8 @@ public class MyComponent extends JComponent {
 				piece.x = rocketHolder.x - 10;
 				piece.y = rocketHolder.y - (Rocket.PART_HEIGHT * builtRocketPieces.size() + Rocket.PART_HEIGHT); 
 	
-				boolean correctPiece = (pieceCount == 3 && piece instanceof BottomRocketPiece) ||
-									   (pieceCount == 2 && piece instanceof MiddleRocketPiece) ||
+				boolean correctPiece = (pieceCount == piecesInLevel && piece instanceof BottomRocketPiece) ||
+									   (pieceCount < piecesInLevel && pieceCount > 1 && piece instanceof MiddleRocketPiece) ||
 									   (pieceCount == 1 && piece instanceof TopRocketPiece);
 	
 				if (correctPiece) {
@@ -337,7 +340,8 @@ public class MyComponent extends JComponent {
 			player.bulletCount = 25;
 			levels.curLevel = 2;
 			buildRocketNum = 0;
-			pieceCount = 3;
+			piecesInLevel = levels.rocketPieces.size();
+			pieceCount = levels.rocketPieces.size(); ;
 			num = rand.nextInt(20);
 			ammo = new AmmoCrate(levels.platforms.get(num).x,levels.platforms.get(num).y -30);
 			buildingRocket.y = levels.platforms.get(levels.platforms.size()-1).y -120;
