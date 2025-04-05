@@ -7,6 +7,16 @@ public class BottomRocketPiece extends Rocket {
     }
 
     @Override
+public void drawPiece(Graphics2D g, int offsetY) {
+    g.setColor(Color.WHITE);
+    g.fillRect(x, offsetY, WIDTH, PART_HEIGHT);
+    g.drawLine(x, offsetY + PART_HEIGHT, x - (WIDTH / 2), offsetY + PART_HEIGHT + 40);
+    g.drawLine(x + WIDTH, offsetY + PART_HEIGHT, x + (3 * HEIGHT / 4), offsetY + PART_HEIGHT + 40);
+    g.drawLine(x - (WIDTH / 2), offsetY + PART_HEIGHT + 40, x + (3 * WIDTH / 2), offsetY + PART_HEIGHT + 40);
+}
+
+
+    @Override
     public void drawOn(Graphics2D g) {
         g.setColor(Color.WHITE);
         g.fillRect(x, y, WIDTH, HEIGHT / 3);
@@ -14,4 +24,7 @@ public class BottomRocketPiece extends Rocket {
         g.drawLine(x + WIDTH, y + HEIGHT / 3, x + (3 * HEIGHT / 4), y + HEIGHT);
         g.drawLine(x - (WIDTH / 2), y + HEIGHT, x + (3 * WIDTH / 2), y + HEIGHT);
     }
+
+
+    
 }

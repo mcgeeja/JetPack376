@@ -44,6 +44,7 @@ public class Level {
         Rocket r = new BottomRocketPiece(pos_x,pos_y);
         rocketPieces.add(r);
         rocketPiece += 1;
+        this.bottomRocketPiece = r;
     }
     private void addMiddleRocketPiece(int pos_x,int pos_y){
         Rocket r = new MiddleRocketPiece(pos_x,pos_y);
@@ -53,7 +54,6 @@ public class Level {
     private void addTopRocketPiece(int pos_x,int pos_y){
         Rocket r = new TopRocketPiece(pos_x,pos_y);
         rocketPieces.add(r);
-        this.bottomRocketPiece = r;
         rocketPiece += 1;
     }
 
