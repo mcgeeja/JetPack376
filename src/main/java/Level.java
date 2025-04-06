@@ -7,11 +7,13 @@ import java.awt.Graphics2D;
 
 
 public class Level {
+
     protected ArrayList<Platform> platforms;
     protected ArrayList<Fuel> fuels;
     protected ArrayList<Rocket> rocketPieces = new ArrayList<>();
     protected int rocketPiece = 1;
     protected Rocket bottomRocketPiece;
+
 
 //    protected FileReader f;
     protected int curLevel;
@@ -40,6 +42,7 @@ public class Level {
         Platform p = new Platform(pos_x,pos_y, 100, height);
         platforms.add(p);
     }
+
     private void addBottomRocketPiece(int pos_x,int pos_y){
         Rocket r = new BottomRocketPiece(pos_x,pos_y);
         rocketPieces.add(r);
@@ -48,8 +51,8 @@ public class Level {
     }
     private void addMiddleRocketPiece(int pos_x,int pos_y){
         Rocket r = new MiddleRocketPiece(pos_x,pos_y);
+
         rocketPieces.add(r);
-        rocketPiece += 1;
     }
     private void addTopRocketPiece(int pos_x,int pos_y){
         Rocket r = new TopRocketPiece(pos_x,pos_y);
@@ -86,6 +89,16 @@ public class Level {
         scanner.close();
         return lines;
     }
+    public void convertLevelToText(ArrayList<String> levelLines){
+        scale_x= Main.frameWidth/levelLines.get(0).length();
+        scale_y=Main.frameHeight/levelLines.size();
+        for(int i =0; i < levelLines.size();i ++)
+            processLine(levelLines.get(i),i);
+    }
+    public Level(){
+        this.platforms = new ArrayList<Platform>();
+        this.fuels = new ArrayList<Fuel>();
+    }
     public Level(int num) {
         this.curLevel = num;
         this.platforms = new ArrayList<Platform>();
@@ -93,12 +106,7 @@ public class Level {
         try {
             File levelFile = new File(getLevelFile(num));
             ArrayList<String> lines =readFromFile(levelFile);
-
-            //calculate scale based on shape of file and screen
-            scale_x= Main.frameWidth/lines.get(0).length();
-            scale_y=Main.frameHeight/lines.size();
-            for(int i =0; i < lines.size();i ++)
-                processLine(lines.get(i),i);
+            convertLevelToText(lines);
 
         } catch (FileNotFoundException e) {
             e.printStackTrace();

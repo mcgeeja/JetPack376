@@ -2,6 +2,7 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.util.ArrayList;
 
+
 public abstract class Rocket extends GameObject {
     protected static final int WIDTH = 60;
     protected static final int HEIGHT = 120;
