@@ -56,6 +56,6 @@ public void testPickedUp_CooldownBlocksPickup() {
         rocket.gravity(platforms);
 
         // Should land right on top of platform
-        assertEquals(platform.y - (rocket.height / 3), rocket.y);
+        assertEquals(platform.y - rocket.height, rocket.y);
     }
 }
