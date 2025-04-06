@@ -16,15 +16,15 @@ public class LevelTest {
     @Test
     public void TestLoadLevel() {
         ArrayList<String> level1String = new ArrayList<>(Arrays.asList(
-                "1.............R.....",
+                "1.............T.....",
                 "..........._f__.....",
                 "....................",
                 "..........._f_......",
                 ".._f_...............",
                 "....................",
-                ".......R............",
+                ".......M............",
                 "..........___.......",
-                ".................R..",
+                ".................B..",
                 "--------------------"
         ));
         Level levelFromString = new Level();
@@ -49,7 +49,7 @@ public class LevelTest {
             Rocket fromFile = levelFromFile.rocketPieces.get(i);
             Rocket fromText = levelFromFile.rocketPieces.get(i);
             compareGameObjects(fromText, fromFile);
-            Assertions.assertEquals(fromText.type, fromFile.type);
+            Assertions.assertEquals(fromText.getClass(), fromFile.getClass());
         }
     }
 }
