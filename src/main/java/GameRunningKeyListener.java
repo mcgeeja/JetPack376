@@ -10,7 +10,7 @@ public class GameRunningKeyListener implements KeyListener {
 		
 		private final MyComponent component;
 		private final Player player;
-	
+
 		//this is called in the main method I think there is probably a better way to set this up
 		//also possible future feature is making this generate based on a controls config file
 		public static void initializeDefaultControlsMap() {
@@ -35,31 +35,31 @@ public class GameRunningKeyListener implements KeyListener {
 		
 		public void keyPressed(KeyEvent e) {
 			if (e.getKeyCode() == controlsMap.get("Move Right")) {
-				player.moveRightKeyPressResponse();
+				player.setMoveRight(true);
 			}
 			
 			if (e.getKeyCode() == controlsMap.get("Move Left")) {
-				player.moveLeftKeyPressResponse();
+				player.setMoveLeft(true);
 			}
 			
 			if(e.getKeyCode() == controlsMap.get("Shoot")) {
-				player.shootKeyPressResponse();
+				player.shoot();
         	}
 			
 			if(e.getKeyCode() == controlsMap.get("Reload")) {
-				player.reloadKeyPressResponse();
+				player.reload();
         	}
 			
 			if(e.getKeyCode() == controlsMap.get("Pickup")) {
-            	player.pickupKeyPressResponse();
+				player.setPickUpItem(true);
             }
 			
 			if (e.getKeyCode() == controlsMap.get("Move Up")) {
-				player.moveUpKeyPressResponse();
+				player.setMoveUp(true);
 			}
 			
 			if (e.getKeyCode() == controlsMap.get("Move Down")) {
-				player.moveDownKeyPressResponse();
+				player.setMoveDown(true);
 			}
 			
 			if (e.getKeyCode() ==  controlsMap.get("Next Level")) {
@@ -74,23 +74,23 @@ public class GameRunningKeyListener implements KeyListener {
 		
 		public void keyReleased(KeyEvent e) {
 			if (e.getKeyCode() == controlsMap.get("Move Right")) {
-				player.moveRightKeyReleaseResponse();
+				player.setMoveRight(false);
         	}
 			
 			if (e.getKeyCode() == controlsMap.get("Move Left")) {
-				player.moveLeftKeyReleaseResponse();
+				player.setMoveLeft(false);
 	        }
 			
 	        if(e.getKeyCode() == controlsMap.get("Move Up")) {
-	        	player.moveUpKeyReleaseResponse();
+	        	player.setMoveUp(false);
 	        }
 	        
 	        if(e.getKeyCode() == controlsMap.get("Move Down")) {
-	        	player.moveDownKeyReleaseResponse();
+	        	player.setMoveDown(false);
 	        }
 	        
 	        if(e.getKeyCode() == controlsMap.get("Pickup")) {
-	        	player.pickupKeyReleaseResponse();
+	        	player.setPickUpItem(false);
 	        }
 		}
 		

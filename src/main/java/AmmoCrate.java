@@ -18,6 +18,7 @@ public class AmmoCrate extends GameObject{
 	public void pickedUpAmmo(Player player) {
 		if(this.intersects(player)) {
 			player.reserveAmmo = 75;
+			player.bulletCount = 25;
 		}
 	}
 }

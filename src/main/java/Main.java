@@ -22,11 +22,6 @@ import javax.swing.Timer;
  */
 public class Main {
 
-
-	/**
-	 * @param args
-	 */
-
 	/**
 	 * @param args
 	 */

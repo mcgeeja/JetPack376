@@ -9,24 +9,24 @@ import java.util.ArrayList;
 import javax.imageio.ImageIO;
 
 public class Player extends GameObject{
-	private static int HeroHeight = 60;
-	private static int HeroWidth = 30;
+	private static final int HeroHeight = 60;
+	private static final int HeroWidth = 30;
 	private static final int GRAVITY = 5;
 	protected int lives;
 	protected int speed;
-	protected ArrayList<Bullets> bulletlist = new ArrayList<>();
-	protected ArrayList<Bullets> bulletlistleft = new ArrayList<>();
+	protected ArrayList<Bullets> bulletList = new ArrayList<>();
+	protected ArrayList<Bullets> bulletListLeft = new ArrayList<>();
 	protected int bulletCount;
 	protected int reserveAmmo;
 	protected Image image;
-	protected boolean right = false;
-	protected boolean left = false;
-	protected boolean up = false;
-	protected boolean down = false;
+	private boolean right = false;
+	private boolean left = false;
+	private boolean up = false;
+	private boolean down = false;
 	private int pickUpCooldown;
-	private boolean faceLeft;
-	private boolean faceRight;
-	protected boolean dropItem = false;
+	private enum Direction {LEFT, RIGHT};
+	private Direction direction = Direction.LEFT;
+	private boolean pickUpItem = false;
 
 	public Player(int x, int y, int speed) {
 		super(x, y, HeroWidth, HeroHeight);
@@ -111,104 +111,60 @@ public class Player extends GameObject{
 
 	public void shoot() {
 		if (this.bulletCount != 0) {
-			Bullets b = new Bullets(this.x + this.width, this.y + this.height / 2, Color.ORANGE, 10);
-			bulletlist.add(b);
+			if(direction == Direction.RIGHT) {
+				Bullets b = new Bullets(this.x + this.width, this.y + this.height / 2, Color.ORANGE, 10);
+				bulletList.add(b);
+			}
+			else if(direction == Direction.LEFT) {
+				Bullets b = new Bullets(this.x - this.width, this.y + this.height / 2, Color.ORANGE, 10);
+				bulletListLeft.add(b);
+			}
 			this.bulletCount -= 1;
 		}
 	}
 
 	public ArrayList<Bullets> getListOfBullets() {
-		return bulletlist;
+		return bulletList;
 	}
 
-	public void shootleft() {
-		if (this.bulletCount != 0) {
-			Bullets b = new Bullets(this.x - this.width, this.y + this.height / 2, Color.ORANGE, 10);
-			bulletlistleft.add(b);
-			this.bulletCount -= 1;
-		}
-	}
 
 	public void reload() {
 		int max = 25;
-		if (this.bulletCount >= 25) {
-			return;
-		}
-		if (this.reserveAmmo <= 0) {
-			this.reserveAmmo = 0;
-		} else if (this.reserveAmmo < 25) {
-			int num = Math.min(this.reserveAmmo, max - bulletCount);
-			this.bulletCount += num;
-			this.reserveAmmo -= num;
-
-		} else {
-			int num = Math.min(max, max - bulletCount);
-			this.bulletCount += num;
-			this.reserveAmmo -= num;
-		}
+		int numBulletsToReload = Math.min(reserveAmmo, max - bulletCount);
+		this.bulletCount += numBulletsToReload;
+		this.reserveAmmo -= numBulletsToReload;
 	}
 
 	public ArrayList<Bullets> getListOfLeftBullets() {
-		return bulletlistleft;
+		return bulletListLeft;
 	}
 
-	public void moveRightKeyReleaseResponse() {
-		right = false;
+	public void setMoveRight(boolean b) {
+		right = b;
+		if(right)
+			direction = Direction.RIGHT;
 	}
 
-	public void moveLeftKeyReleaseResponse() {
-		left = false;
+	public void setMoveLeft(boolean b) {
+		left = b;
+		if(left)
+			direction = Direction.LEFT;
 	}
 
-	public void moveUpKeyReleaseResponse() {
-		up = false;
+	public void setMoveUp(boolean b) {
+		up = b;
 	}
 
-	public void moveDownKeyReleaseResponse() {
-		down = false;
+	public void setMoveDown(boolean b) {
+		down = b;
 	}
 
-	public void reloadKeyPressResponse() {
-		reload();
+	public boolean getPickUpItem(){
+		return pickUpItem;
 	}
 
-	public void shootKeyPressResponse() {
-		if(faceRight) {
-			shoot();
-		}
-	
-		if(faceLeft) {
-	    	shootleft();
-		}
-	}
-
-	public void pickupKeyPressResponse() {
-		dropItem = true;
-	}
-
-	public void moveRightKeyPressResponse() {
-		faceRight = true;
-		faceLeft = false;
-		right = true;
-	
-	}
-
-	public void moveLeftKeyPressResponse() {
-		faceRight = false;
-		faceLeft = true;
-		left = true;
-	}
-
-	public void moveUpKeyPressResponse() {
-		up = true;
-	}
-
-	public void moveDownKeyPressResponse() {
-		down = true;
-	}
-
-	public void pickupKeyReleaseResponse() {
-		dropItem = false;
+	public void setPickUpItem(boolean b) {
+		pickUpItem = b;
 	}
 
 }

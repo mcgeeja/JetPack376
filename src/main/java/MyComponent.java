@@ -15,14 +15,12 @@ public class MyComponent extends JComponent {
 	private Level levels;
 	protected int num;
 	protected String[] direction = new String[2];
-	protected ArrayList<Platform> platforms;
-	protected ArrayList<Alien> aliensType1 = new ArrayList<Alien>();
-	protected ArrayList<Alien> aliensType2 = new ArrayList<Alien>();
+	protected ArrayList<Alien> aliensType1 = new ArrayList<>();
+	protected ArrayList<Alien> aliensType2 = new ArrayList<>();
 	protected Graphics2D g;
 	private ArrayList<Rocket> builtRocketPieces = new ArrayList<>();
 
 
-	private int lives;
 	protected int points;
 	protected BuildingPiece rocketHolder;
 	protected Rocket buildingRocket;
@@ -30,10 +28,8 @@ public class MyComponent extends JComponent {
 	protected int pieceCount = 3;
 	protected int fuelCount = 0;
 	protected AmmoCrate ammo;
-	private boolean hasTakenOff=false;
 	protected boolean endGame = false;
-	private boolean levelChange = false;
-	Random rand = new Random();
+	private static final Random rand = new Random();
 
 	public MyComponent() {
 		this.direction[0] = "-";
@@ -82,14 +78,13 @@ public class MyComponent extends JComponent {
 		
 		
         levels.drawLevel(this.g);
-        
-     	for(int i = 0; i < aliensType1.size(); i++) {
-       	aliensType1.get(i).drawOn(this.g);
-      	
+
+        for (Alien alien : aliensType1) {
+            alien.drawOn(this.g);
         }
-     	for(int i = 0; i < aliensType2.size(); i++) {
-     	aliensType2.get(i).drawOn(this.g);
-     	}
+        for (Alien alien : aliensType2) {
+            alien.drawOn(this.g);
+        }
         playerPickUp();
         onRocketHolder();
         updateFuelCount();
@@ -134,12 +129,13 @@ public class MyComponent extends JComponent {
 		if(buildingRocket.y <= 0) {
 			GameOverScreen gameOverScreen = new GameOverScreen(this);
 			gameOverScreen.paintWinGame();
+
 			endGame = true;
 		}
 	}
 
 	public void playerPickUp() {
-		if(player.dropItem != false) {
+		if(player.getPickUpItem()) {
 			for (int i = 0; i < levels.fuels.size(); i++) {
 				levels.fuels.get(i).pickedUp(this.player);
 			}
@@ -209,7 +205,6 @@ public class MyComponent extends JComponent {
 			}
 		}
 	}
-	
     
     public void updateBullets() {
     ArrayList<Bullets>	bulletsToRemove= new ArrayList<>();
@@ -274,46 +269,46 @@ public class MyComponent extends JComponent {
 
 	}
 
-	public void updateAliens() throws FileNotFoundException {
-		for (int i = 0; i < this.aliensType1.size(); i++) {
+	public void updateAliens() {
+        for (Alien alien : this.aliensType1) {
 
-			aliensType1.get(i).move(levels.platforms);
-			if (aliensType1.get(i).bulletHit(player.bulletlist)
-					|| aliensType1.get(i).bulletHit(player.bulletlistleft)) {
-				this.points += 100;
+            alien.move(levels.platforms);
+            if (alien.bulletHit(player.bulletList)
+                    || alien.bulletHit(player.bulletListLeft)) {
+                this.points += 100;
 
-			}
-		}
+            }
+        }
 //	    	
-		for (int i = 0; i < this.aliensType2.size(); i++) {
-			if (aliensType2.get(i).direction == "-") {
-				if (aliensType2.get(i).x < 0) {
-					aliensType2.get(i).x = 1920;
-				}
-			} else {
-				if (aliensType2.get(i).x > 1920) {
-					if (aliensType2.get(i).y > 950) {
-						aliensType2.get(i).y = rand.nextInt(800);
-					}
-					aliensType2.get(i).x = 0;
-				}
-			}
-			if (aliensType2.get(i).y <= 0) {
-				if (aliensType2.get(i).directNum == 1) {
-					aliensType2.get(i).directNum = 2;
-				} else {
-					aliensType2.get(i).directNum = 1;
+        for (Alien alien : this.aliensType2) {
+            if (alien.direction.equals("-")) {
+                if (alien.x < 0) {
+                    alien.x = 1920;
+                }
+            } else {
+                if (alien.x > 1920) {
+                    if (alien.y > 950) {
+                        alien.y = rand.nextInt(800);
+                    }
+                    alien.x = 0;
+                }
+            }
+            if (alien.y <= 0) {
+                if (alien.directNum == 1) {
+                    alien.directNum = 2;
+                } else {
+                    alien.directNum = 1;
 
-				}
+                }
 
-			}
-			aliensType2.get(i).move(levels.platforms);
-			if (aliensType2.get(i).bulletHit(player.bulletlist)
-					|| aliensType2.get(i).bulletHit(player.bulletlistleft)) {
-				this.points += 100;
+            }
+            alien.move(levels.platforms);
+            if (alien.bulletHit(player.bulletList)
+                    || alien.bulletHit(player.bulletListLeft)) {
+                this.points += 100;
 
-			}
-		}
+            }
+        }
 	}
 
 	public void updatePickUpTimer() {
@@ -364,12 +359,11 @@ public class MyComponent extends JComponent {
     }
     
     public void selectLevelOneKeyPressResponse() {
-		if(endGame == true) {
+		if(endGame) {
 			levels = new Level(1);
 			points = 0;
-			player.lives = 3;
-			player.reserveAmmo = 75;
-			player.bulletCount = 25;
+			player = new Player(1920 / 2, 800, 15);
+			this.addKeyListener(new GameRunningKeyListener(this, this.player));
 			levels.curLevel = 1;
 			endGame = false;
 			buildRocketNum = 0;
@@ -381,12 +375,11 @@ public class MyComponent extends JComponent {
     }
     
     public void selectLevelTwoKeyPressResponse() {
-    	if(endGame == true) {
+    	if(endGame) {
 			levels = new Level(2);
 			points = 0;
-			player.lives = 3;
-			player.reserveAmmo = 75;
-			player.bulletCount = 25;
+			player = new Player(1920 / 2, 800, 15);
+			this.addKeyListener(new GameRunningKeyListener(this, this.player));
 			levels.curLevel = 2;
 			endGame = false;
 			buildRocketNum = 0;

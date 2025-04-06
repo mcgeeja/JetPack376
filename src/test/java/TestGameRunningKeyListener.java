@@ -25,12 +25,6 @@ public class TestGameRunningKeyListener {
         EasyMock.expect(mockedEvent.getKeyCode()).andReturn(GameRunningKeyListener.controlsMap.get(controlMapKey)).anyTimes();
     }
 
-    private void replayAndConstructUUT(){
-        EasyMock.replay(mockedEvent, mockedPlayer, mockedComponent);
-        GameRunningKeyListener unitUnderTest = new GameRunningKeyListener(mockedComponent, mockedPlayer);
-        unitUnderTest.keyPressed(mockedEvent);
-    }
-
     @Test
     public void testKeyPressedUpKey() {
         //setup
@@ -38,10 +32,12 @@ public class TestGameRunningKeyListener {
 
         //record section
         expectKeyEvent("Move Up");
-        mockedPlayer.moveUpKeyPressResponse();
+        mockedPlayer.setMoveUp(true);
 
         //replay section
-        replayAndConstructUUT();
+        EasyMock.replay(mockedEvent, mockedPlayer, mockedComponent);
+        GameRunningKeyListener unitUnderTest = new GameRunningKeyListener(mockedComponent, mockedPlayer);
+        unitUnderTest.keyPressed(mockedEvent);
 
         //verify
         EasyMock.verify(mockedEvent, mockedPlayer, mockedComponent);
@@ -54,10 +50,12 @@ public class TestGameRunningKeyListener {
 
         //record section
         expectKeyEvent("Move Left");
-        mockedPlayer.moveLeftKeyPressResponse();
+        mockedPlayer.setMoveLeft(true);
 
         //replay section
-        replayAndConstructUUT();
+        EasyMock.replay(mockedEvent, mockedPlayer, mockedComponent);
+        GameRunningKeyListener unitUnderTest = new GameRunningKeyListener(mockedComponent, mockedPlayer);
+        unitUnderTest.keyPressed(mockedEvent);
 
         //verify
         EasyMock.verify(mockedEvent, mockedPlayer, mockedComponent);
@@ -70,10 +68,12 @@ public class TestGameRunningKeyListener {
 
         //record section
         expectKeyEvent("Move Down");
-        mockedPlayer.moveDownKeyPressResponse();
+        mockedPlayer.setMoveDown(true);
 
         //replay section
-        replayAndConstructUUT();
+        EasyMock.replay(mockedEvent, mockedPlayer, mockedComponent);
+        GameRunningKeyListener unitUnderTest = new GameRunningKeyListener(mockedComponent, mockedPlayer);
+        unitUnderTest.keyPressed(mockedEvent);
 
         //verify
         EasyMock.verify(mockedEvent, mockedPlayer, mockedComponent);
@@ -86,10 +86,12 @@ public class TestGameRunningKeyListener {
 
         //record section
         expectKeyEvent("Move Right");
-        mockedPlayer.moveRightKeyPressResponse();
+        mockedPlayer.setMoveRight(true);
 
         //replay section
-        replayAndConstructUUT();
+        EasyMock.replay(mockedEvent, mockedPlayer, mockedComponent);
+        GameRunningKeyListener unitUnderTest = new GameRunningKeyListener(mockedComponent, mockedPlayer);
+        unitUnderTest.keyPressed(mockedEvent);
 
         //verify
         EasyMock.verify(mockedEvent, mockedPlayer, mockedComponent);
@@ -102,10 +104,12 @@ public class TestGameRunningKeyListener {
 
         //record section
         expectKeyEvent("Shoot");
-        mockedPlayer.shootKeyPressResponse();
+        mockedPlayer.shoot();
 
         //replay section
-        replayAndConstructUUT();
+        EasyMock.replay(mockedEvent, mockedPlayer, mockedComponent);
+        GameRunningKeyListener unitUnderTest = new GameRunningKeyListener(mockedComponent, mockedPlayer);
+        unitUnderTest.keyPressed(mockedEvent);
 
         //verify
         EasyMock.verify(mockedEvent, mockedPlayer, mockedComponent);
@@ -118,10 +122,12 @@ public class TestGameRunningKeyListener {
 
         //record section
         expectKeyEvent("Reload");
-        mockedPlayer.reloadKeyPressResponse();
+        mockedPlayer.reload();
 
         //replay section
-        replayAndConstructUUT();
+        EasyMock.replay(mockedEvent, mockedPlayer, mockedComponent);
+        GameRunningKeyListener unitUnderTest = new GameRunningKeyListener(mockedComponent, mockedPlayer);
+        unitUnderTest.keyPressed(mockedEvent);
 
         //verify
         EasyMock.verify(mockedEvent, mockedPlayer, mockedComponent);
@@ -134,10 +140,12 @@ public class TestGameRunningKeyListener {
 
         //record section
         expectKeyEvent("Pickup");
-        mockedPlayer.pickupKeyPressResponse();
+        mockedPlayer.setPickUpItem(true);
 
         //replay section
-        replayAndConstructUUT();
+        EasyMock.replay(mockedEvent, mockedPlayer, mockedComponent);
+        GameRunningKeyListener unitUnderTest = new GameRunningKeyListener(mockedComponent, mockedPlayer);
+        unitUnderTest.keyPressed(mockedEvent);
 
         //verify
         EasyMock.verify(mockedEvent, mockedPlayer, mockedComponent);
@@ -153,7 +161,9 @@ public class TestGameRunningKeyListener {
         mockedComponent.changeToNextLevelKeyPressResponse();
 
         //replay section
-        replayAndConstructUUT();
+        EasyMock.replay(mockedEvent, mockedPlayer, mockedComponent);
+        GameRunningKeyListener unitUnderTest = new GameRunningKeyListener(mockedComponent, mockedPlayer);
+        unitUnderTest.keyPressed(mockedEvent);
 
         //verify
         EasyMock.verify(mockedEvent, mockedPlayer, mockedComponent);
@@ -169,7 +179,100 @@ public class TestGameRunningKeyListener {
         mockedComponent.changeToPreviousLevelKeyPressResponse();
 
         //replay section
-        replayAndConstructUUT();
+        EasyMock.replay(mockedEvent, mockedPlayer, mockedComponent);
+        GameRunningKeyListener unitUnderTest = new GameRunningKeyListener(mockedComponent, mockedPlayer);
+        unitUnderTest.keyPressed(mockedEvent);
+
+        //verify
+        EasyMock.verify(mockedEvent, mockedPlayer, mockedComponent);
+    }
+
+
+    @Test
+    public void testKeyReleasedUpKey() {
+        //setup
+        setupMockedClasses();
+
+        //record section
+        expectKeyEvent("Move Up");
+        mockedPlayer.setMoveUp(false);
+
+        //replay section
+        EasyMock.replay(mockedEvent, mockedPlayer, mockedComponent);
+        GameRunningKeyListener unitUnderTest = new GameRunningKeyListener(mockedComponent, mockedPlayer);
+        unitUnderTest.keyReleased(mockedEvent);
+
+        //verify
+        EasyMock.verify(mockedEvent, mockedPlayer, mockedComponent);
+    }
+
+    @Test
+    public void testKeyReleasedLeftKey() {
+        //setup
+        setupMockedClasses();
+
+        //record section
+        expectKeyEvent("Move Left");
+        mockedPlayer.setMoveLeft(false);
+
+        //replay section
+        EasyMock.replay(mockedEvent, mockedPlayer, mockedComponent);
+        GameRunningKeyListener unitUnderTest = new GameRunningKeyListener(mockedComponent, mockedPlayer);
+        unitUnderTest.keyReleased(mockedEvent);
+
+        //verify
+        EasyMock.verify(mockedEvent, mockedPlayer, mockedComponent);
+    }
+
+    @Test
+    public void testKeyReleasedDownKey() {
+        //setup
+        setupMockedClasses();
+
+        //record section
+        expectKeyEvent("Move Down");
+        mockedPlayer.setMoveDown(false);
+
+        //replay section
+        EasyMock.replay(mockedEvent, mockedPlayer, mockedComponent);
+        GameRunningKeyListener unitUnderTest = new GameRunningKeyListener(mockedComponent, mockedPlayer);
+        unitUnderTest.keyReleased(mockedEvent);
+
+        //verify
+        EasyMock.verify(mockedEvent, mockedPlayer, mockedComponent);
+    }
+
+    @Test
+    public void testKeyReleasedRightKey() {
+        //setup
+        setupMockedClasses();
+
+        //record section
+        expectKeyEvent("Move Right");
+        mockedPlayer.setMoveRight(false);
+
+        //replay section
+        EasyMock.replay(mockedEvent, mockedPlayer, mockedComponent);
+        GameRunningKeyListener unitUnderTest = new GameRunningKeyListener(mockedComponent, mockedPlayer);
+        unitUnderTest.keyReleased(mockedEvent);
+
+        //verify
+        EasyMock.verify(mockedEvent, mockedPlayer, mockedComponent);
+    }
+
+    @Test
+    public void testKeyReleasedPickupKey() {
+        //setup
+        setupMockedClasses();
+
+        //record section
+        expectKeyEvent("Pickup");
+        mockedPlayer.setPickUpItem(false);
+
+        //replay section
+        EasyMock.replay(mockedEvent, mockedPlayer, mockedComponent);
+        GameRunningKeyListener unitUnderTest = new GameRunningKeyListener(mockedComponent, mockedPlayer);
+        unitUnderTest.keyReleased(mockedEvent);
 
         //verify
         EasyMock.verify(mockedEvent, mockedPlayer, mockedComponent);
