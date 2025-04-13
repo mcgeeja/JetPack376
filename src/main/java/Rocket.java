@@ -2,7 +2,7 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.util.ArrayList;
 
-public abstract class Rocket extends GameObject {
+public abstract class Rocket extends GravityGameObject {
     protected static final int WIDTH = 60;
     protected static final int HEIGHT = 120;
     protected static final int PART_HEIGHT = 40;
@@ -38,12 +38,4 @@ public abstract class Rocket extends GameObject {
         }
     }
 
-    public void gravity(ArrayList<Platform> plats) {
-        this.y += GRAVITY;
-        for (Platform plat : plats) {
-            if (this.intersects(plat)) {
-                this.y = plat.y - this.height;
-            }
-        }
-    }
 }

@@ -8,10 +8,9 @@ import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
 
-public class Player extends GameObject{
+public class Player extends GravityGameObject{
 	private static final int HeroHeight = 60;
 	private static final int HeroWidth = 30;
-	private static final int GRAVITY = 5;
 	protected int lives;
 	protected int speed;
 	protected ArrayList<Bullets> bulletList = new ArrayList<>();
@@ -99,15 +98,6 @@ public class Player extends GameObject{
 		}
 	}
 
-	public void gravity(ArrayList<Platform> plats) {
-		this.y = this.y + GRAVITY;
-
-        for (Platform plat : plats) {
-            if (this.intersects(plat)) {
-                this.y = plat.y - this.height;
-            }
-        }
-	}
 
 	public void shoot() {
 		if (this.bulletCount != 0) {
