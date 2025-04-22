@@ -1,17 +1,20 @@
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
+import java.io.File;
 
 public class Bullets extends GameObject{
 	private int xVelocity;
 	private double size;
 	private Color bulletcolor;
+	private Sound sound = new Sound(new File("bullet-sound.wav"));
 
 	public Bullets(int startx, int starty, Color bulletcolor, int size) {
 		super(startx, starty, size, size);
 		this.xVelocity = 25;
 		this.bulletcolor = bulletcolor;
 		this.size = size;
+		sound.playSoundOneShot();
 	}
 
 	public boolean move(int boundary) {

@@ -48,6 +48,7 @@ public class GameRunningKeyListener implements KeyListener {
 			
 			if(e.getKeyCode() == controlsMap.get("Reload")) {
 				player.reload();
+	
         	}
 			
 			if(e.getKeyCode() == controlsMap.get("Pickup")) {
