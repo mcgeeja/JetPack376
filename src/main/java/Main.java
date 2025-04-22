@@ -82,8 +82,10 @@ public class Main {
 			}
 		};
 		frame.addKeyListener(keylisten);
-
-		playMusic("finalgametheme.wav");
+		
+		Sound gameTheme = new Sound(new File("finalgametheme.wav"));
+		gameTheme.playSoundLoop();
+//		playMusic("finalgametheme.wav");
 
 		frame.setVisible(true);
 		frame.setSize(frameWidth, frameHeight);
