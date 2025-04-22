@@ -85,7 +85,6 @@ public class Main {
 		
 		Sound gameTheme = new Sound(new File("finalgametheme.wav"));
 		gameTheme.playSoundLoop();
-//		playMusic("finalgametheme.wav");
 
 		frame.setVisible(true);
 		frame.setSize(frameWidth, frameHeight);
@@ -94,24 +93,5 @@ public class Main {
 
 	}
 
-	public static void playMusic(String musicLocation) {
-		try {
 
-			File musicPath = new File(musicLocation);
-			
-			if (musicPath.exists()) {
-				AudioInputStream audioInput = AudioSystem.getAudioInputStream(musicPath);			
-				Clip clip = AudioSystem.getClip();
-				clip.open(audioInput);
-				clip.start();
-				clip.loop(Clip.LOOP_CONTINUOUSLY);
-				
-			} else {
-				System.out.println("Can't find file");
-			}
-		} catch (Exception ex) {
-			ex.printStackTrace();
-		}
-
-	}
 }
