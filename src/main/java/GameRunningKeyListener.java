@@ -18,8 +18,7 @@ public class GameRunningKeyListener implements KeyListener {
 			controlsMap.put("Move Left", KeyEvent.VK_LEFT);
 			controlsMap.put("Move Down", KeyEvent.VK_DOWN);
 			controlsMap.put("Move Right", KeyEvent.VK_RIGHT);
-			
-			controlsMap.put("Shoot", KeyEvent.VK_SPACE);
+
 			controlsMap.put("Reload", KeyEvent.VK_R);
 			controlsMap.put("Pickup", KeyEvent.VK_X);
 			
@@ -41,10 +40,6 @@ public class GameRunningKeyListener implements KeyListener {
 			if (e.getKeyCode() == controlsMap.get("Move Left")) {
 				player.setMoveLeft(true);
 			}
-			
-			if(e.getKeyCode() == controlsMap.get("Shoot")) {
-				player.shoot();
-        	}
 			
 			if(e.getKeyCode() == controlsMap.get("Reload")) {
 				player.reload();

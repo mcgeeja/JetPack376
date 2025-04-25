@@ -141,14 +141,10 @@ public class Player extends GravityGameObject{
 
 	public void setMoveRight(boolean b) {
 		right = b;
-		if(right)
-			direction = Direction.RIGHT;
 	}
 
 	public void setMoveLeft(boolean b) {
 		left = b;
-		if(left)
-			direction = Direction.LEFT;
 	}
 
 	public void setMoveUp(boolean b) {
