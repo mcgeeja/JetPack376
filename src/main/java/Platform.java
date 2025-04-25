@@ -18,4 +18,24 @@ public class Platform extends GameObject{
 
 	}
 
+	@Override
+	public void leftEdgeHit() {
+
+	}
+
+	@Override
+	public void rightEdgeHit() {
+
+	}
+
+	@Override
+	public void topEdgeHit() {
+
+	}
+
+	@Override
+	public void bottomEdgeHit() {
+
+	}
+
 }
