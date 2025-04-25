@@ -18,15 +18,15 @@ public class PlayerDirectionTest {
     public void testSetMoveRightMakesDirectionRight() {
         Player player = new Player(10, 10, 5);
 
-        player.setMoveRight(true);
+        player.setDirectionToFace(11);
         Assertions.assertEquals(Player.Direction.RIGHT, player.getDirection());
     }
 
     @Test
-    public void testSetMoveLeftMakesDirectionLeft() {
+    public void testSetDirectionToFaceMakesDirectionLeft() {
         Player player = new Player(10, 10, 5);
 
-        player.setMoveLeft(true);
+        player.setDirectionToFace(9);
         Assertions.assertEquals(Player.Direction.LEFT, player.getDirection());
     }
 
@@ -34,12 +34,12 @@ public class PlayerDirectionTest {
     public void testShootAddsBulletsToFacedDirection() {
         Player player = new Player(10, 10, 5);
 
-        player.setMoveLeft(true);//sets the direction for me
+        player.setDirectionToFace(9);//sets the direction for me
         Assertions.assertEquals(0,  player.bulletListLeft.size());
         player.shoot();
         Assertions.assertEquals(1,  player.bulletListLeft.size());
 
-        player.setMoveRight(true);//sets the direction for me
+        player.setDirectionToFace(11);//sets the direction for me
         Assertions.assertEquals(0,  player.bulletList.size());
         player.shoot();
         Assertions.assertEquals(1,  player.bulletList.size());

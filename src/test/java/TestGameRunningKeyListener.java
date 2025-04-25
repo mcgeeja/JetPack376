@@ -98,24 +98,6 @@ public class TestGameRunningKeyListener {
     }
 
     @Test
-    public void testKeyPressedShootKey() {
-        //setup
-        setupMockedClasses();
-
-        //record section
-        expectKeyEvent("Shoot");
-        mockedPlayer.shoot();
-
-        //replay section
-        EasyMock.replay(mockedEvent, mockedPlayer, mockedComponent);
-        GameRunningKeyListener unitUnderTest = new GameRunningKeyListener(mockedComponent, mockedPlayer);
-        unitUnderTest.keyPressed(mockedEvent);
-
-        //verify
-        EasyMock.verify(mockedEvent, mockedPlayer, mockedComponent);
-    }
-
-    @Test
     public void testKeyPressedReloadKey() {
         //setup
         setupMockedClasses();

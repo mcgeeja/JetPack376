@@ -37,7 +37,7 @@ public class TestGameRunningMouseListener {
         //replay section
         EasyMock.replay(mockedEvent, mockedPlayer);
         GameRunningMouseListener unitUnderTest = new GameRunningMouseListener(mockedPlayer);
-        unitUnderTest.mousePressed(mockedEvent);
+        unitUnderTest.mouseMoved(mockedEvent);
 
         //verify
         EasyMock.verify(mockedEvent, mockedPlayer);
