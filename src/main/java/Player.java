@@ -46,6 +46,9 @@ public class Player extends GravityGameObject{
 		this.reserveAmmo = 75;
 		this.image = null;
 
+		bulletList = new ArrayList<>();
+		bulletListLeft = new ArrayList<>();
+
 		this.pickUpCooldown = 0;
 
 	}//
