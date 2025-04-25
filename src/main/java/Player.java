@@ -14,8 +14,8 @@ public class Player extends GravityGameObject{
 	private static final int HeroWidth = 30;
 	protected int lives;
 	protected int speed;
-	protected ArrayList<Bullets> bulletList = new ArrayList<>();
-	protected ArrayList<Bullets> bulletListLeft = new ArrayList<>();
+	public ArrayList<Bullets> bulletList = new ArrayList<>();
+	public ArrayList<Bullets> bulletListLeft = new ArrayList<>();
 	protected int bulletCount;
 	protected int reserveAmmo;
 	protected Image image;
