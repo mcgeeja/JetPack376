@@ -36,13 +36,13 @@ public class PlayerDirectionTest {
         Player player = new Player(10, 10, 5);
 
         player.setDirectionToFace(9);//sets the direction for me
-        Assertions.assertEquals(0,  player.bulletListLeft.size());
+        Assertions.assertEquals(0,  player.getListOfLeftBullets().size());
         player.shoot();
-        Assertions.assertEquals(1,  player.bulletListLeft.size());
+        Assertions.assertEquals(1,  player.getListOfLeftBullets().size());
 
         player.setDirectionToFace(11);//sets the direction for me
-        Assertions.assertEquals(0,  player.bulletList.size());
+        Assertions.assertEquals(0,  player.getListOfBullets().size());
         player.shoot();
-        Assertions.assertEquals(1,  player.bulletList.size());
+        Assertions.assertEquals(1,  player.getListOfBullets().size());
     }
 }
