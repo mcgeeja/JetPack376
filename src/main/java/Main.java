@@ -50,7 +50,6 @@ public class Main {
 
 				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
 					frame.setVisible(false);
-					System.out.println("Starting game");
 					component.run();
 					GameAdvanceListener advancelistener = new GameAdvanceListener(component);
 					Timer timer = new Timer(60, advancelistener);
