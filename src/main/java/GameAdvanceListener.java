@@ -23,6 +23,7 @@ public class GameAdvanceListener implements ActionListener {
 		this.component.repaint();
 		this.component.repaint();
 		this.component.updateState();
+
 	}
 
 }

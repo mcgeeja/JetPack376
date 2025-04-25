@@ -32,4 +32,24 @@ public class Bullets extends GameObject{
 		Rectangle2D.Double bullet = new Rectangle2D.Double(this.x, this.y, this.size, this.size);
 		g.fill(bullet);
 	}
+
+	@Override
+	public void leftEdgeHit() {
+
+	}
+
+	@Override
+	public void rightEdgeHit() {
+
+	}
+
+	@Override
+	public void topEdgeHit() {
+
+	}
+
+	@Override
+	public void bottomEdgeHit() {
+
+	}
 }

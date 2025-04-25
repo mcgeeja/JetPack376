@@ -1,9 +1,9 @@
+import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.util.HashMap;
 import java.util.Map;
 
-public class GameRunningKeyListener implements KeyListener {
+public class GameRunningKeyListener extends KeyAdapter {
 		
 		static Map<String, Integer> controlsMap = new HashMap<>();
 		
@@ -18,8 +18,7 @@ public class GameRunningKeyListener implements KeyListener {
 			controlsMap.put("Move Left", KeyEvent.VK_LEFT);
 			controlsMap.put("Move Down", KeyEvent.VK_DOWN);
 			controlsMap.put("Move Right", KeyEvent.VK_RIGHT);
-			
-			controlsMap.put("Shoot", KeyEvent.VK_SPACE);
+
 			controlsMap.put("Reload", KeyEvent.VK_R);
 			controlsMap.put("Pickup", KeyEvent.VK_X);
 			
@@ -32,7 +31,8 @@ public class GameRunningKeyListener implements KeyListener {
 			this.component = myComponent;
 			this.player = player;
 		}
-		
+
+		@Override
 		public void keyPressed(KeyEvent e) {
 			if (e.getKeyCode() == controlsMap.get("Move Right")) {
 				player.setMoveRight(true);
@@ -41,10 +41,6 @@ public class GameRunningKeyListener implements KeyListener {
 			if (e.getKeyCode() == controlsMap.get("Move Left")) {
 				player.setMoveLeft(true);
 			}
-			
-			if(e.getKeyCode() == controlsMap.get("Shoot")) {
-				player.shoot();
-        	}
 			
 			if(e.getKeyCode() == controlsMap.get("Reload")) {
 				player.reload();
@@ -72,7 +68,8 @@ public class GameRunningKeyListener implements KeyListener {
 			}
 			
 		}
-		
+
+		@Override
 		public void keyReleased(KeyEvent e) {
 			if (e.getKeyCode() == controlsMap.get("Move Right")) {
 				player.setMoveRight(false);
@@ -93,10 +90,6 @@ public class GameRunningKeyListener implements KeyListener {
 	        if(e.getKeyCode() == controlsMap.get("Pickup")) {
 	        	player.setPickUpItem(false);
 	        }
-		}
-		
-		public void keyTyped(KeyEvent e) {
-			
 		}
 			
 }
