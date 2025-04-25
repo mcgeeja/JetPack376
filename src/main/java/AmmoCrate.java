@@ -15,6 +15,22 @@ public class AmmoCrate extends GameObject{
 		g.setColor(Color.WHITE);
 	}
 
+	@Override
+	public void leftEdgeHit() {
+	}
+
+	@Override
+	public void rightEdgeHit() {
+	}
+
+	@Override
+	public void topEdgeHit() {
+	}
+
+	@Override
+	public void bottomEdgeHit() {
+	}
+
 	public void pickedUpAmmo(Player player) {
 		if(this.intersects(player)) {
 			player.reserveAmmo = 75;

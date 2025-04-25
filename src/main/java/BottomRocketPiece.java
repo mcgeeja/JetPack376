@@ -25,6 +25,25 @@ public void drawPiece(Graphics2D g, int offsetY) {
         g.drawLine(x - (WIDTH / 2), y + HEIGHT, x + (3 * WIDTH / 2), y + HEIGHT);
     }
 
+    @Override
+    public void leftEdgeHit() {
 
-    
+    }
+
+    @Override
+    public void rightEdgeHit() {
+
+    }
+
+    @Override
+    public void topEdgeHit() {
+
+    }
+
+    @Override
+    public void bottomEdgeHit() {
+
+    }
+
+
 }
