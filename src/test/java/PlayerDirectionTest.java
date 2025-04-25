@@ -37,7 +37,7 @@ public class PlayerDirectionTest {
 
         player.setDirectionToFace(9);//sets the direction for me
         Assertions.assertEquals(0,  player.getListOfLeftBullets().size());
-//        player.shoot();
+        player.shoot();
 //        Assertions.assertEquals(1,  player.getListOfLeftBullets().size());
 //
 //        player.setDirectionToFace(11);//sets the direction for me
