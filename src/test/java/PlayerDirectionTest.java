@@ -33,8 +33,7 @@ public class PlayerDirectionTest {
 
     @Test
     public void testShootAddsBulletsToFacedDirection() {
-        Player player = new Player(10, 10, 5);
-
+        Player player = new Player(10,10,5);
         player.setDirectionToFace(9);//sets the direction for me
         Assertions.assertEquals(0,  player.getListOfLeftBullets().size());
         player.shoot();
