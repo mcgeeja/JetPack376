@@ -23,7 +23,16 @@ public class Player extends GravityGameObject{
 	private boolean up = false;
 	private boolean down = false;
 	private int pickUpCooldown;
-	private enum Direction {LEFT, RIGHT};
+
+	public void setDirectionToFace(int mouseX) {
+		if(this.x >= mouseX){
+			this.direction = Direction.LEFT;
+		}else{
+			this.direction = Direction.RIGHT;
+		}
+	}
+
+	public enum Direction {LEFT, RIGHT};
 	private Direction direction = Direction.LEFT;
 	private boolean pickUpItem = false;
 	private Sound reloadSound = new Sound(new File("reload.wav"));
@@ -144,14 +153,10 @@ public class Player extends GravityGameObject{
 
 	public void setMoveRight(boolean b) {
 		right = b;
-		if(right)
-			direction = Direction.RIGHT;
 	}
 
 	public void setMoveLeft(boolean b) {
 		left = b;
-		if(left)
-			direction = Direction.LEFT;
 	}
 
 	public void setMoveUp(boolean b) {
@@ -170,4 +175,7 @@ public class Player extends GravityGameObject{
 		pickUpItem = b;
 	}
 
+	public Direction getDirection(){
+		return direction;
+	}
 }

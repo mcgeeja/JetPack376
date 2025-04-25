@@ -2,7 +2,7 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.util.ArrayList;
 
-public abstract class Rocket extends GravityGameObject {
+public abstract class Rocket extends GravityGameObject implements Interactable{
     protected static final int WIDTH = 60;
     protected static final int HEIGHT = 120;
     protected static final int PART_HEIGHT = 40;
@@ -31,7 +31,7 @@ public abstract class Rocket extends GravityGameObject {
         this.y -= 10;
     }
 
-    public void pickedUp(Player player) {
+    public void interact(Player player) {
         if (this.intersects(player) && player.getPickUpCooldown() == 0) {
             this.x = player.x;
             this.y = player.y;
