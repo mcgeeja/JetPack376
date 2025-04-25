@@ -3,6 +3,7 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.event.KeyListener;
+import java.awt.event.MouseListener;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -14,6 +15,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 import javax.swing.JComponent;
+import javax.swing.event.MouseInputListener;
 
 
 public class MyComponent extends JComponent {
@@ -338,9 +340,13 @@ public class MyComponent extends JComponent {
 
 	public void run() {
 
-		KeyListener keylisten = new GameRunningKeyListener(this, this.player);
+		KeyListener keyListen = new GameRunningKeyListener(this, this.player);
+		MouseInputListener mouseListen = new GameRunningMouseListener(this.player);
        
-        this.addKeyListener(keylisten);
+        this.addKeyListener(keyListen);
+		this.addMouseListener(mouseListen);
+		this.addMouseMotionListener(mouseListen);
+
         this.setFocusable(true);
 	}
 	
