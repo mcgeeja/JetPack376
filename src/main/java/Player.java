@@ -23,7 +23,7 @@ public class Player extends GravityGameObject{
 	private boolean up = false;
 	private boolean down = false;
 	private int pickUpCooldown;
-	private enum Direction {LEFT, RIGHT};
+	public enum Direction {LEFT, RIGHT};
 	private Direction direction = Direction.LEFT;
 	private boolean pickUpItem = false;
 	private Sound reloadSound = new Sound(new File("reload.wav"));
@@ -158,4 +158,7 @@ public class Player extends GravityGameObject{
 		pickUpItem = b;
 	}
 
+	public Direction getDirection(){
+		return direction;
+	}
 }
