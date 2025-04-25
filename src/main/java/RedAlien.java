@@ -10,14 +10,10 @@ public class RedAlien extends Alien {
         super(x, y, direction);
     }
 
-    void wrapAround() {
-        if (direction.equals("-") && x < 0)
-            x = Main.frameWidth;
-        else if (direction.equals("+") && x > Main.frameWidth)
-            x = 0;
-        if (directNum == 1 && y > Main.frameHeight)
-            y = 0;
-        else if (directNum == 2 && y < 0)
+
+    @Override
+    public void topEdgeHit() {
+        if (y < 0)
             directNum = 1;
     }
 
@@ -55,7 +51,5 @@ public class RedAlien extends Alien {
             }
             this.x += 15;
         }
-        System.out.println(y);
-        wrapAround();
     }
 }

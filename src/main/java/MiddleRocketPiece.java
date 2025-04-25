@@ -23,4 +23,24 @@ public void drawPiece(Graphics2D g, int offsetY) {
         g.fillRect(x + (WIDTH / 3), y + (HEIGHT / 9), 20, 20);
     }
 
+    @Override
+    public void leftEdgeHit() {
+
+    }
+
+    @Override
+    public void rightEdgeHit() {
+
+    }
+
+    @Override
+    public void topEdgeHit() {
+
+    }
+
+    @Override
+    public void bottomEdgeHit() {
+
+    }
+
 }
