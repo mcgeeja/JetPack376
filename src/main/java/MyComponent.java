@@ -4,6 +4,7 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.event.KeyListener;
 import java.io.File;
+import java.awt.event.MouseListener;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -15,6 +16,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 import javax.swing.JComponent;
+import javax.swing.event.MouseInputListener;
 
 
 public class MyComponent extends JComponent {
@@ -94,7 +96,7 @@ public class MyComponent extends JComponent {
         for (Alien alien : aliensType2) {
             alien.drawOn(this.g);
         }
-        playerPickUp();
+        interactionHandler();
         onRocketHolder();
         updateFuelCount();
         if(fuelCount != 120) {
@@ -130,7 +132,7 @@ public class MyComponent extends JComponent {
 	}
 	public void writeResultsToFile(boolean didWin){
 		LocalDateTime end = LocalDateTime.now();
-		Duration diff = Duration.between(time,end );
+		Duration diff = Duration.betweennd(time,end );
 		long minutes = diff.toMinutesPart();
 		long seconds = diff.toSecondsPart();
 		LinkedList<String> summaryLines = new LinkedList<>();
@@ -180,18 +182,17 @@ public class MyComponent extends JComponent {
 
 	}
 
-	public void playerPickUp() {
+	public void interactionHandler() {
 		if(player.getPickUpItem()) {
 			for (int i = 0; i < levels.fuels.size(); i++) {
-				levels.fuels.get(i).pickedUp(this.player);
+				levels.fuels.get(i).interact(this.player);
 			}
 			for (int i = 0; i < levels.rocketPieces.size(); i++) {
-				levels.rocketPieces.get(i).pickedUp(this.player);
+				levels.rocketPieces.get(i).interact(this.player);
 			}
 		}
-		if(this.ammo.intersects(this.player)) {
-			ammo.pickedUpAmmo(player);
-		}
+		ammo.interact(player);
+
 	}
 
 	public void playerHit() {
@@ -327,27 +328,6 @@ public class MyComponent extends JComponent {
         }
 //	    	
         for (Alien alien : this.aliensType2) {
-            if (alien.direction.equals("-")) {
-                if (alien.x < 0) {
-                    alien.x = 1920;
-                }
-            } else {
-                if (alien.x > 1920) {
-                    if (alien.y > 950) {
-                        alien.y = rand.nextInt(800);
-                    }
-                    alien.x = 0;
-                }
-            }
-            if (alien.y <= 0) {
-                if (alien.directNum == 1) {
-                    alien.directNum = 2;
-                } else {
-                    alien.directNum = 1;
-
-                }
-
-            }
             alien.move(levels.platforms);
             if (alien.bulletHit(player.bulletList)
                     || alien.bulletHit(player.bulletListLeft)) {
@@ -363,9 +343,13 @@ public class MyComponent extends JComponent {
 
 	public void run() {
 
-		KeyListener keylisten = new GameRunningKeyListener(this, this.player);
+		KeyListener keyListen = new GameRunningKeyListener(this, this.player);
+		MouseInputListener mouseListen = new GameRunningMouseListener(this.player);
        
-        this.addKeyListener(keylisten);
+        this.addKeyListener(keyListen);
+		this.addMouseListener(mouseListen);
+		this.addMouseMotionListener(mouseListen);
+
         this.setFocusable(true);
 	}
 	
@@ -403,7 +387,30 @@ public class MyComponent extends JComponent {
 			repaint();
 		}
     }
-    
+
+	public void handleComponentOnEdge(GameObject gameObject){
+		int bottomEdge = gameObject.y+gameObject.height;
+		int rightEdge = gameObject.x+gameObject.width;
+		int leftEdge = gameObject.x;
+		int topEdge = gameObject.y;
+		if(leftEdge<0)
+			gameObject.leftEdgeHit();
+		else if(rightEdge>getWidth())
+			gameObject.rightEdgeHit();
+		if(topEdge<0)
+			gameObject.topEdgeHit();
+		else if(bottomEdge>getHeight())
+			gameObject.bottomEdgeHit();
+	}
+	public void processGameComponentsOnEdge(){
+		handleComponentOnEdge(player);
+		for(Alien alien:aliensType1){
+			handleComponentOnEdge(alien);
+		}
+		for(Alien alien:aliensType2){
+			handleComponentOnEdge(alien);
+		}
+	}
     public void selectLevelOneKeyPressResponse() {
 		if(endGame) {
 			levels = new Level(1);
@@ -440,6 +447,7 @@ public class MyComponent extends JComponent {
     public void updateState() throws FileNotFoundException {
 		updateAlienReload();
 		updateleftsideBullets();
+		processGameComponentsOnEdge();
 		updateBullets();
 		updateGrav();
 		updateAliens();

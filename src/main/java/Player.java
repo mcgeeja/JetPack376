@@ -23,7 +23,16 @@ public class Player extends GravityGameObject{
 	private boolean up = false;
 	private boolean down = false;
 	private int pickUpCooldown;
-	private enum Direction {LEFT, RIGHT};
+
+	public void setDirectionToFace(int mouseX) {
+		if(this.x >= mouseX){
+			this.direction = Direction.LEFT;
+		}else{
+			this.direction = Direction.RIGHT;
+		}
+	}
+
+	public enum Direction {LEFT, RIGHT};
 	private Direction direction = Direction.LEFT;
 	private boolean pickUpItem = false;
 	private Sound reloadSound = new Sound(new File("reload.wav"));
@@ -48,6 +57,27 @@ public class Player extends GravityGameObject{
 			e.printStackTrace();
 		}
 		g2d.drawImage(image, x, y, width, height, null);
+
+	}
+
+	@Override
+	public void leftEdgeHit() {
+		this.x = 1920 - this.width;
+	}
+
+	@Override
+	public void rightEdgeHit() {
+
+		this.x = 0;
+	}
+
+	@Override
+	public void topEdgeHit() {
+		this.y = 0;
+	}
+
+	@Override
+	public void bottomEdgeHit() {
 
 	}
 
@@ -80,15 +110,6 @@ public class Player extends GravityGameObject{
 		}
 		if (this.left) {
 			this.x -= this.speed;
-		}
-		if (this.x < 0) {
-			this.x = 1920 - this.width;
-		}
-		if (this.x > 1920) {
-			this.x = 0;
-		}
-		if (this.y < 0) {
-			this.y = 0;
 		}
 
 		if (this.up) {
@@ -132,14 +153,10 @@ public class Player extends GravityGameObject{
 
 	public void setMoveRight(boolean b) {
 		right = b;
-		if(right)
-			direction = Direction.RIGHT;
 	}
 
 	public void setMoveLeft(boolean b) {
 		left = b;
-		if(left)
-			direction = Direction.LEFT;
 	}
 
 	public void setMoveUp(boolean b) {
@@ -158,4 +175,7 @@ public class Player extends GravityGameObject{
 		pickUpItem = b;
 	}
 
+	public Direction getDirection(){
+		return direction;
+	}
 }
