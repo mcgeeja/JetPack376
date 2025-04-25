@@ -328,6 +328,27 @@ public class MyComponent extends JComponent {
         }
 //	    	
         for (Alien alien : this.aliensType2) {
+            if (alien.direction.equals("-")) {
+                if (alien.x < 0) {
+                    alien.x = 1920;
+                }
+            } else {
+                if (alien.x > 1920) {
+                    if (alien.y > 950) {
+                        alien.y = rand.nextInt(800);
+                    }
+                    alien.x = 0;
+                }
+            }
+            if (alien.y <= 0) {
+                if (alien.directNum == 1) {
+                    alien.directNum = 2;
+                } else {
+                    alien.directNum = 1;
+
+                }
+
+            }
             alien.move(levels.platforms);
             if (alien.bulletHit(player.bulletList)
                     || alien.bulletHit(player.bulletListLeft)) {
