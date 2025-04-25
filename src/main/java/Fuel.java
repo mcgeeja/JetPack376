@@ -2,7 +2,7 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.util.ArrayList;
 
-public class Fuel extends GravityGameObject{
+public class Fuel extends GravityGameObject implements Interactable{
 
 	private static final int size = 30;
 
@@ -16,7 +16,7 @@ public class Fuel extends GravityGameObject{
 		g.fillRect(x, y, size, size);
 	}
 
-	public void pickedUp(Player player) {
+	public void interact(Player player) {
 		if (this.intersects(player)) {
 			this.x = player.x;
 			this.y = player.y;

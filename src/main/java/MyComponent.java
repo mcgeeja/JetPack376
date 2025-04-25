@@ -5,8 +5,14 @@ import java.awt.Graphics2D;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseListener;
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
-import java.util.Random;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.time.DateTimeException;
+import java.time.Duration;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.util.*;
 
 import javax.swing.JComponent;
 import javax.swing.event.MouseInputListener;
@@ -25,6 +31,7 @@ public class MyComponent extends JComponent {
 
 	protected int points;
 	protected BuildingPiece rocketHolder;
+	LocalDateTime time;
 	protected Rocket buildingRocket;
 	protected int buildRocketNum = 0;
 	protected int pieceCount = 3;
@@ -34,6 +41,7 @@ public class MyComponent extends JComponent {
 	private static final Random rand = new Random();
 
 	public MyComponent() {
+		time =LocalDateTime.now();
 		this.direction[0] = "-";
 		this.direction[1] = "+";
 		this.direction[0] = "+";
@@ -87,7 +95,7 @@ public class MyComponent extends JComponent {
         for (Alien alien : aliensType2) {
             alien.drawOn(this.g);
         }
-        playerPickUp();
+        interactionHandler();
         onRocketHolder();
         updateFuelCount();
         if(fuelCount != 120) {
@@ -121,33 +129,67 @@ public class MyComponent extends JComponent {
 		gameOver();
 		
 	}
+	public void writeResultsToFile(boolean didWin){
+		LocalDateTime end = LocalDateTime.now();
+		Duration diff = Duration.between(end,time);
+		long minutes = diff.toMinutesPart();
+		long seconds = diff.toSecondsPart();
+		LinkedList<String> summaryLines = new LinkedList<>();
+		summaryLines.add((didWin)?"You won!":"You lost!");
+		summaryLines.add("Score: "+points);
+		summaryLines.add("Time: "+minutes+" minutes and "+seconds);
+		summaryLines.add("Played Level: "+levels.curLevel);
 
+		FileWriter writer = null;
+        try {
+			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+			String formattedDateTime = end.format(formatter); // "1986-04-08 12:30"
+
+			writer= new FileWriter("results/"+formattedDateTime+" game.txt");
+			for(String line : summaryLines){
+				writer.write(line+"\n");
+			}
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+		finally {
+			if(writer!=null) {
+                try {
+                    writer.close();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+		}
+    }
 	public void gameOver() {
 		if (this.player.lives <= 0) {
 			GameOverScreen gameOverScreen = new GameOverScreen(this);
 			gameOverScreen.paintLoseGame();
 			endGame = true;
+			writeResultsToFile(false);
 		}
 		if(buildingRocket.y <= 0) {
 			GameOverScreen gameOverScreen = new GameOverScreen(this);
 			gameOverScreen.paintWinGame();
 
 			endGame = true;
+			writeResultsToFile(true);
 		}
+
 	}
 
-	public void playerPickUp() {
+	public void interactionHandler() {
 		if(player.getPickUpItem()) {
 			for (int i = 0; i < levels.fuels.size(); i++) {
-				levels.fuels.get(i).pickedUp(this.player);
+				levels.fuels.get(i).interact(this.player);
 			}
 			for (int i = 0; i < levels.rocketPieces.size(); i++) {
-				levels.rocketPieces.get(i).pickedUp(this.player);
+				levels.rocketPieces.get(i).interact(this.player);
 			}
 		}
-		if(this.ammo.intersects(this.player)) {
-			ammo.pickedUpAmmo(player);
-		}
+		ammo.interact(player);
+		
 	}
 
 	public void playerHit() {
@@ -283,27 +325,6 @@ public class MyComponent extends JComponent {
         }
 //	    	
         for (Alien alien : this.aliensType2) {
-            if (alien.direction.equals("-")) {
-                if (alien.x < 0) {
-                    alien.x = 1920;
-                }
-            } else {
-                if (alien.x > 1920) {
-                    if (alien.y > 950) {
-                        alien.y = rand.nextInt(800);
-                    }
-                    alien.x = 0;
-                }
-            }
-            if (alien.y <= 0) {
-                if (alien.directNum == 1) {
-                    alien.directNum = 2;
-                } else {
-                    alien.directNum = 1;
-
-                }
-
-            }
             alien.move(levels.platforms);
             if (alien.bulletHit(player.bulletList)
                     || alien.bulletHit(player.bulletListLeft)) {
@@ -363,7 +384,30 @@ public class MyComponent extends JComponent {
 			repaint();
 		}
     }
-    
+
+	public void handleComponentOnEdge(GameObject gameObject){
+		int bottomEdge = gameObject.y+gameObject.height;
+		int rightEdge = gameObject.x+gameObject.width;
+		int leftEdge = gameObject.x;
+		int topEdge = gameObject.y;
+		if(leftEdge<0)
+			gameObject.leftEdgeHit();
+		else if(rightEdge>getWidth())
+			gameObject.rightEdgeHit();
+		if(topEdge<0)
+			gameObject.topEdgeHit();
+		else if(bottomEdge>getHeight())
+			gameObject.bottomEdgeHit();
+	}
+	public void processGameComponentsOnEdge(){
+		handleComponentOnEdge(player);
+		for(Alien alien:aliensType1){
+			handleComponentOnEdge(alien);
+		}
+		for(Alien alien:aliensType2){
+			handleComponentOnEdge(alien);
+		}
+	}
     public void selectLevelOneKeyPressResponse() {
 		if(endGame) {
 			levels = new Level(1);
@@ -400,6 +444,7 @@ public class MyComponent extends JComponent {
     public void updateState() throws FileNotFoundException {
 		updateAlienReload();
 		updateleftsideBullets();
+		processGameComponentsOnEdge();
 		updateBullets();
 		updateGrav();
 		updateAliens();
