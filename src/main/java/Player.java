@@ -65,6 +65,28 @@ public class Player extends GravityGameObject{
 	public void leftEdgeHit() {
 		this.x = 1920 - this.width;
 	}
+  
+	@Override
+	public void rightEdgeHit() {
+
+		this.x = 0;
+	}
+
+	@Override
+	public void topEdgeHit() {
+		this.y = 0;
+	}
+
+	@Override
+	public void bottomEdgeHit() {
+
+	}
+
+	public void isHit() {
+		this.lives = this.lives - 1;
+		this.x = 800;
+		this.y = 1920 / 2;
+		if (this.lives == 0) {
 
 	@Override
 	public void rightEdgeHit() {
