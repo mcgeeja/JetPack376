@@ -3,6 +3,7 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.event.KeyListener;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -156,6 +157,8 @@ public class MyComponent extends JComponent {
         try {
 			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 			String formattedDateTime = end.format(formatter); // "1986-04-08 12:30"
+			File resultsFolder = new File("./results/");
+			resultsFolder.mkdir();
 
 			writer= new FileWriter("results/"+formattedDateTime+" game.txt");
 			for(String line : summaryLines){
