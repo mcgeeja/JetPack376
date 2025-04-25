@@ -5,8 +5,14 @@ import java.awt.Graphics2D;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseListener;
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
-import java.util.Random;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.time.DateTimeException;
+import java.time.Duration;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.util.*;
 
 import javax.swing.JComponent;
 import javax.swing.event.MouseInputListener;
@@ -25,6 +31,7 @@ public class MyComponent extends JComponent {
 
 	protected int points;
 	protected BuildingPiece rocketHolder;
+	LocalDateTime time;
 	protected Rocket buildingRocket;
 	protected int buildRocketNum = 0;
 	protected int pieceCount = 3;
@@ -34,6 +41,7 @@ public class MyComponent extends JComponent {
 	private static final Random rand = new Random();
 
 	public MyComponent() {
+		time =LocalDateTime.now();
 		this.direction[0] = "-";
 		this.direction[1] = "+";
 		this.direction[0] = "+";
@@ -121,19 +129,54 @@ public class MyComponent extends JComponent {
 		gameOver();
 		
 	}
+	public void writeResultsToFile(boolean didWin){
+		LocalDateTime end = LocalDateTime.now();
+		Duration diff = Duration.between(end,time);
+		long minutes = diff.toMinutesPart();
+		long seconds = diff.toSecondsPart();
+		LinkedList<String> summaryLines = new LinkedList<>();
+		summaryLines.add((didWin)?"You won!":"You lost!");
+		summaryLines.add("Score: "+points);
+		summaryLines.add("Time: "+minutes+" minutes and "+seconds);
+		summaryLines.add("Played Level: "+levels.curLevel);
 
+		FileWriter writer = null;
+        try {
+			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+			String formattedDateTime = end.format(formatter); // "1986-04-08 12:30"
+
+			writer= new FileWriter("results/"+formattedDateTime+" game.txt");
+			for(String line : summaryLines){
+				writer.write(line+"\n");
+			}
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+		finally {
+			if(writer!=null) {
+                try {
+                    writer.close();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+		}
+    }
 	public void gameOver() {
 		if (this.player.lives <= 0) {
 			GameOverScreen gameOverScreen = new GameOverScreen(this);
 			gameOverScreen.paintLoseGame();
 			endGame = true;
+			writeResultsToFile(false);
 		}
 		if(buildingRocket.y <= 0) {
 			GameOverScreen gameOverScreen = new GameOverScreen(this);
 			gameOverScreen.paintWinGame();
 
 			endGame = true;
+			writeResultsToFile(true);
 		}
+
 	}
 
 	public void interactionHandler() {
