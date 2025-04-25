@@ -51,6 +51,7 @@ public class RedAlien extends Alien {
             }
             this.x += 15;
         }
-        System.out.println(y);
+        wrapAround();
+
     }
 }
