@@ -1,3 +1,4 @@
+import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.io.File;
@@ -43,7 +44,7 @@ public class Main {
 		MyComponent component = new MyComponent();
 		frame2.add(component);
 
-		KeyListener keylisten = new KeyListener() {
+		KeyListener keyListen = new KeyAdapter() {
 
 			@Override
 			public void keyPressed(KeyEvent e) {
@@ -70,17 +71,9 @@ public class Main {
 
 			}
 
-			@Override
-			public void keyTyped(KeyEvent e) {
-
-			}
-
-			@Override
-			public void keyReleased(KeyEvent e) {
-
-			}
 		};
-		frame.addKeyListener(keylisten);
+
+		frame.addKeyListener(keyListen);
 		
 		Sound gameTheme = new Sound(new File("finalgametheme.wav"));
 		gameTheme.playSoundLoop();
