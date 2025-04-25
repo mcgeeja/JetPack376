@@ -51,6 +51,27 @@ public class Player extends GravityGameObject{
 
 	}
 
+	@Override
+	public void leftEdgeHit() {
+		this.x = 1920 - this.width;
+	}
+
+	@Override
+	public void rightEdgeHit() {
+
+		this.x = 0;
+	}
+
+	@Override
+	public void topEdgeHit() {
+		this.y = 0;
+	}
+
+	@Override
+	public void bottomEdgeHit() {
+
+	}
+
 	public void isHit() {
 		this.lives = this.lives - 1;
 		this.x = 800;
@@ -80,15 +101,6 @@ public class Player extends GravityGameObject{
 		}
 		if (this.left) {
 			this.x -= this.speed;
-		}
-		if (this.x < 0) {
-			this.x = 1920 - this.width;
-		}
-		if (this.x > 1920) {
-			this.x = 0;
-		}
-		if (this.y < 0) {
-			this.y = 0;
 		}
 
 		if (this.up) {
