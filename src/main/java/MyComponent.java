@@ -3,7 +3,6 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.event.KeyListener;
-import java.awt.event.MouseListener;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -13,7 +12,6 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
-
 import javax.swing.JComponent;
 import javax.swing.event.MouseInputListener;
 
@@ -34,11 +32,14 @@ public class MyComponent extends JComponent {
 	LocalDateTime time;
 	protected Rocket buildingRocket;
 	protected int buildRocketNum = 0;
-	protected int pieceCount = 3;
+	protected int piecesInLevel;
+	protected int pieceCount;
 	protected int fuelCount = 0;
 	protected AmmoCrate ammo;
 	protected boolean endGame = false;
 	private static final Random rand = new Random();
+	private boolean levelChange = false;
+	private ArrayList<PowerUp> powerUps = new ArrayList<>();
 
 	public MyComponent() {
 		time =LocalDateTime.now();
@@ -61,6 +62,8 @@ public class MyComponent extends JComponent {
 			aliensType2.add(alien2);
 		}
 		this.levels = new Level(1);
+		piecesInLevel = levels.rocketPieces.size();
+		pieceCount = levels.rocketPieces.size(); ;
 		int xR = levels.getBottomRocketPiece().x;
 		
 		this.rocketHolder = new BuildingPiece( xR, 930);
@@ -69,8 +72,12 @@ public class MyComponent extends JComponent {
 		this.buildingRocket.y = levels.platforms.get(levels.platforms.size()-1).y - 120;
 		num = rand.nextInt(20);
 		this.ammo = new AmmoCrate(levels.platforms.get(num).x,levels.platforms.get(num).y -30);
+		// Create a random powerup on a platform
+		PowerUp speedBoost = new SpeedBoost(levels.platforms.get(rand.nextInt(levels.platforms.size())).x, 100);
+		PowerUp shield = new Shield(levels.platforms.get(rand.nextInt(levels.platforms.size())).x, 300);
 
-
+		powerUps.add(speedBoost);
+		powerUps.add(shield);
 	}
 
 	@Override
@@ -123,6 +130,11 @@ public class MyComponent extends JComponent {
 				bullet.drawOn(this.g);
 			}
 		}
+
+		for (PowerUp p : powerUps) {
+			p.drawOn(this.g);
+		}
+
 
 
 		takeOff();
@@ -190,6 +202,12 @@ public class MyComponent extends JComponent {
 		}
 		ammo.interact(player);
 		
+		for (PowerUp p : powerUps) {
+			if(p.intersects(player)){
+				p.pickedUp(player);
+			}
+		}
+
 	}
 
 	public void playerHit() {
@@ -225,8 +243,8 @@ public class MyComponent extends JComponent {
 				piece.x = rocketHolder.x - 10;
 				piece.y = rocketHolder.y - (Rocket.PART_HEIGHT * builtRocketPieces.size() + Rocket.PART_HEIGHT); 
 	
-				boolean correctPiece = (pieceCount == 3 && piece instanceof BottomRocketPiece) ||
-									   (pieceCount == 2 && piece instanceof MiddleRocketPiece) ||
+				boolean correctPiece = (pieceCount == piecesInLevel && piece instanceof BottomRocketPiece) ||
+									   (pieceCount < piecesInLevel && pieceCount > 1 && piece instanceof MiddleRocketPiece) ||
 									   (pieceCount == 1 && piece instanceof TopRocketPiece);
 	
 				if (correctPiece) {
@@ -359,7 +377,8 @@ public class MyComponent extends JComponent {
 			player.bulletCount = 25;
 			levels.curLevel = 2;
 			buildRocketNum = 0;
-			pieceCount = 3;
+			piecesInLevel = levels.rocketPieces.size();
+			pieceCount = levels.rocketPieces.size(); ;
 			num = rand.nextInt(20);
 			ammo = new AmmoCrate(levels.platforms.get(num).x,levels.platforms.get(num).y -30);
 			buildingRocket.y = levels.platforms.get(levels.platforms.size()-1).y -120;

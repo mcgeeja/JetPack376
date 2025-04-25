@@ -1,9 +1,11 @@
-import javax.imageio.ImageIO;
-import java.awt.*;
+import java.awt.Graphics2D;
+import java.awt.Toolkit;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
+
+import javax.imageio.ImageIO;
 
 public class RedAlien extends Alien {
     public RedAlien(int x, int y, String direction) {

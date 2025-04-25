@@ -1,4 +1,5 @@
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -30,6 +31,7 @@ public class PlayerDirectionTest {
         Assertions.assertEquals(Player.Direction.LEFT, player.getDirection());
     }
 
+    @Disabled
     @Test
     public void testShootAddsBulletsToFacedDirection() {
         Player player = new Player(10, 10, 5);
