@@ -8,7 +8,10 @@ import java.sql.Time;
 
 public class GameOverScreen {
 	MyComponent component;
-	
+
+	private static final Font controlsFont = new Font("arial", Font.BOLD, 50);
+	private static final Font mainFont = new Font("arial", Font.BOLD, 100);
+
 	public GameOverScreen(MyComponent component){
 		this.component = component;
 		component.addKeyListener(new GameOverKeyListener(component));
@@ -16,21 +19,24 @@ public class GameOverScreen {
 	
 	public void paintWinGame(){
 		Graphics2D g = component.g;
-//		Time time = new Time(10);
 
+		//Fill screen with black
 		g.setColor(Color.BLACK);
 		g.fillRect(0, 0, 1920, 1080);
 
-		Font font = new Font("arial", Font.BOLD, 100);
-		g.setFont(font);
+		//set font
+		g.setFont(mainFont);
+
+		//set Color and message to put on the screen
 		g.setColor(Color.GREEN);
 		g.drawString("SUCCESS", 1920 / 2 - 250, 1080 / 2);
 
+		//set submessage on the screen
 		g.setColor(Color.WHITE);
 		g.drawString("Last score was: " + component.points, (1920 / 2) - 475, (1080 / 2) + 200);
-		font = new Font("arial", Font.BOLD, 50);
-		g.setFont(font);
-		g.drawString("Press the X to exit" , (1920 / 2) - 230, (1080 / 2) + 300);
+
+		g.setFont(controlsFont);
+		g.drawString("Press '1' for level 1 or '2' for level 2 " , (1920 / 2) - 420, (1080 / 2) + 300);
 	}
 	
 	public void paintLoseGame(){
@@ -40,16 +46,14 @@ public class GameOverScreen {
 		g.setColor(Color.BLACK);
 		g.fillRect(0, 0, 1920, 1080);
 
-		Font font = new Font("arial", Font.BOLD, 100);
-		g.setFont(font);
+		g.setFont(mainFont);
 		g.setColor(Color.RED);
 		g.drawString("GAME OVER", 1920 / 2 - 300, 1080 / 2);
 
 		g.setColor(Color.WHITE);
 		g.drawString("Last score was: " + component.points, (1920 / 2) - 475, (1080 / 2) + 200);
-		
-		font = new Font("arial", Font.BOLD, 50);
-		g.setFont(font);
+
+		g.setFont(controlsFont);
 		g.drawString("Press '1' for level 1 or '2' for level 2 " , (1920 / 2) - 420, (1080 / 2) + 300);
 		
 	}

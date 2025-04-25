@@ -8,8 +8,9 @@ public class GameRunningKeyListener implements KeyListener {
 		static Map<String, Integer> controlsMap = new HashMap<>();
 		
 		
-		private MyComponent component;
-	
+		private final MyComponent component;
+		private final Player player;
+
 		//this is called in the main method I think there is probably a better way to set this up
 		//also possible future feature is making this generate based on a controls config file
 		public static void initializeDefaultControlsMap() {
@@ -27,37 +28,39 @@ public class GameRunningKeyListener implements KeyListener {
 		}
 		
 	
-		public GameRunningKeyListener(MyComponent myComponent) {
+		public GameRunningKeyListener(MyComponent myComponent, Player player) {
 			this.component = myComponent;
+			this.player = player;
 		}
 		
 		public void keyPressed(KeyEvent e) {
 			if (e.getKeyCode() == controlsMap.get("Move Right")) {
-				component.player.moveRightKeyPressResponse();
+				player.setMoveRight(true);
 			}
 			
 			if (e.getKeyCode() == controlsMap.get("Move Left")) {
-				component.player.moveLeftKeyPressResponse();
+				player.setMoveLeft(true);
 			}
 			
 			if(e.getKeyCode() == controlsMap.get("Shoot")) {
-				component.player.shootKeyPressResponse();
+				player.shoot();
         	}
 			
 			if(e.getKeyCode() == controlsMap.get("Reload")) {
-				component.player.reloadKeyPressResponse();
+				player.reload();
+	
         	}
 			
 			if(e.getKeyCode() == controlsMap.get("Pickup")) {
-            	component.player.pickupKeyPressResponse();
+				player.setPickUpItem(true);
             }
 			
 			if (e.getKeyCode() == controlsMap.get("Move Up")) {
-				component.player.moveUpKeyPressResponse();
+				player.setMoveUp(true);
 			}
 			
 			if (e.getKeyCode() == controlsMap.get("Move Down")) {
-				component.player.moveDownKeyPressResponse();
+				player.setMoveDown(true);
 			}
 			
 			if (e.getKeyCode() ==  controlsMap.get("Next Level")) {
@@ -72,23 +75,23 @@ public class GameRunningKeyListener implements KeyListener {
 		
 		public void keyReleased(KeyEvent e) {
 			if (e.getKeyCode() == controlsMap.get("Move Right")) {
-				component.player.moveRightKeyReleaseResponse();
+				player.setMoveRight(false);
         	}
 			
 			if (e.getKeyCode() == controlsMap.get("Move Left")) {
-				component.player.moveLeftKeyReleaseResponse();
+				player.setMoveLeft(false);
 	        }
 			
 	        if(e.getKeyCode() == controlsMap.get("Move Up")) {
-	        	component.player.moveUpKeyReleaseResponse();
+	        	player.setMoveUp(false);
 	        }
 	        
 	        if(e.getKeyCode() == controlsMap.get("Move Down")) {
-	        	component.player.moveDownKeyReleaseResponse();
+	        	player.setMoveDown(false);
 	        }
 	        
 	        if(e.getKeyCode() == controlsMap.get("Pickup")) {
-	        	component.player.pickupKeyReleaseResponse();
+	        	player.setPickUpItem(false);
 	        }
 		}
 		

@@ -10,7 +10,7 @@ public class RocketTest {
     public void testPickedUp_SuccessfulPickup() {
         Rocket rocket = new BottomRocketPiece(106, 105);
         Player player = new Player(100, 100, 5);  // Overlapping position
-        rocket.pickedUp(player);
+        rocket.interact(player);
 
         assertEquals(player.x, rocket.x);
         assertEquals(player.y, rocket.y);
@@ -28,7 +28,7 @@ public void testPickedUp_CooldownBlocksPickup() {
         }
     };
 
-    rocket.pickedUp(mockPlayer);
+    rocket.interact(mockPlayer);
 
     // Should NOT move to player's position
     assertNotEquals(mockPlayer.x, rocket.x);
@@ -56,6 +56,6 @@ public void testPickedUp_CooldownBlocksPickup() {
         rocket.gravity(platforms);
 
         // Should land right on top of platform
-        assertEquals(platform.y - (rocket.height / 3), rocket.y);
+        assertEquals(platform.y - rocket.height, rocket.y);
     }
 }

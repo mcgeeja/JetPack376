@@ -22,11 +22,6 @@ import javax.swing.Timer;
  */
 public class Main {
 
-
-	/**
-	 * @param args
-	 */
-
 	/**
 	 * @param args
 	 */
@@ -87,8 +82,9 @@ public class Main {
 			}
 		};
 		frame.addKeyListener(keylisten);
-
-		playMusic("finalgametheme.wav");
+		
+		Sound gameTheme = new Sound(new File("finalgametheme.wav"));
+		gameTheme.playSoundLoop();
 
 		frame.setVisible(true);
 		frame.setSize(frameWidth, frameHeight);
@@ -97,24 +93,5 @@ public class Main {
 
 	}
 
-	public static void playMusic(String musicLocation) {
-		try {
 
-			File musicPath = new File(musicLocation);
-			
-			if (musicPath.exists()) {
-				AudioInputStream audioInput = AudioSystem.getAudioInputStream(musicPath);			
-				Clip clip = AudioSystem.getClip();
-				clip.open(audioInput);
-				clip.start();
-				clip.loop(Clip.LOOP_CONTINUOUSLY);
-				
-			} else {
-				System.out.println("Can't find file");
-			}
-		} catch (Exception ex) {
-			ex.printStackTrace();
-		}
-
-	}
 }

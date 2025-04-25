@@ -46,8 +46,7 @@ public class ControlRemappingComponent extends JComponent{
 
 						@Override
 						public void keyPressed(KeyEvent e) {
-							entry.setValue(e.getKeyCode());
-							button.setText(KeyEvent.getKeyText(GameRunningKeyListener.controlsMap.get(entry.getKey())));
+							changeKeyMapping(entry, button, e.getKeyCode());
 							button.removeKeyListener(this);
 						}
 
@@ -62,6 +61,12 @@ public class ControlRemappingComponent extends JComponent{
 			});
 
 		}
+	}
+
+	//this is only protected for testing purposes
+	protected void changeKeyMapping(Entry<String, Integer> entry, JButton button, int keyCode) {
+		entry.setValue(keyCode);
+		button.setText(KeyEvent.getKeyText(keyCode));
 	}
 	
 }

@@ -35,9 +35,11 @@ public class TestGameObject {
 	}
 	@Test
 	public void testGameObjectGameOn() {
+		Graphics2D g = null;
 		TestObject t1 = new TestObject(0,0,100,100);
 		assertFalse(ranDrawOn);
-		
+		t1.drawOn(g);
+		assertTrue(ranDrawOn);
 	}
 	
 }

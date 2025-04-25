@@ -1,0 +1,244 @@
+@startuml
+
+top to bottom direction
+skinparam linetype ortho
+
+class Alien {
+  + Alien(int, int, String): 
+  + contactWith(ArrayList<Platform>): void
+  + shootright(): void
+  + shotTimer(): void
+  + bulletHit(ArrayList<Bullets>): boolean
+  + shotPlayer(Player): boolean
+  + drawOn(Graphics2D): void
+  + move(ArrayList<Platform>): void
+   listOfRightBullets: ArrayList<Bullets>
+}
+class AmmoCrate {
+  + AmmoCrate(int, int): 
+  + pickedUpAmmo(Player): void
+  + drawOn(Graphics2D): void
+}
+class BlueAlien {
+  + BlueAlien(int, int, String): 
+  + drawOn(Graphics2D): void
+  + move(ArrayList<Platform>): void
+}
+class BottomRocketPiece {
+  + BottomRocketPiece(int, int): 
+  + drawPiece(Graphics2D, int): void
+  + drawOn(Graphics2D): void
+}
+class BuildingPiece {
+  + BuildingPiece(int, int): 
+  + drawOn(Graphics2D): void
+}
+class Bullets {
+  + Bullets(int, int, Color, int): 
+  + moveLeft(int): boolean
+  + move(int): boolean
+  + drawOn(Graphics2D): void
+}
+class ControlRemappingComponent {
+  + ControlRemappingComponent(): 
+  # changeKeyMapping(Entry<String, Integer>, JButton, int): void
+}
+enum Direction << enumeration >> {
+  + Direction(): 
+  + valueOf(String): Direction
+  + values(): Direction[]
+}
+class Fuel {
+  + Fuel(int, int): 
+  + gravity(ArrayList<Platform>): void
+  + drawOn(Graphics2D): void
+  + pickedUp(Player): void
+}
+class GameAdvanceListener {
+  + GameAdvanceListener(MyComponent): 
+  + actionPerformed(ActionEvent): void
+  + advanceOneTick(): void
+}
+class GameObject {
+  + GameObject(int, int, int, int): 
+  + drawOn(Graphics2D): void
+  + intersects(GameObject): boolean
+   dimensions: Double
+}
+class GameOverKeyListener {
+  + GameOverKeyListener(MyComponent): 
+  + keyPressed(KeyEvent): void
+  + keyTyped(KeyEvent): void
+  + keyReleased(KeyEvent): void
+}
+class GameOverScreen {
+  + GameOverScreen(MyComponent): 
+  + paintWinGame(): void
+  + paintLoseGame(): void
+}
+class GameRunningKeyListener {
+  + GameRunningKeyListener(MyComponent, Player): 
+  + initializeDefaultControlsMap(): void
+  + keyPressed(KeyEvent): void
+  + keyReleased(KeyEvent): void
+  + keyTyped(KeyEvent): void
+}
+class Gravity {
+  + Gravity(): 
+}
+class GreenAlien {
+  + GreenAlien(int, int, String): 
+  + move(ArrayList<Platform>): void
+  + drawOn(Graphics2D): void
+}
+class Level {
+  + Level(): 
+  + Level(int): 
+  # bottomRocketPiece: Rocket
+  - processLine(String, int): void
+  - addPlatform(int, int, int): void
+  + getLevelFile(int): String
+  + convertLevelToText(ArrayList<String>): void
+  + drawLevel(Graphics2D): void
+  - addBottomRocketPiece(int, int): void
+  - addTopRocketPiece(int, int): void
+  - addFuel(int, int): void
+  - addMiddleRocketPiece(int, int): void
+  ~ readFromFile(File): ArrayList<String>
+   bottomRocketPiece: Rocket
+}
+class Main {
+  + Main(): 
+  + playMusic(String): void
+  + main(String[]): void
+}
+class MiddleRocketPiece {
+  + MiddleRocketPiece(int, int): 
+  + drawOn(Graphics2D): void
+  + drawPiece(Graphics2D, int): void
+}
+class MyComponent {
+  + MyComponent(): 
+  + updateGrav(): void
+  + updateFuelCount(): void
+  + paintComponent(Graphics): void
+  + changeToNextLevelKeyPressResponse(): void
+  + selectLevelOneKeyPressResponse(): void
+  + updateState(): void
+  + selectLevelTwoKeyPressResponse(): void
+  + updateBullets(): void
+  + updateAliens(): void
+  + gameOver(): void
+  + onRocketHolder(): void
+  + updateleftsideBullets(): void
+  + changeToPreviousLevelKeyPressResponse(): void
+  + takeOff(): void
+  + playerPickUp(): void
+  + playerHit(): void
+  + run(): void
+  + updateAllAlienBullets(): void
+  + updateAlienReload(): void
+  + updatePickUpTimer(): void
+}
+class Platform {
+  + Platform(int, int, int, int): 
+  + drawOn(Graphics2D): void
+}
+class Player {
+  + Player(int, int, int): 
+  - pickUpItem: boolean
+  - pickUpCooldown: int
+  + drawOn(Graphics2D): void
+  + reload(): void
+  + startCountDown(): void
+  + move(): void
+  + isHit(): void
+  + gravity(ArrayList<Platform>): void
+  + shoot(): void
+   listOfLeftBullets: ArrayList<Bullets>
+   moveRight: boolean
+   listOfBullets: ArrayList<Bullets>
+   pickUpCooldown: int
+   moveLeft: boolean
+   pickUpItem: boolean
+   moveDown: boolean
+   moveUp: boolean
+}
+class RedAlien {
+  + RedAlien(int, int, String): 
+  + move(ArrayList<Platform>): void
+  ~ wrapAround(): void
+  + drawOn(Graphics2D): void
+}
+class Rocket {
+  + Rocket(int, int): 
+  + takeOff(Graphics2D): void
+  + build(int, Graphics2D): void
+  + gravity(ArrayList<Platform>): void
+  + pickedUp(Player): void
+  + drawPiece(Graphics2D, int): void
+}
+class TitleScreen {
+  + TitleScreen(int): 
+  + paintComponent(Graphics): void
+}
+class TopRocketPiece {
+  + TopRocketPiece(int, int): 
+  + drawOn(Graphics2D): void
+  + drawPiece(Graphics2D, int): void
+}
+
+Alien                     "1" *--> "rightbulletlist\n*" Bullets
+Alien                      ..>  Bullets                   : "«create»"
+Alien                      --^  GameObject
+AmmoCrate                  --^  GameObject
+BlueAlien                  --^  Alien
+BottomRocketPiece          --^  Rocket
+BuildingPiece              --^  GameObject
+Bullets                    --^  GameObject
+Direction                  +--  Player
+Fuel                       --^  GameObject
+GameAdvanceListener       "1" *--> "component\n1" MyComponent
+GameOverKeyListener       "1" *--> "component\n1" MyComponent
+GameOverScreen             ..>  GameOverKeyListener       : "«create»"
+GameOverScreen            "1" *--> "component\n1" MyComponent
+GameRunningKeyListener    "1" *--> "component\n1" MyComponent
+GameRunningKeyListener    "1" *--> "player\n1" Player
+GreenAlien                 --^  Alien
+Level                      ..>  BottomRocketPiece         : "«create»"
+Level                     "1" *--> "fuels\n*" Fuel
+Level                      ..>  Fuel                      : "«create»"
+Level                      ..>  MiddleRocketPiece         : "«create»"
+Level                      ..>  Platform                  : "«create»"
+Level                     "1" *--> "platforms\n*" Platform
+Level                     "1" *--> "rocketPieces\n*" Rocket
+Level                      ..>  TopRocketPiece            : "«create»"
+Main                       ..>  ControlRemappingComponent : "«create»"
+Main                       ..>  GameAdvanceListener       : "«create»"
+Main                       ..>  MyComponent               : "«create»"
+Main                       ..>  TitleScreen               : "«create»"
+MiddleRocketPiece          --^  Rocket
+MyComponent               "1" *--> "aliensType1\n*" Alien
+MyComponent                ..>  AmmoCrate                 : "«create»"
+MyComponent               "1" *--> "ammo\n1" AmmoCrate
+MyComponent                ..>  BlueAlien                 : "«create»"
+MyComponent                ..>  BuildingPiece             : "«create»"
+MyComponent               "1" *--> "rocketHolder\n1" BuildingPiece
+MyComponent                ..>  GameOverScreen            : "«create»"
+MyComponent                ..>  GameRunningKeyListener    : "«create»"
+MyComponent                ..>  GreenAlien                : "«create»"
+MyComponent               "1" *--> "levels\n1" Level
+MyComponent                ..>  Level                     : "«create»"
+MyComponent               "1" *--> "player\n1" Player
+MyComponent                ..>  Player                    : "«create»"
+MyComponent                ..>  RedAlien                  : "«create»"
+MyComponent               "1" *--> "builtRocketPieces\n*" Rocket
+Platform                   --^  GameObject
+Player                     ..>  Bullets                   : "«create»"
+Player                    "1" *--> "bulletList\n*" Bullets
+Player                    "1" *--> "direction\n1" Direction
+Player                     --^  GameObject
+RedAlien                   --^  Alien
+Rocket                     --^  GameObject
+TopRocketPiece             --^  Rocket
+@enduml
