@@ -281,27 +281,6 @@ public class MyComponent extends JComponent {
         }
 //	    	
         for (Alien alien : this.aliensType2) {
-            if (alien.direction.equals("-")) {
-                if (alien.x < 0) {
-                    alien.x = 1920;
-                }
-            } else {
-                if (alien.x > 1920) {
-                    if (alien.y > 950) {
-                        alien.y = rand.nextInt(800);
-                    }
-                    alien.x = 0;
-                }
-            }
-            if (alien.y <= 0) {
-                if (alien.directNum == 1) {
-                    alien.directNum = 2;
-                } else {
-                    alien.directNum = 1;
-
-                }
-
-            }
             alien.move(levels.platforms);
             if (alien.bulletHit(player.bulletList)
                     || alien.bulletHit(player.bulletListLeft)) {
@@ -357,7 +336,30 @@ public class MyComponent extends JComponent {
 			repaint();
 		}
     }
-    
+
+	public void handleComponentOnEdge(GameObject gameObject){
+		int bottomEdge = gameObject.y+gameObject.height;
+		int rightEdge = gameObject.x+gameObject.width;
+		int leftEdge = gameObject.x;
+		int topEdge = gameObject.y;
+		if(leftEdge<0)
+			gameObject.leftEdgeHit();
+		else if(rightEdge>getWidth())
+			gameObject.rightEdgeHit();
+		if(topEdge<0)
+			gameObject.topEdgeHit();
+		else if(bottomEdge>getHeight())
+			gameObject.bottomEdgeHit();
+	}
+	public void processGameComponentsOnEdge(){
+		handleComponentOnEdge(player);
+		for(Alien alien:aliensType1){
+			handleComponentOnEdge(alien);
+		}
+		for(Alien alien:aliensType2){
+			handleComponentOnEdge(alien);
+		}
+	}
     public void selectLevelOneKeyPressResponse() {
 		if(endGame) {
 			levels = new Level(1);
@@ -394,6 +396,7 @@ public class MyComponent extends JComponent {
     public void updateState() throws FileNotFoundException {
 		updateAlienReload();
 		updateleftsideBullets();
+		processGameComponentsOnEdge();
 		updateBullets();
 		updateGrav();
 		updateAliens();
