@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import javax.imageio.ImageIO;
 
 public class Player extends GravityGameObject{
+	private boolean shieldActive = false;
 	private static final int HeroHeight = 60;
 	private static final int HeroWidth = 30;
 	protected int lives;
@@ -64,7 +65,7 @@ public class Player extends GravityGameObject{
 	public void leftEdgeHit() {
 		this.x = 1920 - this.width;
 	}
-
+  
 	@Override
 	public void rightEdgeHit() {
 
@@ -81,15 +82,20 @@ public class Player extends GravityGameObject{
 
 	}
 
-	public void isHit() {
-		this.lives = this.lives - 1;
-		this.x = 800;
-		this.y = 1920 / 2;
-		if (this.lives == 0) {
-
-		}
-
+	public void activateShield() {
+    	this.shieldActive = true;
 	}
+
+	public void isHit() {
+    	if (shieldActive) {
+        	shieldActive = false; // Use up shield
+    	} else {
+        	this.lives = this.lives - 1;
+        	this.x = 800;
+        	this.y = 1920 / 2;
+    	}
+	}
+
 
 	public int getPickUpCooldown() {
 		return this.pickUpCooldown;
