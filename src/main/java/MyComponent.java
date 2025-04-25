@@ -3,16 +3,15 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.event.KeyListener;
-import java.awt.event.MouseListener;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.time.DateTimeException;
 import java.time.Duration;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.Random;
 
 import javax.swing.JComponent;
 import javax.swing.event.MouseInputListener;
@@ -145,7 +144,7 @@ public class MyComponent extends JComponent {
 	}
 	public void writeResultsToFile(boolean didWin){
 		LocalDateTime end = LocalDateTime.now();
-		Duration diff = Duration.betweennd(time,end );
+		Duration diff = Duration.between(time,end );
 		long minutes = diff.toMinutesPart();
 		long seconds = diff.toSecondsPart();
 		LinkedList<String> summaryLines = new LinkedList<>();
