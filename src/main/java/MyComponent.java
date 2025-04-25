@@ -131,13 +131,13 @@ public class MyComponent extends JComponent {
 	}
 	public void writeResultsToFile(boolean didWin){
 		LocalDateTime end = LocalDateTime.now();
-		Duration diff = Duration.between(end,time);
+		Duration diff = Duration.betweennd(time,end );
 		long minutes = diff.toMinutesPart();
 		long seconds = diff.toSecondsPart();
 		LinkedList<String> summaryLines = new LinkedList<>();
 		summaryLines.add((didWin)?"You won!":"You lost!");
 		summaryLines.add("Score: "+points);
-		summaryLines.add("Time: "+minutes+" minutes and "+seconds);
+		summaryLines.add("Time: "+minutes+" minutes and "+seconds+" seconds");
 		summaryLines.add("Played Level: "+levels.curLevel);
 
 		FileWriter writer = null;
