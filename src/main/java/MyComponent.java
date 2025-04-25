@@ -129,7 +129,7 @@ public class MyComponent extends JComponent {
 	}
 	public void writeResultsToFile(boolean didWin){
 		LocalDateTime end = LocalDateTime.now();
-		Duration diff = Duration.betweennd(time,end );
+		Duration diff = Duration.between(time,end );
 		long minutes = diff.toMinutesPart();
 		long seconds = diff.toSecondsPart();
 		LinkedList<String> summaryLines = new LinkedList<>();
