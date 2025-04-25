@@ -34,6 +34,8 @@ public class MyComponent extends JComponent {
 	private boolean hasTakenOff=false;
 	protected boolean endGame = false;
 	private boolean levelChange = false;
+	private ArrayList<PowerUp> powerUps = new ArrayList<>();
+
 	Random rand = new Random();
 
 	public MyComponent() {
@@ -66,8 +68,12 @@ public class MyComponent extends JComponent {
 		this.buildingRocket.y = levels.platforms.get(levels.platforms.size()-1).y - 120;
 		num = rand.nextInt(20);
 		this.ammo = new AmmoCrate(levels.platforms.get(num).x,levels.platforms.get(num).y -30);
+		// Create a random powerup on a platform
+		PowerUp speedBoost = new SpeedBoost(levels.platforms.get(rand.nextInt(levels.platforms.size())).x, 100);
+		PowerUp shield = new Shield(levels.platforms.get(rand.nextInt(levels.platforms.size())).x, 300);
 
-
+		powerUps.add(speedBoost);
+		powerUps.add(shield);
 	}
 
 	@Override
@@ -122,6 +128,11 @@ public class MyComponent extends JComponent {
 			}
 		}
 
+		for (PowerUp p : powerUps) {
+			p.drawOn(this.g);
+		}
+		
+
 
 		takeOff();
 		gameOver();
@@ -153,6 +164,13 @@ public class MyComponent extends JComponent {
 		if(this.ammo.intersects(this.player)) {
 			ammo.pickedUpAmmo(player);
 		}
+
+		for (PowerUp p : powerUps) {
+			if(p.intersects(player)){
+				p.pickedUp(player);
+			}
+		}
+		
 	}
 
 	public void playerHit() {

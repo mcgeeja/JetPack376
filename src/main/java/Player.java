@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import javax.imageio.ImageIO;
 
 public class Player extends GameObject{
+	private boolean shieldActive = false;
 	private static int HeroHeight = 60;
 	private static int HeroWidth = 30;
 	private static final int GRAVITY = 5;
@@ -51,15 +52,22 @@ public class Player extends GameObject{
 
 	}
 
-	public void isHit() {
-		this.lives = this.lives - 1;
-		this.x = 800;
-		this.y = 1920 / 2;
-		if (this.lives == 0) {
+	
 
-		}
-
+	public void activateShield() {
+    	this.shieldActive = true;
 	}
+
+	public void isHit() {
+    	if (shieldActive) {
+        	shieldActive = false; // Use up shield
+    	} else {
+        	this.lives = this.lives - 1;
+        	this.x = 800;
+        	this.y = 1920 / 2;
+    	}
+	}
+
 
 	public int getPickUpCooldown() {
 		return this.pickUpCooldown;
@@ -210,5 +218,7 @@ public class Player extends GameObject{
 	public void pickupKeyReleaseResponse() {
 		dropItem = false;
 	}
+
+	
 
 }
