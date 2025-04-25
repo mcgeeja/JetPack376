@@ -93,7 +93,7 @@ public class MyComponent extends JComponent {
         for (Alien alien : aliensType2) {
             alien.drawOn(this.g);
         }
-        playerPickUp();
+        interactionHandler();
         onRocketHolder();
         updateFuelCount();
         if(fuelCount != 120) {
@@ -177,18 +177,17 @@ public class MyComponent extends JComponent {
 
 	}
 
-	public void playerPickUp() {
+	public void interactionHandler() {
 		if(player.getPickUpItem()) {
 			for (int i = 0; i < levels.fuels.size(); i++) {
-				levels.fuels.get(i).pickedUp(this.player);
+				levels.fuels.get(i).interact(this.player);
 			}
 			for (int i = 0; i < levels.rocketPieces.size(); i++) {
-				levels.rocketPieces.get(i).pickedUp(this.player);
+				levels.rocketPieces.get(i).interact(this.player);
 			}
 		}
-		if(this.ammo.intersects(this.player)) {
-			ammo.pickedUpAmmo(player);
-		}
+		ammo.interact(player);
+		
 	}
 
 	public void playerHit() {
