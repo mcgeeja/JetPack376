@@ -16,6 +16,26 @@ public class Fuel extends GravityGameObject{
 		g.fillRect(x, y, size, size);
 	}
 
+	@Override
+	public void leftEdgeHit() {
+
+	}
+
+	@Override
+	public void rightEdgeHit() {
+
+	}
+
+	@Override
+	public void topEdgeHit() {
+
+	}
+
+	@Override
+	public void bottomEdgeHit() {
+
+	}
+
 	public void pickedUp(Player player) {
 		if (this.intersects(player)) {
 			this.x = player.x;
