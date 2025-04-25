@@ -23,6 +23,15 @@ public class Player extends GravityGameObject{
 	private boolean up = false;
 	private boolean down = false;
 	private int pickUpCooldown;
+
+	public void setDirectionToFace(int mouseX) {
+		if(this.x >= mouseX){
+			this.direction = Direction.LEFT;
+		}else{
+			this.direction = Direction.RIGHT;
+		}
+	}
+
 	public enum Direction {LEFT, RIGHT};
 	private Direction direction = Direction.LEFT;
 	private boolean pickUpItem = false;
