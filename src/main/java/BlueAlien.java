@@ -23,19 +23,35 @@ public class BlueAlien extends Alien{
     }
 
     @Override
+    public void leftEdgeHit() {
+        super.leftEdgeHit();
+        if(direction.equals("-"))
+            this.x = 1920;
+    }
+
+    @Override
+    public void rightEdgeHit() {
+        super.rightEdgeHit();
+        if(direction.equals("+"))
+            this.x = 0;
+    }
+
+    @Override
+    public void topEdgeHit() {
+        super.topEdgeHit();
+    }
+
+    @Override
+    public void bottomEdgeHit() {
+        super.bottomEdgeHit();
+    }
+
+    @Override
     public void move(ArrayList<Platform> plats) {
         if (direction == "+") {
-            if (this.x <= 1920) {
-                this.x += 10;
-            } else {
-                this.x = 0;
-            }
+            this.x += 10;
         } else {
-            if (this.x > 0) {
-                this.x -= 15;
-            } else {
-                this.x = 1920;
-            }
+            this.x -= 15;
         }
     }
 }

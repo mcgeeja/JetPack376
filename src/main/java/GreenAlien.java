@@ -21,6 +21,26 @@ public class GreenAlien extends  Alien{
     }
 
     @Override
+    public void leftEdgeHit() {
+
+    }
+
+    @Override
+    public void rightEdgeHit() {
+
+    }
+
+    @Override
+    public void topEdgeHit() {
+
+    }
+
+    @Override
+    public void bottomEdgeHit() {
+
+    }
+
+    @Override
     public void move(ArrayList<Platform> plats) {
         this.contactWith(plats);
         if (direction == "-") {

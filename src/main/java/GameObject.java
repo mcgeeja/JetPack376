@@ -16,4 +16,8 @@ public abstract class GameObject {
 		return new Rectangle2D.Double(x, y, width, height);
 	}
 	public abstract void drawOn(Graphics2D g);
+	public abstract void leftEdgeHit();
+	public abstract void rightEdgeHit();
+	public abstract void topEdgeHit();
+	public abstract void bottomEdgeHit();
 }

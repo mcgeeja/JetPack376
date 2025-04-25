@@ -14,4 +14,24 @@ public class BuildingPiece extends GameObject{
 		g.fillRect(x, y, width, height);
 		g.setColor(Color.WHITE);
 	}
+
+	@Override
+	public void leftEdgeHit() {
+
+	}
+
+	@Override
+	public void rightEdgeHit() {
+
+	}
+
+	@Override
+	public void topEdgeHit() {
+
+	}
+
+	@Override
+	public void bottomEdgeHit() {
+
+	}
 }
