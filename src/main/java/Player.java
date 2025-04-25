@@ -53,13 +53,13 @@ public class Player extends GravityGameObject{
 
 	@Override
 	public void leftEdgeHit() {
-		this.x = 1920 - this.width;
+		this.x = 1290 -100;
 	}
 
 	@Override
 	public void rightEdgeHit() {
 
-		this.x = 0;
+		this.x = 10;
 	}
 
 	@Override
