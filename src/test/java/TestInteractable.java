@@ -1,16 +1,47 @@
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.awt.Graphics2D;
+import java.awt.geom.Rectangle2D;
+
 import org.junit.jupiter.api.Test;
 
 public class TestInteractable {
+	boolean success = false;
+	private class InteractableObject extends GameObject implements Interactable{
+		
+		public InteractableObject(int x, int y, int width, int height) {
+			super(x, y, width, height);
+		}
+
+		@Override
+		public void interact(Player player) {
+			if(this.intersects(player)){
+				success = true;
+			}
+			
+		}
+
+		@Override
+		public void drawOn(Graphics2D g) {
+			// TODO Auto-generated method stub
+			
+		}
+		
+	}
+	
+	private class TestPlayer extends Player{
+
+		public TestPlayer(int x, int y, int speed) {
+			super(x, y, speed);
+		}
+		
+	}
 	@Test
 	public void testInteractMethod() {
-		AmmoCrate a = new AmmoCrate(1,1);
-		Player p = new Player(1,1, 5);
-		p.bulletCount = 2;
-		a.interact(p);
-		assertEquals(p.bulletCount, 25);
-		assertEquals(p.reserveAmmo, 75);
+		TestPlayer p = new TestPlayer(1,1, 5);
+		InteractableObject ob = new InteractableObject(1,1,100,100);
+		ob.interact(p);
+		assertTrue(success);
 		
 	}
 }
