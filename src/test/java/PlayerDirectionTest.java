@@ -33,15 +33,15 @@ public class PlayerDirectionTest {
 
     @Test
     public void testShootAddsBulletsToFacedDirection() {
-        Player player3 = new Player(10,10,5);
-        player3.setDirectionToFace(9);//sets the direction for me
-        Assertions.assertEquals(0,  player3.getListOfLeftBullets().size());
-        player3.shoot();
-//        Assertions.assertEquals(1,  player.getListOfLeftBullets().size());
-//
-//        player.setDirectionToFace(11);//sets the direction for me
-//        Assertions.assertEquals(0,  player.getListOfBullets().size());
-//        player.shoot();
-//        Assertions.assertEquals(1,  player.getListOfBullets().size());
+        Player player = new Player(10,10,5);
+        player.setDirectionToFace(9);//sets the direction for me
+        Assertions.assertEquals(0,  player.getListOfLeftBullets().size());
+        player.shoot();
+        Assertions.assertEquals(1,  player.getListOfLeftBullets().size());
+
+        player.setDirectionToFace(11);//sets the direction for me
+        Assertions.assertEquals(0,  player.getListOfBullets().size());
+        player.shoot();
+        Assertions.assertEquals(1,  player.getListOfBullets().size());
     }
 }
