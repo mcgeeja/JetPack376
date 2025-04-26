@@ -345,7 +345,7 @@ public class MyComponent extends JComponent {
 
 	public void run() {
 
-		KeyListener keyListen = new GameRunningKeyListener(this, this.player);
+		KeyListener keyListen = new GameRunningKeyListener( this.player);
 		MouseInputListener mouseListen = new GameRunningMouseListener(this.player);
        
         this.addKeyListener(keyListen);
@@ -419,7 +419,7 @@ public class MyComponent extends JComponent {
 			levels = new Level(1);
 			points = 0;
 			player = new Player(1920 / 2, 800, 15);
-			this.addKeyListener(new GameRunningKeyListener(this, this.player));
+			this.addKeyListener(new GameRunningKeyListener(this.player));
 			levels.curLevel = 1;
 			endGame = false;
 			buildRocketNum = 0;
@@ -435,7 +435,7 @@ public class MyComponent extends JComponent {
 			levels = new Level(2);
 			points = 0;
 			player = new Player(1920 / 2, 800, 15);
-			this.addKeyListener(new GameRunningKeyListener(this, this.player));
+			this.addKeyListener(new GameRunningKeyListener(this.player));
 			levels.curLevel = 2;
 			endGame = false;
 			buildRocketNum = 0;
