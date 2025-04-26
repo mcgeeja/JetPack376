@@ -75,7 +75,7 @@ public class Main {
 
 		frame.addKeyListener(keyListen);
 		
-		Sound gameTheme = new Sound(new File("finalgametheme.wav"));
+		Sound gameTheme = new Sound(new File("./sounds/finalgametheme.wav"));
 		gameTheme.playSoundLoop();
 
 		frame.setVisible(true);
