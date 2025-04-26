@@ -1,4 +1,6 @@
+import java.io.BufferedInputStream;
 import java.io.File;
+import java.io.InputStream;
 
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
@@ -8,9 +10,10 @@ public class Sound {
 
 	private Clip audio;
 	
-	public Sound(File soundFile) {
+	public Sound(String soundFile) {
 		try {
-			AudioInputStream audioInput = AudioSystem.getAudioInputStream(soundFile);
+			InputStream audioSrc = getClass().getResourceAsStream(soundFile);
+			AudioInputStream audioInput = AudioSystem.getAudioInputStream(new BufferedInputStream(audioSrc));
 			this.audio = AudioSystem.getClip();
 			this.audio.open(audioInput);
 		} catch (Exception ex) {

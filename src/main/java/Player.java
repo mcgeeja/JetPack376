@@ -36,7 +36,7 @@ public class Player extends GravityGameObject{
 	public enum Direction {LEFT, RIGHT};
 	private Direction direction = Direction.LEFT;
 	private boolean pickUpItem = false;
-	private Sound reloadSound = new Sound(new File("../resources/sounds/reload.wav"));
+	private Sound reloadSound = new Sound("/sounds/reload.wav");
 
 	public Player(int x, int y, int speed) {
 		super(x, y, HeroWidth, HeroHeight);
