@@ -2,6 +2,9 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
@@ -29,6 +32,8 @@ public class Main {
 	public static final int frameWidth = 1920;
 	public static final int frameHeight = 1080;
 
+	public static final Random rand = new Random();
+
 	public static void main(String[] args) {
 		GameRunningKeyListener.initializeDefaultControlsMap();
 
@@ -40,8 +45,21 @@ public class Main {
 		JFrame frame2 = new JFrame();
 		frame2.setSize(frameWidth, frameHeight);
 		frame2.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		
-		MyComponent component = new MyComponent();
+
+
+		List<Alien> aliensType1 = new ArrayList<Alien>();
+		List<Alien> aliensType2 = new ArrayList<Alien>();
+		aliensType1.add(new BlueAlien(0, rand.nextInt(900),  "+"));
+		aliensType1.add(new BlueAlien(0, rand.nextInt(900),  "+"));
+		aliensType1.add(new BlueAlien(0, 150,  "+"));
+		aliensType1.add(new RedAlien(500,500,"+"));
+
+		aliensType2.add(new GreenAlien(frameWidth, rand.nextInt(900),  "+"));
+		aliensType2.add(new GreenAlien(frameWidth, 500,  "+"));
+
+		Player player = new Player(frameWidth / 2, 800, 15);
+
+		MyComponent component = new MyComponent(player, aliensType1, aliensType2);
 		frame2.add(component);
 
 		KeyListener keyListen = new KeyAdapter() {
