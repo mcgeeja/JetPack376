@@ -8,25 +8,34 @@ import javax.sound.sampled.Clip;
 
 public class Sound {
 
+	public static boolean audioEnabled = true;
+
 	private Clip audio;
 	
 	public Sound(String soundFile) {
+		if(!audioEnabled)
+			return;
+
 		try {
 			InputStream audioSrc = getClass().getResourceAsStream(soundFile);
 			AudioInputStream audioInput = AudioSystem.getAudioInputStream(new BufferedInputStream(audioSrc));
 			this.audio = AudioSystem.getClip();
 			this.audio.open(audioInput);
 		} catch (Exception ex) {
-			ex.printStackTrace();
+			throw new RuntimeException(ex);
 		}
 	}
 	public void playSoundOneShot() {
-		audio.setFramePosition(0);
-		this.audio.start();
+		if(audioEnabled) {
+			audio.setFramePosition(0);
+			this.audio.start();
+		}
 	}
 	
 	public void playSoundLoop() {
-		this.audio.start();
-		this.audio.loop(Clip.LOOP_CONTINUOUSLY);
+		if(audioEnabled) {
+			this.audio.start();
+			this.audio.loop(Clip.LOOP_CONTINUOUSLY);
+		}
 	}
 }

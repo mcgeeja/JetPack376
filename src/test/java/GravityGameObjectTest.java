@@ -4,9 +4,14 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.awt.Graphics2D;
 import java.util.ArrayList;
 
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 public class GravityGameObjectTest {
+	@BeforeAll
+	static void setUpBeforeClass() {
+		Sound.audioEnabled=false;
+	}
 
 	public class TestGravObject extends GravityGameObject{
 		
