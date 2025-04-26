@@ -18,6 +18,7 @@ public class Sound {
 		}
 	}
 	public void playSoundOneShot() {
+		audio.setFramePosition(0);
 		this.audio.start();
 	}
 	

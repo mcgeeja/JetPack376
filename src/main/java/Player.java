@@ -151,6 +151,7 @@ public class Player extends GravityGameObject{
 		int numBulletsToReload = Math.min(reserveAmmo, max - bulletCount);
 		this.bulletCount += numBulletsToReload;
 		this.reserveAmmo -= numBulletsToReload;
+		reloadSound.playSoundOneShot();
 	}
 
 	public ArrayList<Bullets> getListOfLeftBullets() {
