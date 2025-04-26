@@ -31,7 +31,6 @@ public class PlayerDirectionTest {
         Assertions.assertEquals(Player.Direction.LEFT, player.getDirection());
     }
 
-    @Disabled
     @Test
     public void testShootAddsBulletsToFacedDirection() {
         Player player = new Player(10, 10, 5);
