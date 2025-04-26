@@ -7,7 +7,7 @@ public class Bullets extends GameObject{
 	private int xVelocity;
 	private double size;
 	private Color bulletcolor;
-	private Sound sound = new Sound(new File("src/main/resources/sounds/bullet-sound.wav"));
+	private Sound sound = new Sound(new File("../resources/sounds/bullet-sound.wav"));
 
 	public Bullets(int startx, int starty, Color bulletcolor, int size) {
 		super(startx, starty, size, size);
