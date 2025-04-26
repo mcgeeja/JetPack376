@@ -10,13 +10,16 @@ public class Sound {
 	
 	public Sound(File soundFile) {
 		try {
-			if (soundFile.exists()) {
-				AudioInputStream audioInput = AudioSystem.getAudioInputStream(soundFile);			
-				this.audio = AudioSystem.getClip();
-				this.audio.open(audioInput);
-			} else {
-				System.out.println("Can't find file");
-			}
+			AudioInputStream audioInput = AudioSystem.getAudioInputStream(soundFile);			
+			this.audio = AudioSystem.getClip();
+			this.audio.open(audioInput);
+			// if (soundFile.exists()) {
+			// 	AudioInputStream audioInput = AudioSystem.getAudioInputStream(soundFile);			
+			// 	this.audio = AudioSystem.getClip();
+			// 	this.audio.open(audioInput);
+			// } else {
+			// 	System.out.println("Can't find file");
+			// }
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
