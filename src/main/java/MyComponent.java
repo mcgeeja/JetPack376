@@ -3,6 +3,7 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.event.KeyListener;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -134,64 +135,61 @@ public class MyComponent extends JComponent {
 		for (PowerUp p : powerUps) {
 			p.drawOn(this.g);
 		}
-		
+
 
 
 		takeOff();
 		gameOver();
 		
 	}
+	public void writeResultsToFile(boolean didWin){
+		LocalDateTime end = LocalDateTime.now();
+		Duration diff = Duration.between(time,end );
+		long minutes = diff.toMinutesPart();
+		long seconds = diff.toSecondsPart();
+		LinkedList<String> summaryLines = new LinkedList<>();
+		summaryLines.add((didWin)?"You won!":"You lost!");
+		summaryLines.add("Score: "+points);
+		summaryLines.add("Time: "+minutes+" minutes and "+seconds+" seconds");
+		summaryLines.add("Played Level: "+levels.curLevel);
 
-//	public void writeResultsToFile(boolean didWin){
-//		LocalDateTime end = LocalDateTime.now();
-//		Duration diff = Duration.between(end,time);
-//		long minutes = diff.toMinutesPart();
-//		long seconds = diff.toSecondsPart();
-//		LinkedList<String> summaryLines = new LinkedList<>();
-//		summaryLines.add((didWin)?"You won!":"You lost!");
-//		summaryLines.add("Score: "+points);
-//		summaryLines.add("Time: "+minutes+" minutes and "+seconds);
-//		summaryLines.add("Played Level: "+levels.curLevel);
-//
-//		FileWriter writer = null;
-//        try {
-//			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-//			String formattedDateTime = end.format(formatter); // "1986-04-08 12:30"
-//
-//			writer= new FileWriter("results/"+formattedDateTime+" game.txt");
-//			for(String line : summaryLines){
-//				writer.write(line+"\n");
-//			}
-//        } catch (IOException e) {
-//            throw new RuntimeException(e);
-//        }
-//		finally {
-//			if(writer!=null) {
-//                try {
-//                    writer.close();
-//                } catch (IOException e) {
-//                    throw new RuntimeException(e);
-//                }
-//            }
-//		}
-//    }
+		FileWriter writer = null;
+        try {
+			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+			String formattedDateTime = end.format(formatter); // "1986-04-08 12:30"
+			File resultsFolder = new File("./results/");
+			resultsFolder.mkdir();
 
+			writer= new FileWriter("results/"+formattedDateTime+" game.txt");
+			for(String line : summaryLines){
+				writer.write(line+"\n");
+			}
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+		finally {
+			if(writer!=null) {
+                try {
+                    writer.close();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+		}
+    }
 	public void gameOver() {
 		if (this.player.lives <= 0) {
 			GameOverScreen gameOverScreen = new GameOverScreen(this);
 			gameOverScreen.paintLoseGame();
 			endGame = true;
-
-//			writeResultsToFile(false);
-
+			writeResultsToFile(false);
 		}
 		if(buildingRocket.y <= 0) {
 			GameOverScreen gameOverScreen = new GameOverScreen(this);
 			gameOverScreen.paintWinGame();
 
 			endGame = true;
-//			writeResultsToFile(true);
-
+			writeResultsToFile(true);
 		}
 
 	}
@@ -212,7 +210,7 @@ public class MyComponent extends JComponent {
 				p.pickedUp(player);
 			}
 		}
-		
+
 	}
 
 	public void playerHit() {
