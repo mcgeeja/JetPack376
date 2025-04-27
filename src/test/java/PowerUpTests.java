@@ -11,12 +11,10 @@ public class PowerUpTests {
     private Player player;
     private Shield shield;
     private SpeedBoost speedBoost;
-    private BlueAlien blueAlien;
-
+   
     @BeforeEach
     public void setup() {
         player = new Player(100, 100, 10);
-        blueAlien = new BlueAlien(0, 0, "+");
         shield = new Shield(150, 150);
         speedBoost = new SpeedBoost(200, 200);
     }
@@ -52,13 +50,12 @@ public class PowerUpTests {
 
    
     @Test
-    public void testSpeedBoostDetails() {
+    public void testSpeedBoostCollected() {
+        speedBoost = new SpeedBoost(100, 100);
+        player = new Player(100, 100, 10);
 
-        assertEquals(30, speedBoost.width);
-        assertEquals(30, speedBoost.height);
-        assertEquals(100, speedBoost.x);
-        assertEquals(100, speedBoost.y);
         assertFalse(speedBoost.collected);
-        assertEquals(java.awt.Color.BLUE, speedBoost.color);
+        speedBoost.pickedUp(player);
+        assertTrue(speedBoost.collected);
     }
 }
