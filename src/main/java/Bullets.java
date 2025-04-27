@@ -4,7 +4,7 @@ import java.awt.geom.Rectangle2D;
 import java.io.File;
 
 public class Bullets extends GameObject{
-	private int xVelocity;
+	public int xVelocity;
 	private double size;
 	private Color bulletcolor;
 	private Sound sound = new Sound(new File("bullet-sound.wav"));
@@ -33,23 +33,4 @@ public class Bullets extends GameObject{
 		g.fill(bullet);
 	}
 
-	@Override
-	public void leftEdgeHit() {
-
-	}
-
-	@Override
-	public void rightEdgeHit() {
-
-	}
-
-	@Override
-	public void topEdgeHit() {
-
-	}
-
-	@Override
-	public void bottomEdgeHit() {
-
-	}
 }
