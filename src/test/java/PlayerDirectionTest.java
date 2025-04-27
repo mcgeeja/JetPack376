@@ -1,12 +1,13 @@
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class PlayerDirectionTest {
+    @BeforeAll
+    static void setUpBeforeClass() {
+        Sound.audioEnabled=false;
+    }
 
     @Test
     public void testDefaultDirectionLeft() {
@@ -31,7 +32,6 @@ public class PlayerDirectionTest {
         Assertions.assertEquals(Player.Direction.LEFT, player.getDirection());
     }
 
-    @Disabled
     @Test
     public void testShootAddsBulletsToFacedDirection() {
         Player player = new Player(10, 10, 5);

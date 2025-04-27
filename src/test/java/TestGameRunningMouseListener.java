@@ -1,9 +1,15 @@
 import org.easymock.EasyMock;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import java.awt.event.MouseEvent;
 
 public class TestGameRunningMouseListener {
+
+    @BeforeAll
+    static void setUpBeforeClass() {
+        Sound.audioEnabled=false;
+    }
 
     @Test
     public void testMouseClickedShoots() {

@@ -36,7 +36,7 @@ public class Player extends GravityGameObject{
 	public enum Direction {LEFT, RIGHT};
 	private Direction direction = Direction.LEFT;
 	private boolean pickUpItem = false;
-	private Sound reloadSound = new Sound(new File("reload.wav"));
+	private Sound reloadSound = new Sound("/sounds/reload.wav");
 
 	public Player(int x, int y, int speed) {
 		super(x, y, HeroWidth, HeroHeight);
@@ -151,6 +151,7 @@ public class Player extends GravityGameObject{
 		int numBulletsToReload = Math.min(reserveAmmo, max - bulletCount);
 		this.bulletCount += numBulletsToReload;
 		this.reserveAmmo -= numBulletsToReload;
+		reloadSound.playSoundOneShot();
 	}
 
 	public ArrayList<Bullets> getListOfLeftBullets() {

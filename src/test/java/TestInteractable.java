@@ -3,9 +3,15 @@ import static org.junit.jupiter.api.Assertions.*;
 import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
 
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 public class TestInteractable {
+	@BeforeAll
+	static void setUpBeforeClass() {
+		Sound.audioEnabled=false;
+	}
+
 	boolean success = false;
 	private class InteractableObject extends GameObject implements Interactable{
 		

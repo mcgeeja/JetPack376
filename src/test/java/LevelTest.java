@@ -1,4 +1,5 @@
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 
@@ -6,6 +7,12 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class LevelTest {
+    @BeforeAll
+    static void setUpBeforeClass() {
+        Sound.audioEnabled=false;
+    }
+
+
     void compareGameObjects(GameObject g1, GameObject g2) {
         Assertions.assertEquals(g1.height, g2.height);
         Assertions.assertEquals(g1.width, g2.width);

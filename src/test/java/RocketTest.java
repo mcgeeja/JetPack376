@@ -2,9 +2,16 @@ import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
+
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 public class RocketTest {
+
+    @BeforeAll
+    static void setUpBeforeClass() {
+        Sound.audioEnabled=false;
+    }
 
     @Test
     public void testPickedUp_SuccessfulPickup() {

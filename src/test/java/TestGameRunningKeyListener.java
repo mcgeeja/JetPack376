@@ -9,6 +9,7 @@ public class TestGameRunningKeyListener {
     @BeforeAll
     public static void setUpDefaultControlMap() {
         GameRunningKeyListener.initializeDefaultControlsMap();//this sets up a static variable
+        Sound.audioEnabled=false;
     }
 
     KeyEvent mockedEvent;

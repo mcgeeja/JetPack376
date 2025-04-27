@@ -3,9 +3,15 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.awt.Graphics2D;
 
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 public class TestGameObject {
+	@BeforeAll
+	static void setUpBeforeClass() {
+		Sound.audioEnabled=false;
+	}
+
 	public boolean ranDrawOn = false;
 	
 	public class TestObject extends GameObject{
