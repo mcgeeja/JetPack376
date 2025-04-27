@@ -16,8 +16,8 @@ public class TestBullet {
         assertFalse(bullet.move(99));
         assertTrue(bullet.move(99));
 
-       testMoveLeft();
     }
+    @Test
     public void testMoveLeft(){
 
         Bullets bullet = new Bullets(50,0, Color.BLACK,1);
