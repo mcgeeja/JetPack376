@@ -6,9 +6,7 @@ import java.util.Map;
 public class GameRunningKeyListener extends KeyAdapter {
 		
 		static Map<String, Integer> controlsMap = new HashMap<>();
-		
-		
-		private final MyComponent component;
+
 		private final Player player;
 
 		//this is called in the main method I think there is probably a better way to set this up
@@ -21,14 +19,10 @@ public class GameRunningKeyListener extends KeyAdapter {
 
 			controlsMap.put("Reload", KeyEvent.VK_R);
 			controlsMap.put("Pickup", KeyEvent.VK_X);
-			
-			controlsMap.put("Next Level", KeyEvent.VK_U);
-			controlsMap.put("Previous Level", KeyEvent.VK_D);
 		}
 		
 	
-		public GameRunningKeyListener(MyComponent myComponent, Player player) {
-			this.component = myComponent;
+		public GameRunningKeyListener(Player player) {
 			this.player = player;
 		}
 
@@ -57,14 +51,6 @@ public class GameRunningKeyListener extends KeyAdapter {
 			
 			if (e.getKeyCode() == controlsMap.get("Move Down")) {
 				player.setMoveDown(true);
-			}
-			
-			if (e.getKeyCode() ==  controlsMap.get("Next Level")) {
-				component.changeToNextLevelKeyPressResponse();
-			}
-			
-			if (e.getKeyCode() == controlsMap.get("Previous Level") ) {
-				component.changeToPreviousLevelKeyPressResponse();
 			}
 			
 		}
