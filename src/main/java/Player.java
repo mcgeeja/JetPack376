@@ -24,6 +24,7 @@ public class Player extends GravityGameObject{
 	private boolean up = false;
 	private boolean down = false;
 	private int pickUpCooldown;
+	private static final Image astronautImage = Toolkit.getDefaultToolkit().getImage("Astronaut.png");
 
 	public void setDirectionToFace(int mouseX) {
 		if(this.x >= mouseX){
@@ -57,7 +58,7 @@ public class Player extends GravityGameObject{
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		g2d.drawImage(image, x, y, width, height, null);
+		g2d.drawImage(astronautImage, x, y, width, height, null);
 
 	}
 
@@ -185,4 +186,9 @@ public class Player extends GravityGameObject{
 	public Direction getDirection(){
 		return direction;
 	}
+
+	public void increaseSpeed(double multiplier) {
+		this.speed = (int)(this.speed * multiplier);
+	}
+	
 }
