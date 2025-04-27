@@ -8,7 +8,7 @@ public class SpeedBoost extends PowerUp {
 
     @Override
     public void applyEffect(Player player) {
-        player.speed *= 1.25;
+        player.increaseSpeed(1.25);
         
     }
 }
