@@ -196,7 +196,7 @@ public class MyComponent extends JComponent {
 		
 		for (PowerUp p : powerUps) {
 			if(p.intersects(player)){
-				p.pickedUp(player);
+				p.interact(player);
 			}
 		}
 

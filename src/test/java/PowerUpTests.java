@@ -75,7 +75,7 @@ public class PowerUpTests {
         player = new TestPlayer(100, 100, 10);
 
         assertFalse(speedBoost.collected);
-        speedBoost.pickedUp(player);
+        speedBoost.interact(player);
         assertTrue(speedBoost.collected);
     }
 }
