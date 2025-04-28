@@ -8,10 +8,10 @@ import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
 
-public class Player extends GravityGameObject{
+public abstract class Player extends GravityGameObject{
 	private boolean shieldActive = false;
 	private static final int HeroHeight = 60;
-	private static final int HeroWidth = 30;
+	private static final int HeroWidth = 40;
 	protected int lives;
 	protected int speed;
 	protected ArrayList<Bullets> bulletList = new ArrayList<>();
@@ -24,7 +24,6 @@ public class Player extends GravityGameObject{
 	private boolean up = false;
 	private boolean down = false;
 	private int pickUpCooldown;
-	private static final Image astronautImage = Toolkit.getDefaultToolkit().getImage("Astronaut.png");
 
 	public void setDirectionToFace(int mouseX) {
 		if(this.x >= mouseX){
@@ -51,17 +50,7 @@ public class Player extends GravityGameObject{
 
 	}//
 
-	public void drawOn(Graphics2D g2d) {
-		this.image = Toolkit.getDefaultToolkit().getImage("Astronaut.png");
-		try {
-			this.image = ImageIO.read(new File("Astronaut.png"));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		g2d.drawImage(astronautImage, x, y, width, height, null);
-
-	}
-
+	public abstract void drawOn(Graphics2D g2d);
 	@Override
 	public void leftEdgeHit() {
 		this.x = 1920-20;

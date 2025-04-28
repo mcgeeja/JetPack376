@@ -33,47 +33,36 @@ public class Main {
 	public static final int frameHeight = 1080;
 
 	public static final Random rand = new Random();
+	static JFrame frame = new JFrame();
+	static JFrame frame2 = new JFrame();
+	static MyComponent component;
+	static List<Alien> aliensType1 = new ArrayList<Alien>();
+	static List<Alien> aliensType2 = new ArrayList<Alien>();
 
 	public static void main(String[] args) {
 		GameRunningKeyListener.initializeDefaultControlsMap();
 
-		JFrame frame = new JFrame();
 
 		TitleScreen title = new TitleScreen(0);
 		frame.add(title);
 
-		JFrame frame2 = new JFrame();
 		frame2.setSize(frameWidth, frameHeight);
 		frame2.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-
-		List<Alien> aliensType1 = new ArrayList<Alien>();
-		List<Alien> aliensType2 = new ArrayList<Alien>();
-		aliensType1.add(new BlueAlien(0, rand.nextInt(900),  "+"));
-		aliensType1.add(new BlueAlien(0, rand.nextInt(900),  "+"));
-		aliensType1.add(new BlueAlien(0, 150,  "+"));
-		aliensType1.add(new RedAlien(500,500,"+"));
-
-		aliensType2.add(new GreenAlien(frameWidth, rand.nextInt(900),  "+"));
-		aliensType2.add(new GreenAlien(frameWidth, 500,  "+"));
-
-		Player player = new Player(frameWidth / 2, 800, 15);
-
-		MyComponent component = new MyComponent(player, aliensType1, aliensType2);
-		frame2.add(component);
+		setUpComponent();
 
 		KeyListener keyListen = new KeyAdapter() {
 
 			@Override
 			public void keyPressed(KeyEvent e) {
 
-				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-					frame.setVisible(false);
-					component.run();
-					GameAdvanceListener advancelistener = new GameAdvanceListener(component);
-					Timer timer = new Timer(60, advancelistener);
-					timer.start();
-					frame2.setVisible(true);
+				if (e.getKeyCode() == KeyEvent.VK_1) {
+					component.setPlayer(new Astronaut(frameWidth / 2, 800, 15));
+					run();
+				}
+				if (e.getKeyCode() == KeyEvent.VK_2) {
+					component.setPlayer(new ZombieAstronaut(frameWidth / 2, 800, 15));
+					run();
 				}
 				
 				if (e.getKeyCode() == KeyEvent.VK_BACK_SPACE) {
@@ -89,6 +78,7 @@ public class Main {
 
 			}
 
+			
 		};
 
 		frame.addKeyListener(keyListen);
@@ -102,6 +92,29 @@ public class Main {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 	}
+	private static void setUpComponent() {
+		component = new MyComponent(null, aliensType1, aliensType2);
+		frame2.add(component);
+		frame.setVisible(false);
+	}
+	private static void setUpAliens() {
+		aliensType1.add(new BlueAlien(0, rand.nextInt(900),  "+"));
+		aliensType1.add(new BlueAlien(0, rand.nextInt(900),  "+"));
+		aliensType1.add(new BlueAlien(0, 150,  "+"));
+		aliensType1.add(new RedAlien(500,500,"+"));
+		aliensType2.add(new GreenAlien(frameWidth, rand.nextInt(900),  "+"));
+		aliensType2.add(new GreenAlien(frameWidth, 500,  "+"));
+	}
+	private static void run() {
+		setUpAliens();
+		component.run();
+		GameAdvanceListener advancelistener = new GameAdvanceListener(component);
+		Timer timer = new Timer(60, advancelistener);
+		timer.start();
+		frame2.setVisible(true);
+		
+	}
+
 
 
 }

@@ -40,6 +40,12 @@ public class TestInteractable {
 		public TestPlayer(int x, int y, int speed) {
 			super(x, y, speed);
 		}
+
+		@Override
+		public void drawOn(Graphics2D g2d) {
+			// TODO Auto-generated method stub
+			
+		}
 		
 	}
 	@Test

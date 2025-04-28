@@ -65,6 +65,9 @@ public class MyComponent extends JComponent {
 		powerUps.add(speedBoost);
 		powerUps.add(shield);
 	}
+	public void setPlayer(Player player) {
+		this.player = player;
+	}
 
 	@Override
 	public void paintComponent(Graphics g) {
@@ -418,7 +421,7 @@ public class MyComponent extends JComponent {
 		if(endGame) {
 			levels = new Level(1);
 			points = 0;
-			player = new Player(1920 / 2, 800, 15);
+			player = new Astronaut(1920 / 2, 800, 15);
 			this.addKeyListener(new GameRunningKeyListener(this.player));
 			levels.curLevel = 1;
 			endGame = false;
@@ -434,7 +437,7 @@ public class MyComponent extends JComponent {
     	if(endGame) {
 			levels = new Level(2);
 			points = 0;
-			player = new Player(1920 / 2, 800, 15);
+			player = new Astronaut(1920 / 2, 800, 15);
 			this.addKeyListener(new GameRunningKeyListener(this.player));
 			levels.curLevel = 2;
 			endGame = false;
