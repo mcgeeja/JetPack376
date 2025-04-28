@@ -1,8 +1,10 @@
+import java.awt.Color;
 import java.awt.Graphics2D;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+
 
 
 public class PlayerDirectionTest {
@@ -21,6 +23,19 @@ public class PlayerDirectionTest {
 		public void drawOn(Graphics2D g2d) {
 			// TODO Auto-generated method stub
 			
+		}
+
+		@Override
+		public void shoot() {
+			if (this.bulletCount != 0) {
+				if(direction == Direction.RIGHT) {
+					bulletList.add(new Bullets(1,1,null, 1,1));
+				}
+				else if(direction == Direction.LEFT) {
+					bulletListLeft.add(new Bullets(1,1,null, 1,1));
+				}
+				this.bulletCount -= 1;
+			}
 		}
     	
     }

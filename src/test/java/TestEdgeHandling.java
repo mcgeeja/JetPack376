@@ -16,6 +16,11 @@ public class TestEdgeHandling {
 			// TODO Auto-generated method stub
 			
 		}
+		@Override
+		public void shoot() {
+			// TODO Auto-generated method stub
+			bulletList.add(new Bullets(1,1,null, 1,1));
+		}
     	
     }
     @Test

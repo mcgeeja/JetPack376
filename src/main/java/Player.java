@@ -34,7 +34,7 @@ public abstract class Player extends GravityGameObject{
 	}
 
 	public enum Direction {LEFT, RIGHT};
-	private Direction direction = Direction.LEFT;
+	protected Direction direction = Direction.LEFT;
 	private boolean pickUpItem = false;
 	private Sound reloadSound = new Sound("/sounds/reload.wav");
 
@@ -117,20 +117,7 @@ public abstract class Player extends GravityGameObject{
 	}
 
 
-	public void shoot() {
-		if (this.bulletCount != 0) {
-			if(direction == Direction.RIGHT) {
-				Bullets b = new Bullets(this.x + this.width, this.y + this.height / 2, Color.ORANGE, 10);
-				bulletList.add(b);
-			}
-			else if(direction == Direction.LEFT) {
-				Bullets b = new Bullets(this.x - this.width, this.y + this.height / 2, Color.ORANGE, 10);
-				bulletListLeft.add(b);
-			}
-			this.bulletCount -= 1;
-		}
-	}
-
+	public abstract void shoot();
 	public ArrayList<Bullets> getListOfBullets() {
 		return bulletList;
 	}
