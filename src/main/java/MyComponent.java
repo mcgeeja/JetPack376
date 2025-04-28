@@ -39,7 +39,6 @@ public class MyComponent extends JComponent {
 	protected boolean endGame = false;
 	private ArrayList<PowerUp> powerUps = new ArrayList<>();
 
-	Random r = new Random();
 	public MyComponent(Player player, List<Alien> aliensType1,List<Alien>  aliensType2) {
 		time =LocalDateTime.now();
 
@@ -57,11 +56,11 @@ public class MyComponent extends JComponent {
 		this.buildingRocket = levels.getBottomRocketPiece();
 		this.buildingRocket.x = xR - 10;
 		this.buildingRocket.y = levels.platforms.get(levels.platforms.size()-1).y - 120;
-		num = r.nextInt(20);
+		num = Main.rand.nextInt(20);
 		this.ammo = new AmmoCrate(levels.platforms.get(num).x,levels.platforms.get(num).y -30);
 		// Create a random powerup on a platform
-		PowerUp speedBoost = new SpeedBoost(levels.platforms.get(r.nextInt(levels.platforms.size())).x, 100);
-		PowerUp shield = new Shield(levels.platforms.get(r.nextInt(levels.platforms.size())).x, 300);
+		PowerUp speedBoost = new SpeedBoost(levels.platforms.get(Main.rand.nextInt(levels.platforms.size())).x, 100);
+		PowerUp shield = new Shield(levels.platforms.get(Main.rand.nextInt(levels.platforms.size())).x, 300);
 
 		powerUps.add(speedBoost);
 		powerUps.add(shield);
