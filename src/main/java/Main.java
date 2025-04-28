@@ -33,15 +33,16 @@ public class Main {
 	public static final int frameHeight = 1080;
 
 	public static final Random rand = new Random();
-	static JFrame frame = new JFrame();
-	static JFrame frame2 = new JFrame();
+	static JFrame frame;
+	static JFrame frame2;
 	static MyComponent component;
 	static List<Alien> aliensType1 = new ArrayList<Alien>();
 	static List<Alien> aliensType2 = new ArrayList<Alien>();
 
 	public static void main(String[] args) {
 		GameRunningKeyListener.initializeDefaultControlsMap();
-
+		frame = new JFrame();
+		frame2 = new JFrame();
 
 		TitleScreen title = new TitleScreen(0);
 		frame.add(title);
