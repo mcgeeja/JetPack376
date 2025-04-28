@@ -50,7 +50,7 @@ public class Main {
 		frame2.setSize(frameWidth, frameHeight);
 		frame2.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-		setUpComponent();
+		
 
 		KeyListener keyListen = new KeyAdapter() {
 
@@ -58,11 +58,11 @@ public class Main {
 			public void keyPressed(KeyEvent e) {
 
 				if (e.getKeyCode() == KeyEvent.VK_1) {
-					component.setPlayer(new Astronaut(frameWidth / 2, 800, 15));
+					setUpComponent(new Astronaut(frameWidth / 2, 800, 15));
 					run();
 				}
 				if (e.getKeyCode() == KeyEvent.VK_2) {
-					component.setPlayer(new ZombieAstronaut(frameWidth / 2, 800, 15));
+					setUpComponent(new ZombieAstronaut(frameWidth / 2, 800, 15));
 					run();
 				}
 				
@@ -93,8 +93,8 @@ public class Main {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 	}
-	private static void setUpComponent() {
-		component = new MyComponent(null, aliensType1, aliensType2);
+	private static void setUpComponent(Player p) {
+		component = new MyComponent(p, aliensType1, aliensType2);
 		frame2.add(component);
 		frame.setVisible(false);
 	}

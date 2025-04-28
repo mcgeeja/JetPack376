@@ -66,9 +66,6 @@ public class MyComponent extends JComponent {
 		powerUps.add(speedBoost);
 		powerUps.add(shield);
 	}
-	public void setPlayer(Player player) {
-		this.player = player;
-	}
 
 	@Override
 	public void paintComponent(Graphics g) {
