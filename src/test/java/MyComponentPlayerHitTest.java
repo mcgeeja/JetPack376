@@ -8,7 +8,7 @@ public class MyComponentPlayerHitTest {
     @Test
     public void testPlayerHit() {
         //setup
-        Player mockPlayer = EasyMock.mock(Player.class);
+        Astronaut mockPlayer = EasyMock.mock(Astronaut.class);
         List<Alien> aliensType1 = new ArrayList<>();
         List<Alien> aliensType2 = new ArrayList<>();
 
