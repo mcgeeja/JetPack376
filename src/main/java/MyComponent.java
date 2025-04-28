@@ -56,7 +56,8 @@ public class MyComponent extends JComponent {
 		this.buildingRocket = levels.getBottomRocketPiece();
 		this.buildingRocket.x = xR - 10;
 		this.buildingRocket.y = levels.platforms.get(levels.platforms.size()-1).y - 120;
-		num = Main.rand.nextInt(20);
+		Random r = new Random();
+		num = r.nextInt(20);
 		this.ammo = new AmmoCrate(levels.platforms.get(num).x,levels.platforms.get(num).y -30);
 		// Create a random powerup on a platform
 		PowerUp speedBoost = new SpeedBoost(levels.platforms.get(Main.rand.nextInt(levels.platforms.size())).x, 100);
