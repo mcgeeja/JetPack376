@@ -75,7 +75,7 @@ public abstract class Alien extends GameObject{
 	}
 
 	public void shootright() {
-		Bullets b = new Bullets(this.x + this.width, this.y + this.height / 2, Color.RED, 5);
+		Bullets b = new Bullets(this.x + this.width, this.y + this.height / 2, Color.RED, 5, 25);
 		rightbulletlist.add(b);
 	}
 

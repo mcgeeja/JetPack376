@@ -40,6 +40,17 @@ public class TestInteractable {
 		public TestPlayer(int x, int y, int speed) {
 			super(x, y, speed);
 		}
+
+		@Override
+		public void drawOn(Graphics2D g2d) {
+			// TODO Auto-generated method stub
+			
+		}
+		@Override
+		public void shoot() {
+			// TODO Auto-generated method stub
+			bulletList.add(new Bullets(1,1,null, 1,1));
+		}
 		
 	}
 	@Test
