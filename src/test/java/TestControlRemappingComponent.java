@@ -11,6 +11,7 @@ public class TestControlRemappingComponent {
     @BeforeAll
     static void setUpBeforeClass() {
         GameRunningKeyListener.initializeDefaultControlsMap();
+        Sound.audioEnabled=false;
     }
 
     @Test

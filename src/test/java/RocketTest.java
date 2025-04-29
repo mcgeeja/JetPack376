@@ -1,15 +1,40 @@
+import java.awt.Graphics2D;
 import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
+
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 public class RocketTest {
 
+    @BeforeAll
+    static void setUpBeforeClass() {
+        Sound.audioEnabled=false;
+    }
+    private class TestPlayer extends Player{
+
+		public TestPlayer(int x, int y, int speed) {
+			super(x, y, speed);
+		}
+
+		@Override
+		public void drawOn(Graphics2D g2d) {
+			// TODO Auto-generated method stub
+			
+		}
+		@Override
+		public void shoot() {
+			// TODO Auto-generated method stub
+			bulletList.add(new Bullets(1,1,null, 1,1));
+		}
+    	
+    }
     @Test
     public void testPickedUp_SuccessfulPickup() {
         Rocket rocket = new BottomRocketPiece(106, 105);
-        Player player = new Player(100, 100, 5);  // Overlapping position
+        Player player = new TestPlayer(100, 100, 5);  // Overlapping position
         rocket.interact(player);
 
         assertEquals(player.x, rocket.x);
@@ -21,7 +46,7 @@ public void testPickedUp_CooldownBlocksPickup() {
     Rocket rocket = new BottomRocketPiece(100, 110);
 
     // Use subclass to override cooldown method
-    Player mockPlayer = new Player(150, 100, 5) {
+    Player mockPlayer = new TestPlayer(150, 100, 5) {
         @Override
         public int getPickUpCooldown() {
             return 5; // Simulate active cooldown

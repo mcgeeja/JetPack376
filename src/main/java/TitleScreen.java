@@ -21,6 +21,8 @@ public class TitleScreen extends JComponent {
 
 		font = new Font("arial", Font.BOLD, 50);
 		g2d.setFont(font);
-		g2d.drawString("Press ENTER to start", 1920 / 2 - 265, 1080 / 2 + 200);
+		g2d.drawString("Press 1 to play as Astronaut", 1920 / 2 - 265, 1080 / 2 + 200);
+		g2d.drawString("Press 2 to play as Zombie Astronaut", 1920 / 2 - 265, 1080 / 2 + 300);
+
 	}
 }

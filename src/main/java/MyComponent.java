@@ -18,12 +18,11 @@ import javax.swing.event.MouseInputListener;
 
 
 public class MyComponent extends JComponent {
-	protected Player player = new Player(1920 / 2, 800, 15);
+	protected Player player;
 	private Level levels;
 	protected int num;
-	protected String[] direction = new String[2];
-	protected ArrayList<Alien> aliensType1 = new ArrayList<>();
-	protected ArrayList<Alien> aliensType2 = new ArrayList<>();
+	protected List<Alien> aliensType1;
+	protected List<Alien> aliensType2;
 	protected Graphics2D g;
 	private ArrayList<Rocket> builtRocketPieces = new ArrayList<>();
 
@@ -38,30 +37,17 @@ public class MyComponent extends JComponent {
 	protected int fuelCount = 0;
 	protected AmmoCrate ammo;
 	protected boolean endGame = false;
-	private static final Random rand = new Random();
-	private boolean levelChange = false;
 	private ArrayList<PowerUp> powerUps = new ArrayList<>();
 
-	public MyComponent() {
+	Random r = new Random();
+	public MyComponent(Player player, List<Alien> aliensType1,List<Alien>  aliensType2) {
 		time =LocalDateTime.now();
-		this.direction[0] = "-";
-		this.direction[1] = "+";
-		this.direction[0] = "+";
-		for (int i = 0; i < 1; i++) {
-			Alien alienType1 = new BlueAlien(0, rand.nextInt(900),  this.direction[rand.nextInt(2)]);
-			Alien redAlien = new RedAlien(500,500,"+");
-			Alien alienType1_2 = new BlueAlien(0, rand.nextInt(900),  this.direction[rand.nextInt(2)]);
-			Alien alienType2 = new GreenAlien(1920, rand.nextInt(900),  this.direction[rand.nextInt(2)]);
-			Alien alien1 = new BlueAlien(0, 150,  this.direction[rand.nextInt(2)]);
-			Alien alien2 = new GreenAlien(1920, 500,  this.direction[rand.nextInt(2)]);
-			aliensType1.add(alienType1);
-			aliensType1.add(alienType1_2);
-			aliensType1.add(alien1);
-			aliensType1.add(redAlien);
-			
-			aliensType2.add(alienType2);
-			aliensType2.add(alien2);
-		}
+
+		this.player = player;
+
+		this.aliensType1 = aliensType1;
+		this.aliensType2 = aliensType2;
+
 		this.levels = new Level(1);
 		piecesInLevel = levels.rocketPieces.size();
 		pieceCount = levels.rocketPieces.size(); ;
@@ -71,11 +57,11 @@ public class MyComponent extends JComponent {
 		this.buildingRocket = levels.getBottomRocketPiece();
 		this.buildingRocket.x = xR - 10;
 		this.buildingRocket.y = levels.platforms.get(levels.platforms.size()-1).y - 120;
-		num = rand.nextInt(20);
+		num = r.nextInt(20);
 		this.ammo = new AmmoCrate(levels.platforms.get(num).x,levels.platforms.get(num).y -30);
 		// Create a random powerup on a platform
-		PowerUp speedBoost = new SpeedBoost(levels.platforms.get(rand.nextInt(levels.platforms.size())).x, 100);
-		PowerUp shield = new Shield(levels.platforms.get(rand.nextInt(levels.platforms.size())).x, 300);
+		PowerUp speedBoost = new SpeedBoost(levels.platforms.get(r.nextInt(levels.platforms.size())).x, 100);
+		PowerUp shield = new Shield(levels.platforms.get(r.nextInt(levels.platforms.size())).x, 300);
 
 		powerUps.add(speedBoost);
 		powerUps.add(shield);
@@ -107,7 +93,7 @@ public class MyComponent extends JComponent {
         onRocketHolder();
         updateFuelCount();
         if(fuelCount != 120) {
-        player.drawOn(this.g);
+        	player.drawOn(this.g);
         }
         for(Bullets bullet:player.getListOfBullets()) {
         	bullet.drawOn(this.g);
@@ -207,7 +193,7 @@ public class MyComponent extends JComponent {
 		
 		for (PowerUp p : powerUps) {
 			if(p.intersects(player)){
-				p.pickedUp(player);
+				p.interact(player);
 			}
 		}
 
@@ -331,7 +317,6 @@ public class MyComponent extends JComponent {
 	public void updateAlienReload() {
 		aliensType1.get(0).shotTimer();
 		aliensType2.get(0).shotTimer();
-
 	}
 
 	public void updateAliens() {
@@ -361,7 +346,7 @@ public class MyComponent extends JComponent {
 
 	public void run() {
 
-		KeyListener keyListen = new GameRunningKeyListener(this, this.player);
+		KeyListener keyListen = new GameRunningKeyListener( this.player);
 		MouseInputListener mouseListen = new GameRunningMouseListener(this.player);
        
         this.addKeyListener(keyListen);
@@ -382,7 +367,7 @@ public class MyComponent extends JComponent {
 			buildRocketNum = 0;
 			piecesInLevel = levels.rocketPieces.size();
 			pieceCount = levels.rocketPieces.size(); ;
-			num = rand.nextInt(20);
+			num = Main.rand.nextInt(20);
 			ammo = new AmmoCrate(levels.platforms.get(num).x,levels.platforms.get(num).y -30);
 			buildingRocket.y = levels.platforms.get(levels.platforms.size()-1).y -120;
 		}
@@ -400,7 +385,7 @@ public class MyComponent extends JComponent {
 			levels.curLevel = 1;
 			buildRocketNum = 0;
 			pieceCount = 3;
-			num = rand.nextInt(20);
+			num = Main.rand.nextInt(20);
 			ammo = new AmmoCrate(levels.platforms.get(num).x,levels.platforms.get(num).y -30);
 			buildingRocket.y = levels.platforms.get(levels.platforms.size()-1).y -120;
 			repaint();
@@ -434,13 +419,13 @@ public class MyComponent extends JComponent {
 		if(endGame) {
 			levels = new Level(1);
 			points = 0;
-			player = new Player(1920 / 2, 800, 15);
-			this.addKeyListener(new GameRunningKeyListener(this, this.player));
+			player = new Astronaut(1920 / 2, 800, 15);
+			this.addKeyListener(new GameRunningKeyListener(this.player));
 			levels.curLevel = 1;
 			endGame = false;
 			buildRocketNum = 0;
 			pieceCount = 3;
-			num = rand.nextInt(20);
+			num = Main.rand.nextInt(20);
 			ammo = new AmmoCrate(levels.platforms.get(num).x,levels.platforms.get(num).y -30);
 			buildingRocket.y = levels.platforms.get(levels.platforms.size()-1).y -120;
 		}
@@ -450,13 +435,13 @@ public class MyComponent extends JComponent {
     	if(endGame) {
 			levels = new Level(2);
 			points = 0;
-			player = new Player(1920 / 2, 800, 15);
-			this.addKeyListener(new GameRunningKeyListener(this, this.player));
+			player = new Astronaut(1920 / 2, 800, 15);
+			this.addKeyListener(new GameRunningKeyListener(this.player));
 			levels.curLevel = 2;
 			endGame = false;
 			buildRocketNum = 0;
 			pieceCount = 3;
-			num = rand.nextInt(20);
+			num = Main.rand.nextInt(20);
 			ammo = new AmmoCrate(levels.platforms.get(num).x,levels.platforms.get(num).y -30);
 			buildingRocket.y = levels.platforms.get(levels.platforms.size()-1).y -120;
 		}

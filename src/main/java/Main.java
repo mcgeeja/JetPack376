@@ -2,6 +2,9 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
@@ -29,33 +32,38 @@ public class Main {
 	public static final int frameWidth = 1920;
 	public static final int frameHeight = 1080;
 
+	public static final Random rand = new Random();
+	static JFrame frame;
+	static JFrame frame2;
+	static MyComponent component;
+	static List<Alien> aliensType1 = new ArrayList<Alien>();
+	static List<Alien> aliensType2 = new ArrayList<Alien>();
+
 	public static void main(String[] args) {
 		GameRunningKeyListener.initializeDefaultControlsMap();
-
-		JFrame frame = new JFrame();
+		frame = new JFrame();
+		frame2 = new JFrame();
 
 		TitleScreen title = new TitleScreen(0);
 		frame.add(title);
 
-		JFrame frame2 = new JFrame();
 		frame2.setSize(frameWidth, frameHeight);
 		frame2.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
 		
-		MyComponent component = new MyComponent();
-		frame2.add(component);
 
 		KeyListener keyListen = new KeyAdapter() {
 
 			@Override
 			public void keyPressed(KeyEvent e) {
 
-				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-					frame.setVisible(false);
-					component.run();
-					GameAdvanceListener advancelistener = new GameAdvanceListener(component);
-					Timer timer = new Timer(60, advancelistener);
-					timer.start();
-					frame2.setVisible(true);
+				if (e.getKeyCode() == KeyEvent.VK_1) {
+					setUpComponent(new Astronaut(frameWidth / 2, 800, 15));
+					run();
+				}
+				if (e.getKeyCode() == KeyEvent.VK_2) {
+					setUpComponent(new ZombieAstronaut(frameWidth / 2, 800, 15));
+					run();
 				}
 				
 				if (e.getKeyCode() == KeyEvent.VK_BACK_SPACE) {
@@ -71,11 +79,12 @@ public class Main {
 
 			}
 
+			
 		};
 
 		frame.addKeyListener(keyListen);
 		
-		Sound gameTheme = new Sound(new File("finalgametheme.wav"));
+		Sound gameTheme = new Sound("/sounds/finalgametheme.wav");
 		gameTheme.playSoundLoop();
 
 		frame.setVisible(true);
@@ -84,6 +93,29 @@ public class Main {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 	}
+	private static void setUpComponent(Player p) {
+		component = new MyComponent(p, aliensType1, aliensType2);
+		frame2.add(component);
+		frame.setVisible(false);
+	}
+	private static void setUpAliens() {
+		aliensType1.add(new BlueAlien(0, rand.nextInt(900),  "+"));
+		aliensType1.add(new BlueAlien(0, rand.nextInt(900),  "+"));
+		aliensType1.add(new BlueAlien(0, 150,  "+"));
+		aliensType1.add(new RedAlien(500,500,"+"));
+		aliensType2.add(new GreenAlien(frameWidth, rand.nextInt(900),  "+"));
+		aliensType2.add(new GreenAlien(frameWidth, 500,  "+"));
+	}
+	private static void run() {
+		setUpAliens();
+		component.run();
+		GameAdvanceListener advancelistener = new GameAdvanceListener(component);
+		Timer timer = new Timer(60, advancelistener);
+		timer.start();
+		frame2.setVisible(true);
+		
+	}
+
 
 
 }

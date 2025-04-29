@@ -1,0 +1,336 @@
+@startuml
+
+top to bottom direction
+skinparam linetype ortho
+
+class Alien {
+  + Alien(int, int, String):
+  + bulletHit(ArrayList<Bullets>): boolean
+  + rightEdgeHit(): void
+  + shotPlayer(Player): boolean
+  + move(ArrayList<Platform>): void
+  + leftEdgeHit(): void
+  + shootright(): void
+  + bottomEdgeHit(): void
+  + topEdgeHit(): void
+  + contactWith(ArrayList<Platform>): void
+  + drawOn(Graphics2D): void
+  + shotTimer(): void
+   listOfRightBullets: ArrayList<Bullets>
+}
+class AmmoCrate {
+  + AmmoCrate(int, int):
+  + interact(Player): void
+  + drawOn(Graphics2D): void
+}
+class BlueAlien {
+  + BlueAlien(int, int, String):
+  + move(ArrayList<Platform>): void
+  + leftEdgeHit(): void
+  + drawOn(Graphics2D): void
+  + rightEdgeHit(): void
+  + topEdgeHit(): void
+  + bottomEdgeHit(): void
+}
+class BottomRocketPiece {
+  + BottomRocketPiece(int, int):
+  + drawPiece(Graphics2D, int): void
+  + rightEdgeHit(): void
+  + leftEdgeHit(): void
+  + bottomEdgeHit(): void
+  + topEdgeHit(): void
+  + drawOn(Graphics2D): void
+}
+class BuildingPiece {
+  + BuildingPiece(int, int):
+  + rightEdgeHit(): void
+  + topEdgeHit(): void
+  + drawOn(Graphics2D): void
+  + leftEdgeHit(): void
+  + bottomEdgeHit(): void
+}
+class Bullets {
+  + Bullets(int, int, Color, int):
+  + leftEdgeHit(): void
+  + rightEdgeHit(): void
+  + move(int): boolean
+  + bottomEdgeHit(): void
+  + topEdgeHit(): void
+  + drawOn(Graphics2D): void
+  + moveLeft(int): boolean
+}
+class ControlRemappingComponent {
+  + ControlRemappingComponent():
+  # changeKeyMapping(Entry<String, Integer>, JButton, int): void
+}
+enum Direction << enumeration >> {
+  + Direction():
+  + values(): Direction[]
+  + valueOf(String): Direction
+}
+class Fuel {
+  + Fuel(int, int):
+  + drawOn(Graphics2D): void
+  + interact(Player): void
+}
+class GameAdvanceListener {
+  + GameAdvanceListener(MyComponent):
+  + advanceOneTick(): void
+  + actionPerformed(ActionEvent): void
+}
+class GameObject {
+  + GameObject(int, int, int, int):
+  + bottomEdgeHit(): void
+  + intersects(GameObject): boolean
+  + rightEdgeHit(): void
+  + leftEdgeHit(): void
+  + topEdgeHit(): void
+  + drawOn(Graphics2D): void
+   dimensions: Double
+}
+class GameOverKeyListener {
+  + GameOverKeyListener(MyComponent):
+  + keyTyped(KeyEvent): void
+  + keyPressed(KeyEvent): void
+  + keyReleased(KeyEvent): void
+}
+class GameOverScreen {
+  + GameOverScreen(MyComponent):
+  + paintWinGame(): void
+  + paintLoseGame(): void
+}
+class GameRunningKeyListener {
+  + GameRunningKeyListener(Player):
+  + keyReleased(KeyEvent): void
+  + keyPressed(KeyEvent): void
+  + initializeDefaultControlsMap(): void
+}
+class GameRunningMouseListener {
+  + GameRunningMouseListener(Player):
+  + mousePressed(MouseEvent): void
+  + mouseMoved(MouseEvent): void
+}
+class GravityGameObject {
+  + GravityGameObject(int, int, int, int):
+  + gravity(ArrayList<Platform>): void
+}
+class GreenAlien {
+  + GreenAlien(int, int, String):
+  + topEdgeHit(): void
+  + bottomEdgeHit(): void
+  + move(ArrayList<Platform>): void
+  + drawOn(Graphics2D): void
+  + rightEdgeHit(): void
+  + leftEdgeHit(): void
+}
+interface Interactable << interface >> {
+  + interact(Player): void
+}
+class Level {
+  + Level():
+  + Level(int):
+  # bottomRocketPiece: Rocket
+  - addMiddleRocketPiece(int, int): void
+  - addFuel(int, int): void
+  - addTopRocketPiece(int, int): void
+  - addPlatform(int, int, int): void
+  + convertLevelToText(ArrayList<String>): void
+  + drawLevel(Graphics2D): void
+  + getLevelFile(int): String
+  - addBottomRocketPiece(int, int): void
+  - processLine(String, int): void
+  ~ readFromFile(File): ArrayList<String>
+   bottomRocketPiece: Rocket
+}
+class Main {
+  + Main():
+  + main(String[]): void
+}
+class MiddleRocketPiece {
+  + MiddleRocketPiece(int, int):
+  + drawPiece(Graphics2D, int): void
+  + leftEdgeHit(): void
+  + rightEdgeHit(): void
+  + topEdgeHit(): void
+  + bottomEdgeHit(): void
+  + drawOn(Graphics2D): void
+}
+class MyComponent {
+  + MyComponent(Player, List<Alien>, List<Alien>):
+  + updatePickUpTimer(): void
+  + updateFuelCount(): void
+  + paintComponent(Graphics): void
+  + processGameComponentsOnEdge(): void
+  + changeToPreviousLevelKeyPressResponse(): void
+  + interactionHandler(): void
+  + updateAlienReload(): void
+  + run(): void
+  + takeOff(): void
+  + changeToNextLevelKeyPressResponse(): void
+  + updateGrav(): void
+  + updateAliens(): void
+  + handleComponentOnEdge(GameObject): void
+  + updateAllAlienBullets(): void
+  + updateState(): void
+  + onRocketHolder(): void
+  + gameOver(): void
+  + updateleftsideBullets(): void
+  + selectLevelOneKeyPressResponse(): void
+  + writeResultsToFile(boolean): void
+  + playerHit(): void
+  + selectLevelTwoKeyPressResponse(): void
+  + updateBullets(): void
+}
+class Platform {
+  + Platform(int, int, int, int):
+  + drawOn(Graphics2D): void
+  + topEdgeHit(): void
+  + rightEdgeHit(): void
+  + bottomEdgeHit(): void
+  + leftEdgeHit(): void
+}
+class Player {
+  + Player(int, int, int):
+  - pickUpItem: boolean
+  - pickUpCooldown: int
+  - direction: Direction
+  + startCountDown(): void
+  + shoot(): void
+  + drawOn(Graphics2D): void
+  + activateShield(): void
+  + reload(): void
+  + rightEdgeHit(): void
+  + increaseSpeed(double): void
+  + isHit(): void
+  + move(): void
+  + bottomEdgeHit(): void
+  + leftEdgeHit(): void
+  + topEdgeHit(): void
+   directionToFace: int
+   moveLeft: boolean
+   listOfLeftBullets: ArrayList<Bullets>
+   moveDown: boolean
+   direction: Direction
+   listOfBullets: ArrayList<Bullets>
+   pickUpCooldown: int
+   moveUp: boolean
+   pickUpItem: boolean
+   moveRight: boolean
+}
+class PowerUp {
+  + PowerUp(int, int, int, int, Color):
+  + applyEffect(Player): void
+  + pickedUp(Player): void
+  + drawOn(Graphics2D): void
+}
+class RedAlien {
+  + RedAlien(int, int, String):
+  + drawOn(Graphics2D): void
+  + topEdgeHit(): void
+  + move(ArrayList<Platform>): void
+}
+class Rocket {
+  + Rocket(int, int):
+  + drawPiece(Graphics2D, int): void
+  + interact(Player): void
+  + build(int, Graphics2D): void
+  + takeOff(Graphics2D): void
+}
+class Shield {
+  + Shield(int, int):
+  + applyEffect(Player): void
+}
+class Sound {
+  + Sound(String):
+  + playSoundOneShot(): void
+  + playSoundLoop(): void
+}
+class SpeedBoost {
+  + SpeedBoost(int, int):
+  + applyEffect(Player): void
+}
+class TitleScreen {
+  + TitleScreen(int):
+  + paintComponent(Graphics): void
+}
+class TopRocketPiece {
+  + TopRocketPiece(int, int):
+  + drawPiece(Graphics2D, int): void
+  + drawOn(Graphics2D): void
+  + topEdgeHit(): void
+  + bottomEdgeHit(): void
+  + leftEdgeHit(): void
+  + rightEdgeHit(): void
+}
+
+Alien                      -[#595959,dashed]->  Bullets
+Alien                     "1" *-[#595959,plain]-> "rightbulletlist\n*" Bullets
+Alien                      -[#000082,plain]-^  GameObject
+AmmoCrate                  -[#000082,plain]-^  GameObject
+AmmoCrate                  -[#008200,dashed]-^  Interactable
+BlueAlien                  -[#000082,plain]-^  Alien
+BottomRocketPiece          -[#000082,plain]-^  Rocket
+BuildingPiece              -[#000082,plain]-^  GameObject
+Bullets                    -[#000082,plain]-^  GameObject
+Bullets                   "1" *-[#595959,plain]-> "sound\n1" Sound
+Bullets                    -[#595959,dashed]->  Sound
+Direction                  +-[#820000,plain]-  Player
+Fuel                       -[#000082,plain]-^  GravityGameObject
+Fuel                       -[#008200,dashed]-^  Interactable
+GameAdvanceListener       "1" *-[#595959,plain]-> "component\n1" MyComponent
+GameOverKeyListener       "1" *-[#595959,plain]-> "component\n1" MyComponent
+GameOverScreen             -[#595959,dashed]->  GameOverKeyListener
+GameOverScreen            "1" *-[#595959,plain]-> "component\n1" MyComponent
+GameRunningKeyListener    "1" *-[#595959,plain]-> "player\n1" Player
+GameRunningMouseListener  "1" *-[#595959,plain]-> "player\n1" Player
+GravityGameObject          -[#000082,plain]-^  GameObject
+GreenAlien                 -[#000082,plain]-^  Alien
+Level                      -[#595959,dashed]->  BottomRocketPiece
+Level                     "1" *-[#595959,plain]-> "fuels\n*" Fuel
+Level                      -[#595959,dashed]->  Fuel
+Level                      -[#595959,dashed]->  MiddleRocketPiece
+Level                     "1" *-[#595959,plain]-> "platforms\n*" Platform
+Level                      -[#595959,dashed]->  Platform
+Level                     "1" *-[#595959,plain]-> "rocketPieces\n*" Rocket
+Level                      -[#595959,dashed]->  TopRocketPiece
+Main                       -[#595959,dashed]->  BlueAlien
+Main                       -[#595959,dashed]->  ControlRemappingComponent
+Main                       -[#595959,dashed]->  GameAdvanceListener
+Main                       -[#595959,dashed]->  GreenAlien
+Main                       -[#595959,dashed]->  MyComponent
+Main                       -[#595959,dashed]->  Player
+Main                       -[#595959,dashed]->  RedAlien
+Main                       -[#595959,dashed]->  Sound
+Main                       -[#595959,dashed]->  TitleScreen
+MiddleRocketPiece          -[#000082,plain]-^  Rocket
+MyComponent               "1" *-[#595959,plain]-> "aliensType1\n*" Alien
+MyComponent               "1" *-[#595959,plain]-> "ammo\n1" AmmoCrate
+MyComponent                -[#595959,dashed]->  AmmoCrate
+MyComponent               "1" *-[#595959,plain]-> "rocketHolder\n1" BuildingPiece
+MyComponent                -[#595959,dashed]->  BuildingPiece
+MyComponent                -[#595959,dashed]->  GameOverScreen
+MyComponent                -[#595959,dashed]->  GameRunningKeyListener
+MyComponent                -[#595959,dashed]->  GameRunningMouseListener
+MyComponent                -[#595959,dashed]->  Level
+MyComponent               "1" *-[#595959,plain]-> "levels\n1" Level
+MyComponent               "1" *-[#595959,plain]-> "player\n1" Player
+MyComponent                -[#595959,dashed]->  Player
+MyComponent               "1" *-[#595959,plain]-> "powerUps\n*" PowerUp
+MyComponent               "1" *-[#595959,plain]-> "builtRocketPieces\n*" Rocket
+MyComponent                -[#595959,dashed]->  Shield
+MyComponent                -[#595959,dashed]->  SpeedBoost
+Platform                   -[#000082,plain]-^  GameObject
+Player                     -[#595959,dashed]->  Bullets
+Player                    "1" *-[#595959,plain]-> "bulletList\n*" Bullets
+Player                    "1" *-[#595959,plain]-> "direction\n1" Direction
+Player                     -[#000082,plain]-^  GravityGameObject
+Player                     -[#595959,dashed]->  Sound
+Player                    "1" *-[#595959,plain]-> "reloadSound\n1" Sound
+PowerUp                    -[#000082,plain]-^  GameObject
+RedAlien                   -[#000082,plain]-^  Alien
+Rocket                     -[#000082,plain]-^  GravityGameObject
+Rocket                     -[#008200,dashed]-^  Interactable
+Shield                     -[#000082,plain]-^  PowerUp
+SpeedBoost                 -[#000082,plain]-^  PowerUp
+TopRocketPiece             -[#000082,plain]-^  Rocket
+@enduml

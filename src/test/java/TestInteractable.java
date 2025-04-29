@@ -3,9 +3,15 @@ import static org.junit.jupiter.api.Assertions.*;
 import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
 
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 public class TestInteractable {
+	@BeforeAll
+	static void setUpBeforeClass() {
+		Sound.audioEnabled=false;
+	}
+
 	boolean success = false;
 	private class InteractableObject extends GameObject implements Interactable{
 		
@@ -33,6 +39,17 @@ public class TestInteractable {
 
 		public TestPlayer(int x, int y, int speed) {
 			super(x, y, speed);
+		}
+
+		@Override
+		public void drawOn(Graphics2D g2d) {
+			// TODO Auto-generated method stub
+			
+		}
+		@Override
+		public void shoot() {
+			// TODO Auto-generated method stub
+			bulletList.add(new Bullets(1,1,null, 1,1));
 		}
 		
 	}

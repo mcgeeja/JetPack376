@@ -1,7 +1,7 @@
 import java.awt.Color;
 import java.awt.Graphics2D;
 
-public abstract class PowerUp extends GameObject {
+public abstract class PowerUp extends GameObject implements Interactable{
     protected boolean collected = false;
     protected Color color;
 
@@ -20,7 +20,7 @@ public abstract class PowerUp extends GameObject {
         }
     }
 
-    public void pickedUp(Player player) {
+    public void interact(Player player) {
         if (!collected && this.intersects(player)) {
             collected = true;
             applyEffect(player);

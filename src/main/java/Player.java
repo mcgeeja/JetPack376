@@ -8,10 +8,10 @@ import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
 
-public class Player extends GravityGameObject{
+public abstract class Player extends GravityGameObject{
 	private boolean shieldActive = false;
 	private static final int HeroHeight = 60;
-	private static final int HeroWidth = 30;
+	private static final int HeroWidth = 40;
 	protected int lives;
 	protected int speed;
 	protected ArrayList<Bullets> bulletList = new ArrayList<>();
@@ -34,9 +34,9 @@ public class Player extends GravityGameObject{
 	}
 
 	public enum Direction {LEFT, RIGHT};
-	private Direction direction = Direction.LEFT;
+	protected Direction direction = Direction.LEFT;
 	private boolean pickUpItem = false;
-	private Sound reloadSound = new Sound(new File("reload.wav"));
+	private Sound reloadSound = new Sound("/sounds/reload.wav");
 
 	public Player(int x, int y, int speed) {
 		super(x, y, HeroWidth, HeroHeight);
@@ -50,17 +50,7 @@ public class Player extends GravityGameObject{
 
 	}//
 
-	public void drawOn(Graphics2D g2d) {
-		this.image = Toolkit.getDefaultToolkit().getImage("Astronaut.png");
-		try {
-			this.image = ImageIO.read(new File("Astronaut.png"));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		g2d.drawImage(image, x, y, width, height, null);
-
-	}
-
+	public abstract void drawOn(Graphics2D g2d);
 	@Override
 	public void leftEdgeHit() {
 		this.x = 1920-20;
@@ -127,20 +117,7 @@ public class Player extends GravityGameObject{
 	}
 
 
-	public void shoot() {
-		if (this.bulletCount != 0) {
-			if(direction == Direction.RIGHT) {
-				Bullets b = new Bullets(this.x + this.width, this.y + this.height / 2, Color.ORANGE, 10);
-				bulletList.add(b);
-			}
-			else if(direction == Direction.LEFT) {
-				Bullets b = new Bullets(this.x - this.width, this.y + this.height / 2, Color.ORANGE, 10);
-				bulletListLeft.add(b);
-			}
-			this.bulletCount -= 1;
-		}
-	}
-
+	public abstract void shoot();
 	public ArrayList<Bullets> getListOfBullets() {
 		return bulletList;
 	}
@@ -151,6 +128,7 @@ public class Player extends GravityGameObject{
 		int numBulletsToReload = Math.min(reserveAmmo, max - bulletCount);
 		this.bulletCount += numBulletsToReload;
 		this.reserveAmmo -= numBulletsToReload;
+		reloadSound.playSoundOneShot();
 	}
 
 	public ArrayList<Bullets> getListOfLeftBullets() {
@@ -184,4 +162,9 @@ public class Player extends GravityGameObject{
 	public Direction getDirection(){
 		return direction;
 	}
+
+	public void increaseSpeed(double multiplier) {
+		this.speed = (int)(this.speed * multiplier);
+	}
+	
 }
