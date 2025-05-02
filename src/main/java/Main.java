@@ -111,6 +111,7 @@ public class Main {
 		level = new Level(1);
 		setUpAliens();
 		setUpPowerUps();
+		setUpAmmoCrate();
 		setUpComponent();
 		run();
 	}

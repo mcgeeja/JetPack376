@@ -21,7 +21,7 @@ public class MyComponent extends JComponent {
 	protected List<Alien> aliensType1;
 	protected List<Alien> aliensType2;
 	protected Graphics2D g;
-	private List<Rocket> builtRocketPieces = new ArrayList<>();
+	private List<Rocket> builtRocketPieces;
 
 
 	protected int points;
@@ -54,9 +54,9 @@ public class MyComponent extends JComponent {
 
 		this.ammo = ammoCrate;
 
-
 		this.powerUps = powerUps;
 
+		builtRocketPieces = new ArrayList<>();
 	}
 
 	@Override
@@ -222,12 +222,12 @@ public class MyComponent extends JComponent {
 			Rocket piece = level.rocketPieces.get(i);
 			if (rocketHolder.intersects(piece)) {
 				piece.x = rocketHolder.x - 10;
-				piece.y = rocketHolder.y - (Rocket.PART_HEIGHT * builtRocketPieces.size() + Rocket.PART_HEIGHT); 
+				piece.y = rocketHolder.y - (Rocket.PART_HEIGHT * builtRocketPieces.size());
 	
 				boolean correctPiece = (level.rocketPieces.size() == piecesInLevel && piece instanceof BottomRocketPiece) ||
 									   (level.rocketPieces.size() < piecesInLevel && level.rocketPieces.size() > 1 && piece instanceof MiddleRocketPiece) ||
 									   (level.rocketPieces.size() == 1 && piece instanceof TopRocketPiece);
-	
+
 				if (correctPiece) {
 					level.rocketPieces.remove(i);
 					builtRocketPieces.add(piece);
