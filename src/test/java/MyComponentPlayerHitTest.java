@@ -17,7 +17,13 @@ public class MyComponentPlayerHitTest {
         aliensType2.add(EasyMock.mock(Alien.class));
         aliensType2.add(EasyMock.mock(Alien.class));
 
-        MyComponent unitUnderTest = new MyComponent(mockPlayer, aliensType1, aliensType2);
+        List<PowerUp> powerUps = new ArrayList<>();
+
+        Level level = EasyMock.mock(Level.class);
+
+        AmmoCrate ammoCrate = EasyMock.mock(AmmoCrate.class);
+
+        MyComponent unitUnderTest = new MyComponent(mockPlayer, aliensType1, aliensType2, level, powerUps, ammoCrate);
 
         //record
             EasyMock.expect(mockPlayer.intersects(aliensType1.get(0))).andReturn(true);
