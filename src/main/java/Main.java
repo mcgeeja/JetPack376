@@ -36,6 +36,7 @@ public class Main {
 	static JFrame frame;
 	static JFrame frame2;
 	static MyComponent component;
+	static Player player;
 	static List<Alien> aliensType1 = new ArrayList<Alien>();
 	static List<Alien> aliensType2 = new ArrayList<Alien>();
 
@@ -44,43 +45,14 @@ public class Main {
 		frame = new JFrame();
 		frame2 = new JFrame();
 
-		TitleScreen title = new TitleScreen(0);
+		TitleScreen title = new TitleScreen();
 		frame.add(title);
 
 		frame2.setSize(frameWidth, frameHeight);
 		frame2.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-		
 
-		KeyListener keyListen = new KeyAdapter() {
-
-			@Override
-			public void keyPressed(KeyEvent e) {
-
-				if (e.getKeyCode() == KeyEvent.VK_1) {
-					setUpComponent(new Astronaut(frameWidth / 2, 800, 15));
-					run();
-				}
-				if (e.getKeyCode() == KeyEvent.VK_2) {
-					setUpComponent(new ZombieAstronaut(frameWidth / 2, 800, 15));
-					run();
-				}
-				
-				if (e.getKeyCode() == KeyEvent.VK_BACK_SPACE) {
-					
-					JFrame controlRemappingFrame = new JFrame("Control Settings");
-			        controlRemappingFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-			        controlRemappingFrame.setSize(400, 1000);
-			        ControlRemappingComponent controlMappingComponent = new ControlRemappingComponent();
-			        
-			        controlRemappingFrame.add(controlMappingComponent.panel);
-			        controlRemappingFrame.setVisible(true);					
-				}
-
-			}
-
-			
-		};
+		KeyListener keyListen = new TitleScreenKeyListener();
 
 		frame.addKeyListener(keyListen);
 		
@@ -93,8 +65,8 @@ public class Main {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 	}
-	private static void setUpComponent(Player p) {
-		component = new MyComponent(p, aliensType1, aliensType2);
+	private static void setUpComponent() {
+		component = new MyComponent(player, aliensType1, aliensType2);
 		frame2.add(component);
 		frame.setVisible(false);
 	}
@@ -116,6 +88,27 @@ public class Main {
 		
 	}
 
+	public static void startGameWithPlayerTypeOne(){
+		player = new Astronaut(frameWidth / 2, 800, 15);
+		setUpComponent();
+		run();
+	}
+
+	public static void startGameWithPlayerTypeTwo(){
+		player = new ZombieAstronaut(frameWidth / 2, 800, 15);
+		setUpComponent();
+		run();
+	}
+
+	public static void showControlRemappingMenu(){
+		JFrame controlRemappingFrame = new JFrame("Control Settings");
+		controlRemappingFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		controlRemappingFrame.setSize(400, 1000);
+		ControlRemappingComponent controlMappingComponent = new ControlRemappingComponent();
+
+		controlRemappingFrame.add(controlMappingComponent.panel);
+		controlRemappingFrame.setVisible(true);
+	}
 
 
 }
