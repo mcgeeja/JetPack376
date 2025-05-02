@@ -44,13 +44,14 @@ public class MyComponent extends JComponent {
 
 		this.level = level;
 
-		piecesInLevel = level.rocketPieces.size();
+		this.piecesInLevel = this.level.getRocketPieces().size();
 		int xR = level.getBottomRocketPiece().x;
 		
 		this.rocketHolder = new BuildingPiece( xR, 930);
-		this.buildingRocket = level.getBottomRocketPiece();
+
+		this.buildingRocket = this.level.getBottomRocketPiece();
 		this.buildingRocket.x = xR - 10;
-		this.buildingRocket.y = level.platforms.get(level.platforms.size()-1).y - 120;
+		this.buildingRocket.y = this.level.getPlatforms().get(this.level.getPlatforms().size()-1).y - 120;
 
 		this.ammo = ammoCrate;
 
@@ -177,8 +178,8 @@ public class MyComponent extends JComponent {
 			for (int i = 0; i < level.fuels.size(); i++) {
 				level.fuels.get(i).interact(this.player);
 			}
-			for (int i = 0; i < level.rocketPieces.size(); i++) {
-				level.rocketPieces.get(i).interact(this.player);
+			for (int i = 0; i < level.getRocketPieces().size(); i++) {
+				level.getRocketPieces().get(i).interact(this.player);
 			}
 		}
 		ammo.interact(player);
@@ -206,7 +207,7 @@ public class MyComponent extends JComponent {
 	}
 
     public void updateFuelCount() {
-    	if(level.rocketPieces.isEmpty()) {
+    	if(level.getRocketPieces().isEmpty()) {
     		for(int i = 0; i < level.fuels.size(); i++) {
     			if(this.level.fuels.get(i).intersects(rocketHolder)){
     				this.level.fuels.remove(i);
@@ -218,18 +219,18 @@ public class MyComponent extends JComponent {
     }
 
 	public void onRocketHolder() {
-		for (int i = 0; i < level.rocketPieces.size(); i++) {
-			Rocket piece = level.rocketPieces.get(i);
+		for (int i = 0; i < level.getRocketPieces().size(); i++) {
+			Rocket piece = level.getRocketPieces().get(i);
 			if (rocketHolder.intersects(piece)) {
 				piece.x = rocketHolder.x - 10;
 				piece.y = rocketHolder.y - (Rocket.PART_HEIGHT * builtRocketPieces.size());
 	
-				boolean correctPiece = (level.rocketPieces.size() == piecesInLevel && piece instanceof BottomRocketPiece) ||
-									   (level.rocketPieces.size() < piecesInLevel && level.rocketPieces.size() > 1 && piece instanceof MiddleRocketPiece) ||
-									   (level.rocketPieces.size() == 1 && piece instanceof TopRocketPiece);
+				boolean correctPiece = (level.getRocketPieces().size() == piecesInLevel && piece instanceof BottomRocketPiece) ||
+									   (level.getRocketPieces().size() < piecesInLevel && level.getRocketPieces().size() > 1 && piece instanceof MiddleRocketPiece) ||
+									   (level.getRocketPieces().size() == 1 && piece instanceof TopRocketPiece);
 
 				if (correctPiece) {
-					level.rocketPieces.remove(i);
+					level.getRocketPieces().remove(i);
 					builtRocketPieces.add(piece);
 					points += 300;
 				}
@@ -240,7 +241,7 @@ public class MyComponent extends JComponent {
 	
 	
     public void takeOff() {
-		if (this.level.rocketPieces.isEmpty() && this.fuelCount == 120) {
+		if (this.level.getRocketPieces().isEmpty() && this.fuelCount == 120) {
 			for (Rocket part : builtRocketPieces) {
 				part.takeOff(this.g);
 			}
@@ -295,12 +296,12 @@ public class MyComponent extends JComponent {
 	}
 
 	public void updateGrav(){
-		for (Rocket r : level.rocketPieces) {
-			r.gravity(level.platforms);
+		for (Rocket r : level.getRocketPieces()) {
+			r.gravity(level.getPlatforms());
 		}
-		player.gravity(level.platforms);
+		player.gravity(level.getPlatforms());
 		for (Fuel f : level.fuels) {
-			f.gravity(level.platforms);
+			f.gravity(level.getPlatforms());
 		}
 	}
 
@@ -312,7 +313,7 @@ public class MyComponent extends JComponent {
 	public void updateAliens() {
         for (Alien alien : this.aliensType1) {
 
-            alien.move(level.platforms);
+            alien.move(level.getPlatforms());
             if (alien.bulletHit(player.bulletList)
                     || alien.bulletHit(player.bulletListLeft)) {
                 this.points += 100;
@@ -321,7 +322,7 @@ public class MyComponent extends JComponent {
         }
 //	    	
         for (Alien alien : this.aliensType2) {
-            alien.move(level.platforms);
+            alien.move(level.getPlatforms());
             if (alien.bulletHit(player.bulletList)
                     || alien.bulletHit(player.bulletListLeft)) {
                 this.points += 100;
@@ -378,8 +379,8 @@ public class MyComponent extends JComponent {
 			level.curLevel = 1;
 			endGame = false;
 			num = Main.rand.nextInt(20);
-			ammo = new AmmoCrate(level.platforms.get(num).x, level.platforms.get(num).y -30);
-			buildingRocket.y = level.platforms.get(level.platforms.size()-1).y -120;
+			ammo = new AmmoCrate(level.getPlatforms().get(num).x, level.getPlatforms().get(num).y -30);
+			buildingRocket.y = level.getPlatforms().get(level.getPlatforms().size()-1).y -120;
 		}
     }
     
@@ -392,8 +393,8 @@ public class MyComponent extends JComponent {
 			level.curLevel = 2;
 			endGame = false;
 			num = Main.rand.nextInt(20);
-			ammo = new AmmoCrate(level.platforms.get(num).x, level.platforms.get(num).y -30);
-			buildingRocket.y = level.platforms.get(level.platforms.size()-1).y -120;
+			ammo = new AmmoCrate(level.getPlatforms().get(num).x, level.getPlatforms().get(num).y -30);
+			buildingRocket.y = level.getPlatforms().get(level.getPlatforms().size()-1).y -120;
 		}
     }
 

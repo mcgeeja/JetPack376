@@ -75,15 +75,15 @@ public class Main {
 
 	private static void setUpPowerUps() {
 		// Create a random powerup on a platform
-		PowerUp speedBoost = new SpeedBoost(level.platforms.get(rand.nextInt(level.platforms.size())).x, 100);
-		PowerUp shield = new Shield(level.platforms.get(rand.nextInt(level.platforms.size())).x, 300);
+		PowerUp speedBoost = new SpeedBoost(level.getPlatforms().get(rand.nextInt(level.getPlatforms().size())).x, 100);
+		PowerUp shield = new Shield(level.getPlatforms().get(rand.nextInt(level.getPlatforms().size())).x, 300);
 		powerUps.add(speedBoost);
 		powerUps.add(shield);
 	}
 
 	private static void setUpAmmoCrate() {
 		int num = rand.nextInt(20);
-		ammoCrate = new AmmoCrate(level.platforms.get(num).x, level.platforms.get(num).y -30);
+		ammoCrate = new AmmoCrate(level.getPlatforms().get(num).x, level.getPlatforms().get(num).y -30);
 	}
 
 	private static void run() {

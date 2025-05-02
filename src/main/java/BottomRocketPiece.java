@@ -9,7 +9,7 @@ public class BottomRocketPiece extends Rocket {
     @Override
 public void drawPiece(Graphics2D g, int offsetY) {
     g.setColor(Color.WHITE);
-    g.fillRect(x, offsetY, WIDTH, PART_HEIGHT/2);
+    g.fillRect(x, offsetY, WIDTH, PART_HEIGHT);
 
     g.drawLine(x, offsetY + PART_HEIGHT/2, x - (WIDTH / 2), offsetY + PART_HEIGHT/2 + PART_HEIGHT/2);
     g.drawLine(x + WIDTH, offsetY + PART_HEIGHT/2, x + (3 * HEIGHT / 4), offsetY + PART_HEIGHT/2 + PART_HEIGHT/2);

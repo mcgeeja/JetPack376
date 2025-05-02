@@ -2,7 +2,7 @@ import javax.imageio.ImageIO;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.List;
 
 public class GreenAlien extends  Alien{
     public GreenAlien(int x, int y, String direction) {
@@ -41,7 +41,7 @@ public class GreenAlien extends  Alien{
     }
 
     @Override
-    public void move(ArrayList<Platform> plats) {
+    public void move(List<Platform> plats) {
         this.contactWith(plats);
         if (direction == "-") {
             if (directNum == 1) {
