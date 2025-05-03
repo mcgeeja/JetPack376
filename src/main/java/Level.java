@@ -3,6 +3,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.util.List;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.awt.Graphics2D;
@@ -10,9 +11,9 @@ import java.awt.Graphics2D;
 
 public class Level {
 
-    protected ArrayList<Platform> platforms;
-    protected ArrayList<Fuel> fuels;
-    protected ArrayList<Rocket> rocketPieces = new ArrayList<>();
+    protected List<Platform> platforms;
+    protected List<Fuel> fuels;
+    protected List<Rocket> rocketPieces = new ArrayList<>();
     protected int rocketPiece = 1;
     protected Rocket bottomRocketPiece;
 
@@ -33,12 +34,14 @@ public class Level {
         }
         return fileName;
     }
+
     private void addFuel(int pos_x, int pos_y){
         Fuel fuel = new Fuel(pos_x - 40, pos_y - 40);
         fuels.add(fuel);
         addPlatform(pos_x,pos_y,40);
 
     }
+
     private void addPlatform(int pos_x,int pos_y,int height){
         Platform p = new Platform(pos_x,pos_y, 100, height);
         platforms.add(p);
@@ -50,11 +53,13 @@ public class Level {
         rocketPiece += 1;
         this.bottomRocketPiece = r;
     }
+
     private void addMiddleRocketPiece(int pos_x,int pos_y){
         Rocket r = new MiddleRocketPiece(pos_x,pos_y);
 
         rocketPieces.add(r);
     }
+
     private void addTopRocketPiece(int pos_x,int pos_y){
         Rocket r = new TopRocketPiece(pos_x,pos_y);
         rocketPieces.add(r);
@@ -80,6 +85,7 @@ public class Level {
                 addBottomRocketPiece(pos_x,pos_y);
         }
     }
+
     ArrayList<String> readFromFile(File levelFile) {
         ArrayList<String> lines = new ArrayList<>();
 
@@ -98,16 +104,19 @@ public class Level {
         scanner.close();
         return lines;
     }
+
     public void convertLevelToText(ArrayList<String> levelLines){
         scale_x= Main.frameWidth/levelLines.get(0).length();
         scale_y=Main.frameHeight/levelLines.size();
         for(int i =0; i < levelLines.size();i ++)
             processLine(levelLines.get(i),i);
     }
+
     public Level(){
         this.platforms = new ArrayList<>();
         this.fuels = new ArrayList<>();
     }
+
     public Level (int num) {
         this.curLevel = num;
         this.platforms = new ArrayList<>();
@@ -135,6 +144,14 @@ public class Level {
 
     public Rocket getBottomRocketPiece(){
         return this.bottomRocketPiece;
+    }
+
+    public List<Platform> getPlatforms(){
+        return this.platforms;
+    }
+
+    public List<Rocket> getRocketPieces(){
+        return this.rocketPieces;
     }
 
 
