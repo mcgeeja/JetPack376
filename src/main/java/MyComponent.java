@@ -158,14 +158,12 @@ public class MyComponent extends JComponent {
     }
 	public void gameOver() {
 		if (this.player.lives <= 0) {
-			GameOverScreen gameOverScreen = new GameOverScreen(this);
-			gameOverScreen.paintLoseGame();
+			Main.setupGameOverScreen(points, false);
 			endGame = true;
 			writeResultsToFile(false);
 		}
 		if(buildingRocket.y <= 0) {
-			GameOverScreen gameOverScreen = new GameOverScreen(this);
-			gameOverScreen.paintWinGame();
+			Main.setupGameOverScreen(points, true);
 
 			endGame = true;
 			writeResultsToFile(true);
@@ -333,18 +331,6 @@ public class MyComponent extends JComponent {
 
 	public void updatePickUpTimer() {
 		player.startCountDown();
-	}
-
-	public void run() {
-
-		KeyListener keyListen = new GameRunningKeyListener( this.player);
-		MouseInputListener mouseListen = new GameRunningMouseListener(this.player);
-       
-        this.addKeyListener(keyListen);
-		this.addMouseListener(mouseListen);
-		this.addMouseMotionListener(mouseListen);
-
-        this.setFocusable(true);
 	}
 
 	public void handleComponentOnEdge(GameObject gameObject){

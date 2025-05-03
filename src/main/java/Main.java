@@ -1,9 +1,10 @@
+import java.awt.event.KeyListener;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import javax.swing.JFrame;
-import javax.swing.Timer;
+import javax.swing.*;
+import javax.swing.event.MouseInputListener;
 
 
 /**
@@ -22,16 +23,25 @@ public class Main {
 	public static final int frameHeight = 1080;
 
 	public static final Random rand = new Random();
-	static JFrame titleFrame;
-	static JFrame gameFrame;
-	static MyComponent component;
-	static Player player;
-	static List<Alien> aliensType1 = new ArrayList<>();
-	static List<Alien> aliensType2 = new ArrayList<>();
-	static Level level;
-	static List<PowerUp> powerUps = new ArrayList<>();
-	static AmmoCrate ammoCrate;
+	private static JFrame titleFrame;
+	private static JFrame gameFrame;
+	private static JFrame gameOverFrame;
 
+
+	private static MyComponent component;
+	private static GameOverScreen gameOverScreen;
+
+
+	private static Player player;
+	private static int playerNum;
+	private static List<Alien> aliensType1;
+	private static List<Alien> aliensType2;
+	private static Level level;
+	private static int levelNum = 1;//default of 1 so when we select just player it gives you a place to start
+	private static List<PowerUp> powerUps;
+	private static AmmoCrate ammoCrate;
+
+	private static Timer timer;
 	/**
 	 * @param args
 	 */
@@ -54,6 +64,10 @@ public class Main {
 		gameFrame.setSize(frameWidth, frameHeight);
 		gameFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
+		gameOverFrame = new JFrame();
+		gameOverFrame.setSize(frameWidth, frameHeight);
+		gameOverFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
 		
 		Sound gameTheme = new Sound("/sounds/finalgametheme.wav");
 		gameTheme.playSoundLoop();
@@ -63,8 +77,12 @@ public class Main {
 		component = new MyComponent(player, aliensType1, aliensType2, level, powerUps, ammoCrate);
 		gameFrame.add(component);
 		titleFrame.setVisible(false);
+		gameOverFrame.setVisible(false);
 	}
 	private static void setUpAliens() {
+		aliensType1 = new ArrayList<>();
+		aliensType2 = new ArrayList<>();
+
 		aliensType1.add(new BlueAlien(0, rand.nextInt(900),  "+"));
 		aliensType1.add(new BlueAlien(0, rand.nextInt(900),  "+"));
 		aliensType1.add(new BlueAlien(0, 150,  "+"));
@@ -74,7 +92,7 @@ public class Main {
 	}
 
 	private static void setUpPowerUps() {
-		// Create a random powerup on a platform
+		powerUps = new ArrayList<>();
 		PowerUp speedBoost = new SpeedBoost(level.getPlatforms().get(rand.nextInt(level.getPlatforms().size())).x, 100);
 		PowerUp shield = new Shield(level.getPlatforms().get(rand.nextInt(level.getPlatforms().size())).x, 300);
 		powerUps.add(speedBoost);
@@ -86,19 +104,54 @@ public class Main {
 		ammoCrate = new AmmoCrate(level.getPlatforms().get(num).x, level.getPlatforms().get(num).y -30);
 	}
 
+	private static void setUpPlayer(){
+		if(playerNum == 1) {
+			player = new Astronaut(frameWidth / 2, 800, 15);
+		} else if(playerNum == 2) {
+			player = new ZombieAstronaut(frameWidth / 2, 800, 15);
+		}
+	}
+
 	private static void run() {
-		component.run();
+		component.setFocusable(true);
+		component.requestFocusInWindow();
+		component.addKeyListener(new GameRunningKeyListener(player));
+		MouseInputListener mouseListen = new GameRunningMouseListener(player);
+		component.addMouseListener(mouseListen);
+		component.addMouseMotionListener(mouseListen);
+
 		GameAdvanceListener advancelistener = new GameAdvanceListener(component);
-		Timer timer = new Timer(60, advancelistener);
+		timer = new Timer(60, advancelistener);
 		timer.start();
 		gameFrame.setVisible(true);
 		
 	}
 
-	public static void startGameWithPlayerTypeOne(){
+	public static void setupGameOverScreen(int score, boolean gameWon){
+		gameFrame.remove(component);
+		timer.stop();
 
-		player = new Astronaut(frameWidth / 2, 800, 15);
-		level = new Level(1);
+		if(gameOverScreen != null) {//remove old GameOverScreen
+			gameOverFrame.remove(gameOverScreen);
+		}
+		gameOverScreen = new GameOverScreen(score, gameWon);
+		gameOverScreen.setFocusable(true);
+		gameOverScreen.requestFocusInWindow();
+		gameOverScreen.addKeyListener(new GameOverKeyListener());
+		gameOverFrame.add(gameOverScreen);
+
+		titleFrame.setVisible(false);
+		gameFrame.setVisible(false);
+
+		gameOverFrame.setVisible(true);
+		gameOverFrame.setSize(frameWidth, frameHeight);
+		gameOverFrame.setTitle("Game Over Screen");
+		gameOverFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	}
+
+	private static void startGame(){
+		setUpPlayer();
+		level = new Level(levelNum);
 		setUpAliens();
 		setUpPowerUps();
 		setUpAmmoCrate();
@@ -106,14 +159,24 @@ public class Main {
 		run();
 	}
 
+	public static void startGameWithPlayerTypeOne(){
+		playerNum = 1;
+		startGame();
+	}
+
 	public static void startGameWithPlayerTypeTwo(){
-		player = new ZombieAstronaut(frameWidth / 2, 800, 15);
-		level = new Level(1);
-		setUpAliens();
-		setUpPowerUps();
-		setUpAmmoCrate();
-		setUpComponent();
-		run();
+		playerNum = 2;
+		startGame();
+	}
+
+	public static void startGameLevelOne(){
+		levelNum = 1;
+		startGame();
+	}
+
+	public static void startGameLevelTwo(){
+		levelNum = 2;
+		startGame();
 	}
 
 	public static void showControlRemappingMenu(){

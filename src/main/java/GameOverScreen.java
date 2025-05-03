@@ -1,24 +1,23 @@
-import java.awt.Color;
-import java.awt.Component;
-import java.awt.Font;
-import java.awt.Graphics2D;
+import javax.swing.*;
+import java.awt.*;
 import java.sql.Time;
 
 
 
-public class GameOverScreen {
-	MyComponent component;
+public class GameOverScreen extends JComponent {
+//	MyComponent component;
+	int score;
+	boolean gameWon;
 
 	private static final Font controlsFont = new Font("arial", Font.BOLD, 50);
 	private static final Font mainFont = new Font("arial", Font.BOLD, 100);
 
-	public GameOverScreen(MyComponent component){
-		this.component = component;
-		component.addKeyListener(new GameOverKeyListener(component));
+	public GameOverScreen(int score, boolean gameWon){
+		this.score = score;
+		this.gameWon = gameWon;
 	}
 	
-	public void paintWinGame(){
-		Graphics2D g = component.g;
+	public void paintWinGame(Graphics2D g){
 
 		//Fill screen with black
 		g.setColor(Color.BLACK);
@@ -33,15 +32,13 @@ public class GameOverScreen {
 
 		//set submessage on the screen
 		g.setColor(Color.WHITE);
-		g.drawString("Last score was: " + component.points, (1920 / 2) - 475, (1080 / 2) + 200);
+		g.drawString("Last score was: " + score, (1920 / 2) - 475, (1080 / 2) + 200);
 
 		g.setFont(controlsFont);
 		g.drawString("Press '1' for level 1 or '2' for level 2 " , (1920 / 2) - 420, (1080 / 2) + 300);
 	}
 	
-	public void paintLoseGame(){
-		Graphics2D g = component.g;
-//		Time time = new Time(10);
+	public void paintLoseGame(Graphics2D g){
 
 		g.setColor(Color.BLACK);
 		g.fillRect(0, 0, 1920, 1080);
@@ -51,11 +48,21 @@ public class GameOverScreen {
 		g.drawString("GAME OVER", 1920 / 2 - 300, 1080 / 2);
 
 		g.setColor(Color.WHITE);
-		g.drawString("Last score was: " + component.points, (1920 / 2) - 475, (1080 / 2) + 200);
+		g.drawString("Last score was: " + score, (1920 / 2) - 475, (1080 / 2) + 200);
 
 		g.setFont(controlsFont);
 		g.drawString("Press '1' for level 1 or '2' for level 2 " , (1920 / 2) - 420, (1080 / 2) + 300);
 		
 	}
 
+
+	@Override
+	public void paintComponent(Graphics g) {
+		if(gameWon){
+			paintWinGame((Graphics2D) g);
+		} else{
+			paintLoseGame((Graphics2D) g);
+		}
+
+	}
 }
