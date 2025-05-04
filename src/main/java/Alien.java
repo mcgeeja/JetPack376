@@ -32,7 +32,7 @@ public abstract class Alien extends GameObject{
 		if (y > 950) {
 			y = rnd.nextInt(800);
 		}
-		x = 0;
+		x = 50;
 	}
 
 	@Override
@@ -48,7 +48,7 @@ public abstract class Alien extends GameObject{
 	@Override
 	public void leftEdgeHit() {
 
-		x = 1920-width;
+		x = 1920-width-30;
 	}
 
 	public abstract void drawOn(Graphics2D g);
