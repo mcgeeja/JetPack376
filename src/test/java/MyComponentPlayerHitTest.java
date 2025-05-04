@@ -17,26 +17,43 @@ public class MyComponentPlayerHitTest {
         aliensType2.add(EasyMock.mock(Alien.class));
         aliensType2.add(EasyMock.mock(Alien.class));
 
-        MyComponent unitUnderTest = new MyComponent(mockPlayer, aliensType1, aliensType2);
+        List<PowerUp> powerUps = new ArrayList<>();
+
+        Level level = EasyMock.mock(Level.class);
+
+        AmmoCrate ammoCrate = EasyMock.mock(AmmoCrate.class);
+
+        List<Platform> platforms = new ArrayList<>();
+        platforms.add(EasyMock.mock(Platform.class));
+
+        List<Rocket> rocketPieces = new ArrayList<>();
+        rocketPieces.add(EasyMock.mock(Rocket.class));
+        rocketPieces.add(EasyMock.mock(Rocket.class));
+        rocketPieces.add(EasyMock.mock(Rocket.class));
 
         //record
-            EasyMock.expect(mockPlayer.intersects(aliensType1.get(0))).andReturn(true);
-            mockPlayer.isHit();
+        EasyMock.expect(level.getPlatforms()).andReturn(platforms).anyTimes();
+        EasyMock.expect(level.getRocketPieces()).andReturn(rocketPieces).anyTimes();
 
-            EasyMock.expect(mockPlayer.intersects(aliensType1.get(1))).andReturn(false);
-            EasyMock.expect(aliensType1.get(1).shotPlayer(mockPlayer)).andReturn(true);
-            mockPlayer.isHit();
+        EasyMock.expect(level.getBottomRocketPiece()).andReturn(EasyMock.mock(Rocket.class)).anyTimes();
 
-            EasyMock.expect(mockPlayer.intersects(aliensType2.get(0))).andReturn(true);
-            mockPlayer.isHit();
+        EasyMock.expect(mockPlayer.intersects(aliensType1.get(0))).andReturn(true);
+        mockPlayer.isHit();
 
-            EasyMock.expect(mockPlayer.intersects(aliensType2.get(1))).andReturn(false);
+        EasyMock.expect(mockPlayer.intersects(aliensType1.get(1))).andReturn(false);
+        EasyMock.expect(aliensType1.get(1).shotPlayer(mockPlayer)).andReturn(true);
+        mockPlayer.isHit();
+
+        EasyMock.expect(mockPlayer.intersects(aliensType2.get(0))).andReturn(true);
+        mockPlayer.isHit();
+
+        EasyMock.expect(mockPlayer.intersects(aliensType2.get(1))).andReturn(false);
 
 
 
         //replay
-        EasyMock.replay(mockPlayer, aliensType1.get(0), aliensType1.get(1), aliensType2.get(0), aliensType2.get(1));
-
+        EasyMock.replay(mockPlayer, aliensType1.get(0), aliensType1.get(1), aliensType2.get(0), aliensType2.get(1), level);
+        MyComponent unitUnderTest = new MyComponent(mockPlayer, aliensType1, aliensType2, level, powerUps, ammoCrate);
         unitUnderTest.playerHit();
 
         //verify

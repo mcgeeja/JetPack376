@@ -3,6 +3,7 @@ import java.awt.Toolkit;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 import javax.imageio.ImageIO;
@@ -31,7 +32,7 @@ public class RedAlien extends Alien {
     }
 
     @Override
-    public void move(ArrayList<Platform> plats) {
+    public void move(List<Platform> plats) {
         this.contactWith(plats);
         Random random = new Random();
         boolean changeDir = random.nextInt(21) == 20;

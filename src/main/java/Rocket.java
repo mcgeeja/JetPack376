@@ -6,7 +6,6 @@ public abstract class Rocket extends GravityGameObject implements Interactable{
     protected static final int WIDTH = 60;
     protected static final int HEIGHT = 120;
     protected static final int PART_HEIGHT = 40;
-    protected static final int GRAVITY = 5;
 
     public Rocket(int x, int y) {
         super(x, y, WIDTH, PART_HEIGHT);

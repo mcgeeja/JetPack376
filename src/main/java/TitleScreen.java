@@ -6,10 +6,8 @@ import javax.swing.JComponent;
 
 public class TitleScreen extends JComponent {
 	protected String title = "JETPACK";
-	protected int lastScore;
 
-	public TitleScreen(int score) {
-		this.lastScore = score;
+	public TitleScreen() {
 	}
 
 	@Override

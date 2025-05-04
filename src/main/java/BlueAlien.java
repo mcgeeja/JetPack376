@@ -2,7 +2,7 @@ import javax.imageio.ImageIO;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.List;
 
 public class BlueAlien extends Alien{
 
@@ -47,7 +47,7 @@ public class BlueAlien extends Alien{
     }
 
     @Override
-    public void move(ArrayList<Platform> plats) {
+    public void move(List<Platform> plats) {
         if (direction == "+") {
             this.x += 10;
         } else {

@@ -2,6 +2,7 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 public abstract class Alien extends GameObject{
@@ -60,7 +61,7 @@ public abstract class Alien extends GameObject{
 		return false;
 	}
 
-	public void contactWith(ArrayList<Platform> plats) {
+	public void contactWith(List<Platform> plats) {
 		for (int i = 0; i < plats.size(); i++) {
 			if (this.intersects(plats.get(i))) {
 
@@ -112,6 +113,6 @@ public abstract class Alien extends GameObject{
 		return false;
 	}
 
-	public abstract  void move(ArrayList<Platform> plats) ;
+	public abstract  void move(List<Platform> plats) ;
 
 }
