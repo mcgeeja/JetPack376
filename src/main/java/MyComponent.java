@@ -134,12 +134,12 @@ public class MyComponent extends JComponent {
 
 		FileWriter writer = null;
         try {
-			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd_HH-mm");
 			String formattedDateTime = end.format(formatter); // "1986-04-08 12:30"
-			File resultsFolder = new File("./results/");
+			File resultsFolder = new File("."+File.separator+"results"+File.separator);
 			resultsFolder.mkdir();
 
-			writer= new FileWriter("results/"+formattedDateTime+" game.txt");
+			writer= new FileWriter("results"+File.separator+formattedDateTime+"_game.txt");
 			for(String line : summaryLines){
 				writer.write(line+"\n");
 			}
