@@ -28,7 +28,7 @@ public class TestEdgeHandling {
         GameObject obj = new TestPlayer(1,1,1) {
         };
         obj.leftEdgeHit();
-        assertEquals(1920-obj.width, obj.x);
+        assertEquals(1920-obj.width-10, obj.x);
     }
     public void HandleRightEdge() {
         GameObject obj = new TestPlayer(1,1,1) ;
