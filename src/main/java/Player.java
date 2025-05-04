@@ -53,7 +53,7 @@ public abstract class Player extends GravityGameObject{
 	public abstract void drawOn(Graphics2D g2d);
 	@Override
 	public void leftEdgeHit() {
-		this.x = 1920-20;
+		this.x = 1920-width;
 	}
   
 	@Override
