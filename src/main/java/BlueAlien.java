@@ -33,7 +33,9 @@ public class BlueAlien extends Alien{
     public void rightEdgeHit() {
         super.rightEdgeHit();
         if(direction.equals("+"))
-            this.x = 0;
+            this.x = 10;
+        else
+            this.x=1900;
     }
 
     @Override
