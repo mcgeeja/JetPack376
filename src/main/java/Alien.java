@@ -48,7 +48,7 @@ public abstract class Alien extends GameObject{
 	@Override
 	public void leftEdgeHit() {
 
-		x = 1920;
+		x = 1920-width;
 	}
 
 	public abstract void drawOn(Graphics2D g);
