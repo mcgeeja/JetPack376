@@ -51,7 +51,7 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: ProjectBuild
-        path: ./JetpakGame/
+        path: ./JetpackGame/
         retention-days: 5
 
   dependency-submission:
