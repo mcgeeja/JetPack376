@@ -48,7 +48,7 @@ jobs:
     - name: Package project
       run: chmod +x ./package.sh && ./package.sh
     - name: Zip project
-      run: zip -r JetpakGame.zip ./JetpakGame 
+      run: zip -r JetpakGame.zip JetpackGame/
     - name: 'Upload Artifact'
       uses: actions/upload-artifact@v4
       with:
