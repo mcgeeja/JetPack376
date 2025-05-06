@@ -46,12 +46,12 @@ jobs:
     #
     # - name: Build with Gradle 8.9    #   run: gradle build
     - name: Package project
-      run: chmod +x ./package.sh && ./package.sh
+      run: chmod +x ./package.sh && ./package.sh && ls
     - name: 'Upload Artifact'
       uses: actions/upload-artifact@v4
       with:
         name: ProjectBuild
-        path: JetpakGame/*
+        path: ./JetpakGame/
         retention-days: 5
 
   dependency-submission:
