@@ -1,7 +1,4 @@
-import javax.imageio.ImageIO;
 import java.awt.*;
-import java.io.File;
-import java.io.IOException;
 import java.util.List;
 
 public class BlueAlien extends Alien{
@@ -12,13 +9,7 @@ public class BlueAlien extends Alien{
 
     @Override
     public void drawOn(Graphics2D g) {
-        this.image = Toolkit.getDefaultToolkit().getImage("alien_type_1_2.0.png");
-        try {
-            this.image = ImageIO.read(new File("alien_type_1_2.0.png"));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
+        this.image = Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/alien_type_1_2.0.png"));
         g.drawImage(this.image, x, y, width, height, null);
     }
 
