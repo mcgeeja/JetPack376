@@ -2,13 +2,9 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Toolkit;
-import java.io.File;
-import java.io.IOException;
-
-import javax.imageio.ImageIO;
 
 public class Astronaut extends Player{
-	private static final Image astronautImage = Toolkit.getDefaultToolkit().getImage("Astronaut.png");
+	private static final Image astronautImage = Toolkit.getDefaultToolkit().getImage(Astronaut.class.getResource("/images/Astronaut.png"));
 	private static final int bulletSpeed = 25;
 
 	public Astronaut(int x, int y, int speed) {

@@ -1,8 +1,4 @@
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
-import java.nio.charset.StandardCharsets;
+import java.io.*;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -24,13 +20,13 @@ public class Level {
     public String getLevelFile(int num){
         String fileName = "";
         if (num == 1) {
-            fileName = "levels/levelOne.txt";
+            fileName = "/levels/levelOne.txt";
         }
         else if (num == 2) {
-            fileName ="levels/levelTwo.txt";
+            fileName ="/levels/levelTwo.txt";
         }
         else if (num == 3) {
-            fileName= "levels/levelThree.txt";
+            fileName= "/levels/levelThree.txt";
         }
         return fileName;
     }
@@ -86,18 +82,10 @@ public class Level {
         }
     }
 
-    ArrayList<String> readFromFile(File levelFile) {
+    ArrayList<String> readFromFile(InputStream levelFile) {
         ArrayList<String> lines = new ArrayList<>();
 
-        FileReader reader;
-        try {
-            reader = new FileReader(levelFile, StandardCharsets.UTF_8);
-        }
-        catch (IOException e) {
-            throw new RuntimeException("Error reading level file", e);
-        }
-
-        Scanner scanner = new Scanner(reader);
+        Scanner scanner = new Scanner(levelFile);
 
         while (scanner.hasNextLine())
             lines.add(scanner.nextLine());
@@ -122,8 +110,8 @@ public class Level {
         this.platforms = new ArrayList<>();
         this.fuels = new ArrayList<>();
 
-        File levelFile = new File(getLevelFile(num));
-        ArrayList<String> lines =readFromFile(levelFile);
+        InputStream levelFile = getClass().getResourceAsStream(getLevelFile(num));
+        ArrayList<String> lines = readFromFile(levelFile);
         convertLevelToText(lines);
     }
 
