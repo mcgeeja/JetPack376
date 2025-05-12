@@ -21,6 +21,8 @@ public class TitleScreen extends JComponent {
 		g2d.setFont(font);
 		g2d.drawString("Press 1 to play as Astronaut", 1920 / 2 - 265, 1080 / 2 + 200);
 		g2d.drawString("Press 2 to play as Zombie Astronaut", 1920 / 2 - 265, 1080 / 2 + 300);
+		g2d.drawString("Press Backspace to change/view controls", 1920 / 2 - 265, 1080 / 2 + 400);
+
 
 	}
 }
