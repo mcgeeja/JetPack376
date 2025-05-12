@@ -1,0 +1,4 @@
+You lost!
+Score: 300
+Time: 0 minutes and 9 seconds
+Played Level: 1
