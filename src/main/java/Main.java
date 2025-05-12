@@ -62,6 +62,8 @@ public class Main {
 		gameFrame = new JFrame();
 		gameFrame.setSize(frameWidth, frameHeight);
 		gameFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		gameFrame.setExtendedState(JFrame.MAXIMIZED_BOTH); 
+		gameFrame.setUndecorated(true);
 
 		gameOverFrame = new JFrame();
 		gameOverFrame.setSize(frameWidth, frameHeight);
