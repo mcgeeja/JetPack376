@@ -102,7 +102,7 @@ public abstract class Alien extends GameObject{
 					this.direction = "-";
 					return true;
 				} else {
-					this.x = 1920;
+					this.x = 1920-width;
 					this.y = rand.nextInt(600);
 					this.direction = "+";
 					return true;
