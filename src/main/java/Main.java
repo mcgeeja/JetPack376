@@ -54,18 +54,18 @@ public class Main {
 		titleScreen.addKeyListener(new TitleScreenKeyListener());
 		titleFrame.add(titleScreen);
 		titleFrame.setVisible(true);
-		titleFrame.setSize(frameWidth, frameHeight);
-		titleFrame.setTitle("Title Screen");
 		titleFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		titleFrame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+		titleFrame.setTitle("Title Screen");
 
 
 		gameFrame = new JFrame();
-		gameFrame.setSize(frameWidth, frameHeight);
 		gameFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		gameFrame.setExtendedState(JFrame.MAXIMIZED_BOTH); 
 
 		gameOverFrame = new JFrame();
-		gameOverFrame.setSize(frameWidth, frameHeight);
 		gameOverFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		gameOverFrame.setExtendedState(JFrame.MAXIMIZED_BOTH); 
 
 		
 		Sound gameTheme = new Sound("/sounds/finalgametheme.wav");
